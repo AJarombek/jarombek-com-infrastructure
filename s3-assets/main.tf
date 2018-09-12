@@ -219,9 +219,233 @@ resource "aws_s3_bucket_object" "sylexiad-sans-thin-bold-ttf" {
 }
 
 /*
- * Logos Directory
+ * Posts Directory
  */
 
+resource "aws_s3_bucket_object" "1-14-18-html-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-14-18-html.png"
+  source = "assets/posts/1-14-18-html.png"
+  etag = "${md5(file("assets/posts/1-14-18-html.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-14-18-webresult-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-14-18-webresult.png"
+  source = "assets/posts/1-14-18-webresult.png"
+  etag = "${md5(file("assets/posts/1-14-18-webresult.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-27-17-postlazy-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-27-17-postlazy.png"
+  source = "assets/posts/1-27-17-postlazy.png"
+  etag = "${md5(file("assets/posts/1-27-17-postlazy.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-27-17-prelazy-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-27-17-prelazy.png"
+  source = "assets/posts/1-27-17-prelazy.png"
+  etag = "${md5(file("assets/posts/1-27-17-prelazy.png"))}"
+}
+
+resource "aws_s3_bucket_object" "5-20-18-blockchain-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/5-20-18-blockchain.png"
+  source = "assets/posts/5-20-18-blockchain.png"
+  etag = "${md5(file("assets/posts/5-20-18-blockchain.png"))}"
+}
+
+resource "aws_s3_bucket_object" "5-20-18-simpleblock-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/5-20-18-simpleblock.png"
+  source = "assets/posts/5-20-18-simpleblock.png"
+  etag = "${md5(file("assets/posts/5-20-18-simpleblock.png"))}"
+}
+
+resource "aws_s3_bucket_object" "5-20-18-exercise-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/5-20-18-exercise.png"
+  source = "assets/posts/5-20-18-exercise.png"
+  etag = "${md5(file("assets/posts/5-20-18-exercise.png"))}"
+}
+
+resource "aws_s3_bucket_object" "5-31-18-seed-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/5-31-18-seed.png"
+  source = "assets/posts/5-31-18-seed.png"
+  etag = "${md5(file("assets/posts/5-31-18-seed.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-9-18-array-chain-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-9-18-array-chain.png"
+  source = "assets/posts/6-9-18-array-chain.png"
+  etag = "${md5(file("assets/posts/6-9-18-array-chain.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-9-18-function-chain-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-9-18-function-chain.png"
+  source = "assets/posts/6-9-18-function-chain.png"
+  etag = "${md5(file("assets/posts/6-9-18-function-chain.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-9-18-object-chain-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-9-18-object-chain.png"
+  source = "assets/posts/6-9-18-object-chain.png"
+  etag = "${md5(file("assets/posts/6-9-18-object-chain.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-9-18-prototype-traverse-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-9-18-prototype-traverse.png"
+  source = "assets/posts/6-9-18-prototype-traverse.png"
+  etag = "${md5(file("assets/posts/6-9-18-prototype-traverse.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-13-18-network-files-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-13-18-network-files.png"
+  source = "assets/posts/6-13-18-network-files.png"
+  etag = "${md5(file("assets/posts/6-13-18-network-files.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-13-18-writing-notes-gif" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-13-18-writing-notes.gif"
+  source = "assets/posts/6-13-18-writing-notes.gif"
+  etag = "${md5(file("assets/posts/6-13-18-writing-notes.gif"))}"
+}
+
+resource "aws_s3_bucket_object" "6-18-18-grid-0-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-18-18-grid-0.png"
+  source = "assets/posts/6-18-18-grid-0.png"
+  etag = "${md5(file("assets/posts/6-18-18-grid-0.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-18-18-grid-1-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-18-18-grid-1.png"
+  source = "assets/posts/6-18-18-grid-1.png"
+  etag = "${md5(file("assets/posts/6-18-18-grid-1.png"))}"
+}
+
+resource "aws_s3_bucket_object" "6-18-18-grid-2-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/6-18-18-grid-2.png"
+  source = "assets/posts/6-18-18-grid-2.png"
+  etag = "${md5(file("assets/posts/6-18-18-grid-2.png"))}"
+}
+
+resource "aws_s3_bucket_object" "7-4-18-groovy-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/7-4-18-groovy-strict-type-check.png"
+  source = "assets/posts/7-4-18-groovy-strict-type-check.png"
+  etag = "${md5(file("assets/posts/7-4-18-groovy-strict-type-check.png"))}"
+}
+
+resource "aws_s3_bucket_object" "8-5-18-graphql-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/8-5-18-graphql.png"
+  source = "assets/posts/8-5-18-graphql.png"
+  etag = "${md5(file("assets/posts/8-5-18-graphql.png"))}"
+}
+
+resource "aws_s3_bucket_object" "8-8-18-graphiql-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/8-8-18-graphiql.png"
+  source = "assets/posts/8-8-18-graphiql.png"
+  etag = "${md5(file("assets/posts/8-8-18-graphiql.png"))}"
+}
+
+resource "aws_s3_bucket_object" "8-5-18-restapi-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/8-5-18-restapi.png"
+  source = "assets/posts/8-5-18-restapi.png"
+  etag = "${md5(file("assets/posts/8-5-18-restapi.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-3-18-aws-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-3-18-aws.png"
+  source = "assets/posts/9-3-18-aws.png"
+  etag = "${md5(file("assets/posts/9-3-18-aws.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-3-18-web-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-3-18-web.png"
+  source = "assets/posts/9-3-18-web.png"
+  etag = "${md5(file("assets/posts/9-3-18-web.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-7-18-serverless-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-7-18-serverless.png"
+  source = "assets/posts/9-7-18-serverless.png"
+  etag = "${md5(file("assets/posts/9-7-18-serverless.png"))}"
+}
+
+resource "aws_s3_bucket_object" "11-6-17-graph-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/11-6-17-FairfieldGraphImage.png"
+  source = "assets/posts/11-6-17-FairfieldGraphImage.png"
+  etag = "${md5(file("assets/posts/11-6-17-FairfieldGraphImage.png"))}"
+}
+
+resource "aws_s3_bucket_object" "11-13-17-prompt-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/11-13-17-prompt.png"
+  source = "assets/posts/11-13-17-prompt.png"
+  etag = "${md5(file("assets/posts/11-13-17-prompt.png"))}"
+}
+
+resource "aws_s3_bucket_object" "11-21-17-results-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/11-21-17-results.png"
+  source = "assets/posts/11-21-17-results.png"
+  etag = "${md5(file("assets/posts/11-21-17-results.png"))}"
+}
+
+resource "aws_s3_bucket_object" "11-26-17-results-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/11-26-17-results.png"
+  source = "assets/posts/11-26-17-results.png"
+  etag = "${md5(file("assets/posts/11-26-17-results.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-mongodb-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-mongodb.png"
+  source = "assets/posts/12-30-17-mongodb.png"
+  etag = "${md5(file("assets/posts/12-30-17-mongodb.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-restapi-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-restapi.png"
+  source = "assets/posts/12-30-17-restapi.png"
+  etag = "${md5(file("assets/posts/12-30-17-restapi.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-xmlresponse-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-xmlresponse.png"
+  source = "assets/posts/12-30-17-xmlresponse.png"
+  etag = "${md5(file("assets/posts/12-30-17-xmlresponse.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-xmlresponsetext-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-xmlresponsetext.png"
+  source = "assets/posts/12-30-17-xmlresponsetext.png"
+  etag = "${md5(file("assets/posts/12-30-17-xmlresponsetext.png"))}"
+}
+
 /*
- * Posts Directory
+ * Logos Directory
  */
