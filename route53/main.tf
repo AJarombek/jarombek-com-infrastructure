@@ -103,11 +103,20 @@ resource "aws_route53_record" "jarombek_soa" {
   records = ["ns-1626.awsdns-11.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
 }
 
-resource "aws_route53_record" "jarombek_txt" {
+resource "aws_route53_record" "fn_jarombek_txt" {
   name = "_acme-challenge.fn.jarombek.com."
   type = "TXT"
   zone_id = "${aws_route53_zone.jarombek.zone_id}"
   ttl = 300
 
   records = ["xc0Vilgr6au429PaMEDwMRwiu7XvVHp3e5Ttf-CLzmM"]
+}
+
+resource "aws_route53_record" "jarombek_google_txt" {
+  name = "jarombek.com."
+  type = "TXT"
+  zone_id = "${aws_route53_zone.jarombek.zone_id}"
+  ttl = 300
+
+  records = ["google-site-verification=ZRGy5ArALIOLvjcIh-_P-io1-1uSKHtJyA9MxxAzyyE"]
 }

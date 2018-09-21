@@ -222,6 +222,41 @@ resource "aws_s3_bucket_object" "sylexiad-sans-thin-bold-ttf" {
  * Posts Directory
  */
 
+resource "aws_s3_bucket_object" "9-21-18-jenkins01-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-21-18-jenkins01.png"
+  source = "assets/posts/9-21-18-jenkins01.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins01.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-21-18-jenkins02-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-21-18-jenkins02.png"
+  source = "assets/posts/9-21-18-jenkins02.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins02.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-21-18-jenkins03-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-21-18-jenkins03.png"
+  source = "assets/posts/9-21-18-jenkins03.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins03.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-21-18-jenkins04-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-21-18-jenkins04.png"
+  source = "assets/posts/9-21-18-jenkins04.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins04.png"))}"
+}
+
+resource "aws_s3_bucket_object" "9-21-18-jenkins05-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/9-21-18-jenkins05.png"
+  source = "assets/posts/9-21-18-jenkins05.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins05.png"))}"
+}
+
 resource "aws_s3_bucket_object" "1-14-18-html-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
   key = "posts/1-14-18-html.png"
@@ -464,6 +499,13 @@ resource "aws_s3_bucket_object" "apigateway-svg" {
   etag = "${md5(file("assets/logos/apigateway.svg"))}"
 }
 
+resource "aws_s3_bucket_object" "assembly-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/assembly.png"
+  source = "assets/logos/assembly.png"
+  etag = "${md5(file("assets/logos/assembly.png"))}"
+}
+
 resource "aws_s3_bucket_object" "aws-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
   key = "logos/aws.png"
@@ -595,6 +637,13 @@ resource "aws_s3_bucket_object" "java8-png" {
   key = "logos/java8.png"
   source = "assets/logos/java8.png"
   etag = "${md5(file("assets/logos/java8.png"))}"
+}
+
+resource "aws_s3_bucket_object" "jenkins-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/jenkins.png"
+  source = "assets/logos/jenkins.png"
+  etag = "${md5(file("assets/logos/jenkins.png"))}"
 }
 
 resource "aws_s3_bucket_object" "js-png" {
