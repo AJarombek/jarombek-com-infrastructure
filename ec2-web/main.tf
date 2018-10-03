@@ -8,12 +8,18 @@
 # Each time terraform runs, the availability zones will be fetched from the AWS provider
 data "aws_availability_zones" "all" {}
 
+data "template_file" "user_data" {
+  template = "${file("setup.sh")}"
+
+  vars {}
+}
+
 resource "aws_launch_configuration" "jaromek-com" {
   image_id = "${var.ami}"
   instance_type = "${var.instance_type}"
   security_groups = ["${aws_security_group.jarombek-com-security.id}"]
 
-  user_data = ""
+  user_data = "${data.template_file.user_data.rendered}"
 
   lifecycle {
     # Always create a replacement resource before destroying an original resource
@@ -41,6 +47,12 @@ resource "aws_autoscaling_group" "jarombek-com-asg" {
   launch_configuration = "${aws_launch_configuration.jaromek-com.id}"
   availability_zones = ["${data.aws_availability_zones.all.names}"]
 
+  # Register each instance in the elastic load balancer
+  load_balancers = ["${aws_elb.jarombek-com-elb.name}"]
+
+  # Use the elastic load balancer health check to determine if an instance is healthy
+  health_check_type = "ELB"
+
   max_size = "${var.max_size}"
   min_size = "${var.min_size}"
 
@@ -65,6 +77,15 @@ resource "aws_elb" "jarombek-com-elb" {
     instance_port = "${var.server_port}"
     instance_protocol = "http"
   }
+
+  # Health checks will stop routing traffic to an instance if it is unhealthy
+  health_check {
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 3
+    interval = 30
+    target = "HTTP:${var.server_port}/"
+  }
 }
 
 # Additional security group for the elastic load balancer
@@ -75,6 +96,14 @@ resource "aws_security_group" "jarombek-com-elb-security" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Outbound requests are needed for health checks to work
+  egress {
+    from_port = 0
+    protocol = "-1"
+    to_port = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
