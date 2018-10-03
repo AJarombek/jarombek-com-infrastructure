@@ -8,7 +8,7 @@
 # Each time terraform runs, the availability zones will be fetched from the AWS provider
 data "aws_availability_zones" "all" {}
 
-data "template_file" "user_data" {
+data "template_file" "user-data" {
   template = "${file("setup.sh")}"
 
   vars {}
@@ -19,7 +19,7 @@ resource "aws_launch_configuration" "jaromek-com" {
   instance_type = "${var.instance_type}"
   security_groups = ["${aws_security_group.jarombek-com-security.id}"]
 
-  user_data = "${data.template_file.user_data.rendered}"
+  user_data = "${data.template_file.user-data.rendered}"
 
   lifecycle {
     # Always create a replacement resource before destroying an original resource
