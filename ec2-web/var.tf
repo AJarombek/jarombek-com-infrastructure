@@ -31,3 +31,7 @@ variable "min_size" {
 variable "security_group_id" {
   description = "The id of the AWS security group for the web server"
 }
+
+variable "subnet_id" {
+  description = "The Subnet that the EC2 instance will exist in"
+}

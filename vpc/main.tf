@@ -111,9 +111,17 @@ resource "aws_security_group" "private-subnet-security" {
   vpc_id = "${aws_vpc.jarombek-com-vpc.id}"
 
   ingress {
-    # Ports for MongoDB
+    # Default port for MongoDB
     from_port = 27017
     to_port = 27017
+    protocol = "tcp"
+    cidr_blocks = ["${var.public_subnet_cidr}"]
+  }
+
+  ingress {
+    # Ports MongoDB uses to communicate between servers
+    from_port = 27019
+    to_port = 27019
     protocol = "tcp"
     cidr_blocks = ["${var.public_subnet_cidr}"]
   }

@@ -23,10 +23,14 @@ module "ec2-web" {
   source = "ec2-web"
   security_group_id = "${module.vpc.public-subnet-security-group-id}"
   ami = "${module.ami.ami}"
+  subnet_id = "${module.vpc.public-subnet-id}"
 }
 
 module "ec2-mongodb" {
   source = "ec2-mongodb"
+  security_group_id = "${module.vpc.private-subnet-security-group-id}"
+  ami = "${module.ami.ami}"
+  subnet_id = "${module.vpc.private-subnet-id}"
 }
 
 module "s3-assets" {
