@@ -66,7 +66,11 @@ resource "aws_autoscaling_group" "jarombek-com-asg" {
 resource "aws_elb" "jarombek-com-elb" {
   name = "jarombek-com-elb"
   availability_zones = ["${data.aws_availability_zones.all.names}"]
-  security_groups = ["${aws_security_group.jarombek-com-elb-security.id}"]
+
+  security_groups = [
+    "${aws_security_group.jarombek-com-elb-security.id}",
+    "${var.security_group_id}"
+  ]
 
   listener {
     # Port and protocol to receive requests on the load balancer
@@ -91,13 +95,6 @@ resource "aws_elb" "jarombek-com-elb" {
 # Additional security group for the elastic load balancer
 resource "aws_security_group" "jarombek-com-elb-security" {
   name = "jarombek-com-elb-security"
-
-  ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   # Outbound requests are needed for health checks to work
   egress {

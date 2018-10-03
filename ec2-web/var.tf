@@ -27,3 +27,7 @@ variable "min_size" {
   description = "Min number of instances in the auto scaling group"
   default = 2
 }
+
+variable "security_group_id" {
+  description = "The id of the AWS security group for the web server"
+}
