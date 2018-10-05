@@ -10,3 +10,7 @@ provider "aws" {
 module "s3-assets" {
   source = "./s3-assets"
 }
+
+module "s3-tfstate" {
+  source = "./s3-tfstate"
+}

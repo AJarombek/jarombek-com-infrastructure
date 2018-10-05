@@ -20,10 +20,6 @@ data "aws_security_group" "jarombek-com-public-subnet-security" {
   }
 }
 
-module "s3-tfstate" {
-  source = "./s3-tfstate"
-}
-
 module "ami" {
   source = "./ami"
 }
@@ -34,4 +30,8 @@ module "ec2-web" {
   security_group_id = "${data.aws_security_group.jarombek-com-public-subnet-security.id}"
   ami = "${module.ami.ami}"
   subnet_id = "${data.aws_subnet.jarombek-com-public-subnet.id}"
+}
+
+module "s3-tfstate" {
+  source = "./s3-tfstate"
 }

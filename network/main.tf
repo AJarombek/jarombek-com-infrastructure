@@ -20,3 +20,7 @@ module "route53" {
 
   ip = "${data.aws_elb.jarombek-com-elb.dns_name}"
 }
+
+module "s3-tfstate" {
+  source = "./s3-tfstate"
+}

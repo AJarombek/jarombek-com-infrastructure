@@ -18,8 +18,24 @@ provider "mongodbatlas" {
   version = "~> 0.6"
 }
 
+# Use this data source to get the current AWS account ID and more
+data "aws_caller_identity" "current" {}
+
+data "aws_vpc" "jarombek-vpc" {
+  tags {
+    Name = "jarombek-com-vpc"
+  }
+}
+
 module "mongodb" {
   source = "./mongodb"
+
+  database_user_andy_password = "${var.mongodb_user_andy_password}"
+
+  aws_region = "US-EAST-1"
+  aws_account_id = "${data.aws_caller_identity.current.account_id}"
+  aws_vpc_id = "${data.aws_vpc.jarombek-vpc.id}"
+  aws_vpc_cidr_block = "${data.aws_vpc.jarombek-vpc.cidr_block}"
 
   providers = {
     mongo = "mongodbatlas.mongo"
@@ -28,6 +44,14 @@ module "mongodb" {
 
 module "s3-backup" {
   source = "./s3-backup"
+
+  providers = {
+    aws = "aws.aws-us-east"
+  }
+}
+
+module "s3-tfstate" {
+  source = "./s3-tfstate"
 
   providers = {
     aws = "aws.aws-us-east"
