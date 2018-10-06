@@ -10,8 +10,9 @@ resource "mongodbatlas_project" "jarombek-com-db-project" {
 }
 
 resource "mongodbatlas_ip_whitelist" "jarombek-com-db-whitelist" {
+  # Group simply means the project ID
   group = "${mongodbatlas_project.jarombek-com-db-project.id}"
-  cidr_block = "${}" # TODO
+  cidr_block = "${var.cidr_whitelist}"
   comment = "VPC CIDR"
 }
 
@@ -36,19 +37,14 @@ resource "mongodbatlas_cluster" "jarombek-com-db-cluster" {
   replication_factor = 3
 }
 
+# A container resource represents an AWS VPC in the MongoDB Atlas netowrk.  This VPC can be used for VPC peering.
+# Only one container can exist for a project in each region.  In order to use VPC peering, the size of the MongoDB
+# instance must be >= M10.
 resource "mongodbatlas_container" "jarombek-com-db-container" {
   group = "${mongodbatlas_project.jarombek-com-db-project.id}"
   atlas_cidr_block = "${}" # TODO
   provider_name = "${var.provider_name}"
-  region = "${var.aws_region}"
-}
-
-resource "mongodbatlas_vpc_peering_connection" "jarombek-com-db-vpc-peering" {
-  group = "${mongodbatlas_project.jarombek-com-db-project.id}"
-  aws_account_id = "${var.aws_account_id}"
-  vpc_id = "${var.aws_vpc_id}"
-  route_table_cidr_block = "${var.aws_vpc_cidr_block}"
-  container_id = "${mongodbatlas_container.jarombek-com-db-container.id}"
+  region = "${var.region}"
 }
 
 resource "mongodbatlas_database_user" "andy" {

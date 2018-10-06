@@ -9,6 +9,7 @@ data "aws_availability_zones" "all" {}
 resource "aws_vpc" "jarombek-com-vpc" {
   cidr_block = "${var.vpc_cidr}"
 
+  # This is needed for VPC peering to work (ex. with MongoDB Atlas)
   enable_dns_hostnames = true
 
   tags {
