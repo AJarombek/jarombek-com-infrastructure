@@ -17,9 +17,6 @@ provider "mongodbatlas" {
   version = "~> 0.6"
 }
 
-# Use this data source to get the current AWS account ID and more
-data "aws_caller_identity" "current" {}
-
 data "aws_vpc" "jarombek-vpc" {
   tags {
     Name = "jarombek-com-vpc"
@@ -32,21 +29,9 @@ module "mongodb" {
   database_user_andy_password = "${var.mongodb_user_andy_password}"
 
   aws_region = "US-EAST-1"
-  aws_account_id = "${data.aws_caller_identity.current.account_id}"
-  aws_vpc_id = "${data.aws_vpc.jarombek-vpc.id}"
-  aws_vpc_cidr_block = "${data.aws_vpc.jarombek-vpc.cidr_block}"
 
   providers = {
     mongo = "mongodbatlas.mongo"
-  }
-}
-
-module "vpc_peering" {
-  source = "./vpc-peering"
-  connection_id = "${module.mongodb.vpc_peering_connection_id}"
-
-  providers = {
-    aws = "aws.aws-us-east"
   }
 }
 
