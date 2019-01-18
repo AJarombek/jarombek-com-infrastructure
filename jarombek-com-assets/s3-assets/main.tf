@@ -222,39 +222,60 @@ resource "aws_s3_bucket_object" "sylexiad-sans-thin-bold-ttf" {
  * Posts Directory
  */
 
-resource "aws_s3_bucket_object" "9-21-18-jenkins01-png" {
+resource "aws_s3_bucket_object" "11-6-17-graph-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/9-21-18-jenkins01.png"
-  source = "assets/posts/9-21-18-jenkins01.png"
-  etag = "${md5(file("assets/posts/9-21-18-jenkins01.png"))}"
+  key = "posts/11-6-17-FairfieldGraphImage.png"
+  source = "assets/posts/11-6-17-FairfieldGraphImage.png"
+  etag = "${md5(file("assets/posts/11-6-17-FairfieldGraphImage.png"))}"
 }
 
-resource "aws_s3_bucket_object" "9-21-18-jenkins02-png" {
+resource "aws_s3_bucket_object" "11-13-17-prompt-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/9-21-18-jenkins02.png"
-  source = "assets/posts/9-21-18-jenkins02.png"
-  etag = "${md5(file("assets/posts/9-21-18-jenkins02.png"))}"
+  key = "posts/11-13-17-prompt.png"
+  source = "assets/posts/11-13-17-prompt.png"
+  etag = "${md5(file("assets/posts/11-13-17-prompt.png"))}"
 }
 
-resource "aws_s3_bucket_object" "9-21-18-jenkins03-png" {
+resource "aws_s3_bucket_object" "11-21-17-results-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/9-21-18-jenkins03.png"
-  source = "assets/posts/9-21-18-jenkins03.png"
-  etag = "${md5(file("assets/posts/9-21-18-jenkins03.png"))}"
+  key = "posts/11-21-17-results.png"
+  source = "assets/posts/11-21-17-results.png"
+  etag = "${md5(file("assets/posts/11-21-17-results.png"))}"
 }
 
-resource "aws_s3_bucket_object" "9-21-18-jenkins04-png" {
+resource "aws_s3_bucket_object" "11-26-17-results-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/9-21-18-jenkins04.png"
-  source = "assets/posts/9-21-18-jenkins04.png"
-  etag = "${md5(file("assets/posts/9-21-18-jenkins04.png"))}"
+  key = "posts/11-26-17-results.png"
+  source = "assets/posts/11-26-17-results.png"
+  etag = "${md5(file("assets/posts/11-26-17-results.png"))}"
 }
 
-resource "aws_s3_bucket_object" "9-21-18-jenkins05-png" {
+resource "aws_s3_bucket_object" "12-30-17-mongodb-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/9-21-18-jenkins05.png"
-  source = "assets/posts/9-21-18-jenkins05.png"
-  etag = "${md5(file("assets/posts/9-21-18-jenkins05.png"))}"
+  key = "posts/12-30-17-mongodb.png"
+  source = "assets/posts/12-30-17-mongodb.png"
+  etag = "${md5(file("assets/posts/12-30-17-mongodb.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-restapi-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-restapi.png"
+  source = "assets/posts/12-30-17-restapi.png"
+  etag = "${md5(file("assets/posts/12-30-17-restapi.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-xmlresponse-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-xmlresponse.png"
+  source = "assets/posts/12-30-17-xmlresponse.png"
+  etag = "${md5(file("assets/posts/12-30-17-xmlresponse.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-30-17-xmlresponsetext-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-30-17-xmlresponsetext.png"
+  source = "assets/posts/12-30-17-xmlresponsetext.png"
+  etag = "${md5(file("assets/posts/12-30-17-xmlresponsetext.png"))}"
 }
 
 resource "aws_s3_bucket_object" "1-14-18-html-png" {
@@ -269,6 +290,13 @@ resource "aws_s3_bucket_object" "1-14-18-webresult-png" {
   key = "posts/1-14-18-webresult.png"
   source = "assets/posts/1-14-18-webresult.png"
   etag = "${md5(file("assets/posts/1-14-18-webresult.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-19-19-react-lifecycles-gif" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-19-19-react-lifecycles.gif"
+  source = "assets/posts/1-19-19-react-lifecycles.gif"
+  etag = "${md5(file("assets/posts/1-19-19-react-lifecycles.gif"))}"
 }
 
 resource "aws_s3_bucket_object" "1-27-17-postlazy-png" {
@@ -425,60 +453,75 @@ resource "aws_s3_bucket_object" "9-7-18-serverless-png" {
   etag = "${md5(file("assets/posts/9-7-18-serverless.png"))}"
 }
 
-resource "aws_s3_bucket_object" "11-6-17-graph-png" {
+
+resource "aws_s3_bucket_object" "9-21-18-jenkins01-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/11-6-17-FairfieldGraphImage.png"
-  source = "assets/posts/11-6-17-FairfieldGraphImage.png"
-  etag = "${md5(file("assets/posts/11-6-17-FairfieldGraphImage.png"))}"
+  key = "posts/9-21-18-jenkins01.png"
+  source = "assets/posts/9-21-18-jenkins01.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins01.png"))}"
 }
 
-resource "aws_s3_bucket_object" "11-13-17-prompt-png" {
+resource "aws_s3_bucket_object" "9-21-18-jenkins02-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/11-13-17-prompt.png"
-  source = "assets/posts/11-13-17-prompt.png"
-  etag = "${md5(file("assets/posts/11-13-17-prompt.png"))}"
+  key = "posts/9-21-18-jenkins02.png"
+  source = "assets/posts/9-21-18-jenkins02.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins02.png"))}"
 }
 
-resource "aws_s3_bucket_object" "11-21-17-results-png" {
+resource "aws_s3_bucket_object" "9-21-18-jenkins03-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/11-21-17-results.png"
-  source = "assets/posts/11-21-17-results.png"
-  etag = "${md5(file("assets/posts/11-21-17-results.png"))}"
+  key = "posts/9-21-18-jenkins03.png"
+  source = "assets/posts/9-21-18-jenkins03.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins03.png"))}"
 }
 
-resource "aws_s3_bucket_object" "11-26-17-results-png" {
+resource "aws_s3_bucket_object" "9-21-18-jenkins04-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/11-26-17-results.png"
-  source = "assets/posts/11-26-17-results.png"
-  etag = "${md5(file("assets/posts/11-26-17-results.png"))}"
+  key = "posts/9-21-18-jenkins04.png"
+  source = "assets/posts/9-21-18-jenkins04.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins04.png"))}"
 }
 
-resource "aws_s3_bucket_object" "12-30-17-mongodb-png" {
+resource "aws_s3_bucket_object" "9-21-18-jenkins05-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/12-30-17-mongodb.png"
-  source = "assets/posts/12-30-17-mongodb.png"
-  etag = "${md5(file("assets/posts/12-30-17-mongodb.png"))}"
+  key = "posts/9-21-18-jenkins05.png"
+  source = "assets/posts/9-21-18-jenkins05.png"
+  etag = "${md5(file("assets/posts/9-21-18-jenkins05.png"))}"
 }
 
-resource "aws_s3_bucket_object" "12-30-17-restapi-png" {
+resource "aws_s3_bucket_object" "11-7-18-bar-chart-gif" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/12-30-17-restapi.png"
-  source = "assets/posts/12-30-17-restapi.png"
-  etag = "${md5(file("assets/posts/12-30-17-restapi.png"))}"
+  key = "posts/11-7-18-bar-chart.gif"
+  source = "assets/posts/11-7-18-bar-chart.gif"
+  etag = "${md5(file("assets/posts/11-7-18-bar-chart.gif"))}"
 }
 
-resource "aws_s3_bucket_object" "12-30-17-xmlresponse-png" {
+resource "aws_s3_bucket_object" "11-24-18-angular-lifecycle-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/12-30-17-xmlresponse.png"
-  source = "assets/posts/12-30-17-xmlresponse.png"
-  etag = "${md5(file("assets/posts/12-30-17-xmlresponse.png"))}"
+  key = "posts/11-24-18-angular-lifecycle.png"
+  source = "assets/posts/11-24-18-angular-lifecycle.png"
+  etag = "${md5(file("assets/posts/11-24-18-angular-lifecycle.png"))}"
 }
 
-resource "aws_s3_bucket_object" "12-30-17-xmlresponsetext-png" {
+resource "aws_s3_bucket_object" "12-22-18-hierarchy1-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/12-30-17-xmlresponsetext.png"
-  source = "assets/posts/12-30-17-xmlresponsetext.png"
-  etag = "${md5(file("assets/posts/12-30-17-xmlresponsetext.png"))}"
+  key = "posts/12-22-18-hierarchy1.png"
+  source = "assets/posts/12-22-18-hierarchy1.png"
+  etag = "${md5(file("assets/posts/12-22-18-hierarchy1.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-22-18-hierarchy2-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-22-18-hierarchy2.png"
+  source = "assets/posts/12-22-18-hierarchy2.png"
+  etag = "${md5(file("assets/posts/12-22-18-hierarchy2.png"))}"
+}
+
+resource "aws_s3_bucket_object" "12-22-18-hierarchy3-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/12-22-18-hierarchy3.png"
+  source = "assets/posts/12-22-18-hierarchy3.png"
+  etag = "${md5(file("assets/posts/12-22-18-hierarchy3.png"))}"
 }
 
 /*
@@ -548,11 +591,32 @@ resource "aws_s3_bucket_object" "c-png" {
   etag = "${md5(file("assets/logos/c.png"))}"
 }
 
+resource "aws_s3_bucket_object" "cpp-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/cpp.png"
+  source = "assets/logos/cpp.png"
+  etag = "${md5(file("assets/logos/cpp.png"))}"
+}
+
+resource "aws_s3_bucket_object" "csharp-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/csharp.png"
+  source = "assets/logos/csharp.png"
+  etag = "${md5(file("assets/logos/csharp.png"))}"
+}
+
 resource "aws_s3_bucket_object" "css-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
   key = "logos/css.png"
   source = "assets/logos/css.png"
   etag = "${md5(file("assets/logos/css.png"))}"
+}
+
+resource "aws_s3_bucket_object" "d3-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/d3.png"
+  source = "assets/logos/d3.png"
+  etag = "${md5(file("assets/logos/d3.png"))}"
 }
 
 resource "aws_s3_bucket_object" "ec2-png" {
@@ -751,11 +815,18 @@ resource "aws_s3_bucket_object" "swift-png" {
   etag = "${md5(file("assets/logos/swift.png"))}"
 }
 
-resource "aws_s3_bucket_object" "tech_logos-svg" {
+resource "aws_s3_bucket_object" "tech-logos-svg" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
   key = "logos/tech_logos.svg"
   source = "assets/logos/tech_logos.svg"
   etag = "${md5(file("assets/logos/tech_logos.svg"))}"
+}
+
+resource "aws_s3_bucket_object" "tech-logos-white-svg" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/tech_logos_white.svg"
+  source = "assets/logos/tech_logos_white.svg"
+  etag = "${md5(file("assets/logos/tech_logos_white.svg"))}"
 }
 
 resource "aws_s3_bucket_object" "terraform-png" {
@@ -777,6 +848,13 @@ resource "aws_s3_bucket_object" "ts-png" {
   key = "logos/ts.png"
   source = "assets/logos/ts.png"
   etag = "${md5(file("assets/logos/ts.png"))}"
+}
+
+resource "aws_s3_bucket_object" "unicode-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/unicode.png"
+  source = "assets/logos/unicode.png"
+  etag = "${md5(file("assets/logos/unicode.png"))}"
 }
 
 resource "aws_s3_bucket_object" "vim-png" {

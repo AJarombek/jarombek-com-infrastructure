@@ -9,11 +9,8 @@ data "aws_availability_zones" "all" {}
 resource "aws_vpc" "jarombek-com-vpc" {
   cidr_block = "${var.vpc_cidr}"
 
-  # This is needed for VPC peering to work (ex. with MongoDB Atlas)
-  enable_dns_hostnames = true
-
   tags {
-    Name = "jarombek-com-vpc"
+    Name = "Jarombek Com VPC"
   }
 }
 
@@ -92,8 +89,6 @@ resource "aws_security_group" "public-subnet-security" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # ICMP is used for sending error messages or operational information.  ICMP has no ports,
-  # and a common tool that uses ICMP is ping.
   ingress {
     from_port = -1
     to_port = -1
@@ -112,7 +107,6 @@ resource "aws_security_group" "private-subnet-security" {
   vpc_id = "${aws_vpc.jarombek-com-vpc.id}"
 
   ingress {
-    # Default port for MongoDB
     from_port = 27017
     to_port = 27017
     protocol = "tcp"
@@ -120,7 +114,6 @@ resource "aws_security_group" "private-subnet-security" {
   }
 
   ingress {
-    # Ports MongoDB uses to communicate between servers
     from_port = 27019
     to_port = 27019
     protocol = "tcp"
