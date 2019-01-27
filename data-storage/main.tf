@@ -4,9 +4,21 @@
  */
 
 provider "aws" {
-  alias = "aws-us-east"
   region = "us-east-1"
 }
+
+terraform {
+  backend "s3" {
+    bucket = "andrew-jarombek-terraform-state"
+    encrypt = true
+    key = "jarombek-com-infrastructure/data-storage"
+    region = "us-east-1"
+  }
+}
+
+#------------------
+# Terraform Modules
+#------------------
 
 # Provide credentials via the MONGODB_ATLAS_USERNAME and MONGODB_ATLAS_API_KEY environment variables
 provider "mongodbatlas" {
@@ -37,14 +49,6 @@ module "mongodb" {
 
 module "s3-backup" {
   source = "./s3-backup"
-
-  providers = {
-    aws = "aws.aws-us-east"
-  }
-}
-
-module "s3-tfstate" {
-  source = "./s3-tfstate"
 
   providers = {
     aws = "aws.aws-us-east"

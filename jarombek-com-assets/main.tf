@@ -7,10 +7,19 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "s3-assets" {
-  source = "./s3-assets"
+terraform {
+  backend "s3" {
+    bucket = "andrew-jarombek-terraform-state"
+    encrypt = true
+    key = "jarombek-com-infrastructure/jarombek-com-assets"
+    region = "us-east-1"
+  }
 }
 
-module "s3-tfstate" {
-  source = "./s3-tfstate"
+#------------------
+# Terraform Modules
+#------------------
+
+module "s3-assets" {
+  source = "./s3-assets"
 }

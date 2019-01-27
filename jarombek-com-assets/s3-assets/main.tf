@@ -292,13 +292,6 @@ resource "aws_s3_bucket_object" "1-14-18-webresult-png" {
   etag = "${md5(file("assets/posts/1-14-18-webresult.png"))}"
 }
 
-resource "aws_s3_bucket_object" "1-19-19-react-lifecycles-gif" {
-  bucket = "${aws_s3_bucket.asset-jarombek.id}"
-  key = "posts/1-19-19-react-lifecycles.gif"
-  source = "assets/posts/1-19-19-react-lifecycles.gif"
-  etag = "${md5(file("assets/posts/1-19-19-react-lifecycles.gif"))}"
-}
-
 resource "aws_s3_bucket_object" "1-27-17-postlazy-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
   key = "posts/1-27-17-postlazy.png"
@@ -522,6 +515,48 @@ resource "aws_s3_bucket_object" "12-22-18-hierarchy3-png" {
   key = "posts/12-22-18-hierarchy3.png"
   source = "assets/posts/12-22-18-hierarchy3.png"
   etag = "${md5(file("assets/posts/12-22-18-hierarchy3.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-19-19-react-lifecycles-gif" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-19-19-react-lifecycles.gif"
+  source = "assets/posts/1-19-19-react-lifecycles.gif"
+  etag = "${md5(file("assets/posts/1-19-19-react-lifecycles.gif"))}"
+}
+
+resource "aws_s3_bucket_object" "1-24-19-example-1-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-24-19-example-1.png"
+  source = "assets/posts/1-24-19-example-1.png"
+  etag = "${md5(file("assets/posts/1-24-19-example-1.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-24-19-example-2-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-24-19-example-2.png"
+  source = "assets/posts/1-24-19-example-2.png"
+  etag = "${md5(file("assets/posts/1-24-19-example-2.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-24-19-example-3-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-24-19-example-3.png"
+  source = "assets/posts/1-24-19-example-3.png"
+  etag = "${md5(file("assets/posts/1-24-19-example-3.png"))}"
+}
+
+resource "aws_s3_bucket_object" "1-29-19-horse-picture-1-jpg" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-29-19-horse-picture-1.jpg"
+  source = "assets/posts/1-29-19-horse-picture-1.jpg"
+  etag = "${md5(file("assets/posts/1-29-19-horse-picture-1.jpg"))}"
+}
+
+resource "aws_s3_bucket_object" "1-29-19-horse-picture-2-jpg" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/1-29-19-horse-picture-2.jpg"
+  source = "assets/posts/1-29-19-horse-picture-2.jpg"
+  etag = "${md5(file("assets/posts/1-29-19-horse-picture-2.jpg"))}"
 }
 
 /*
