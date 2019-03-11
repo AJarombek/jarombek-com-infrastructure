@@ -559,6 +559,13 @@ resource "aws_s3_bucket_object" "1-29-19-horse-picture-2-jpg" {
   etag = "${md5(file("assets/posts/1-29-19-horse-picture-2.jpg"))}"
 }
 
+resource "aws_s3_bucket_object" "3-12-19-cd-project-gif" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "posts/3-12-19-cd-project.gif"
+  source = "assets/posts/3-12-19-cd-project.gif"
+  etag = "${md5(file("assets/posts/3-12-19-cd-project.gif"))}"
+}
+
 /*
  * Logos Directory
  */
@@ -610,6 +617,13 @@ resource "aws_s3_bucket_object" "batch-png" {
   key = "logos/batch.png"
   source = "assets/logos/batch.png"
   etag = "${md5(file("assets/logos/batch.png"))}"
+}
+
+resource "aws_s3_bucket_object" "bash-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/bash.png"
+  source = "assets/logos/bash.png"
+  etag = "${md5(file("assets/logos/bash.png"))}"
 }
 
 resource "aws_s3_bucket_object" "bootstrap-png" {
@@ -806,6 +820,13 @@ resource "aws_s3_bucket_object" "php-svg" {
   key = "logos/php.svg"
   source = "assets/logos/php.svg"
   etag = "${md5(file("assets/logos/php.svg"))}"
+}
+
+resource "aws_s3_bucket_object" "powershell-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "logos/powershell.png"
+  source = "assets/logos/powershell.png"
+  etag = "${md5(file("assets/logos/powershell.png"))}"
 }
 
 resource "aws_s3_bucket_object" "python-png" {
