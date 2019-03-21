@@ -28,10 +28,6 @@ data "aws_elb" "jarombek-com-elb" {
 # Terraform Modules
 #------------------
 
-module "vpc" {
-  source = "./vpc"
-}
-
 module "route53" {
   source = "./route53"
 
