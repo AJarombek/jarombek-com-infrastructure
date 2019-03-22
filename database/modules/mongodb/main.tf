@@ -28,6 +28,18 @@ data "aws_vpc" "jarombek-com-vpc" {
   }
 }
 
+data "aws_subnet" "jarombek-com-reputation-private-subnet" {
+  tags {
+    Name = "jarombek-com-reputation-private-subnet"
+  }
+}
+
+data "aws_subnet" "jarombek-com-red-private-subnet" {
+  tags {
+    Name = "jarombek-com-red-private-subnet"
+  }
+}
+
 #---------------------------------
 # JarombekCom DocumentDB Resources
 #---------------------------------
@@ -43,7 +55,7 @@ resource "aws_docdb_cluster" "mongodb-cluster" {
   skip_final_snapshot = true
 
   vpc_security_group_ids = ["${module.jarombek-com-mongodb-security-group.security_group_id[0]}"]
-  db_subnet_group_name = "${}"
+  db_subnet_group_name = "${aws_docdb_subnet_group.mongodb-cluster-subnet-group.id}"
 }
 
 resource "aws_docdb_instance" "mongodb-cluster-instances" {
@@ -51,6 +63,18 @@ resource "aws_docdb_instance" "mongodb-cluster-instances" {
   identifier = "jarombek-com-docdb-instance-${count.index}"
   cluster_identifier = "${aws_docdb_cluster.mongodb-cluster.id}"
   instance_class = "db.t2.micro"
+}
+
+resource "aws_docdb_subnet_group" "mongodb-cluster-subnet-group" {
+  name = "jarombek-com-docdb-subnet-group"
+  subnet_ids = [
+    "${data.aws_subnet.jarombek-com-red-private-subnet.id}",
+    "${data.aws_subnet.jarombek-com-reputation-private-subnet.id}"
+  ]
+
+  tags = {
+    Name = "jarombek-com-docdb-subnet-group"
+  }
 }
 
 module "jarombek-com-mongodb-security-group" {
