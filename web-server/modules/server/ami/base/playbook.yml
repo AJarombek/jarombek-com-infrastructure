@@ -1,0 +1,30 @@
+# Ansible Playbook for my base jarombek.com AMI
+# Author: Andrew Jarombek
+# Date: 3/22/2019
+
+- hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+
+    - name: Update Yum Packages
+      become: yes
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Nginx
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - amazon-linux-extras install nginx1.12
+
+    - name: Install Node.js
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+        - . ~/.nvm/nvm.sh
+        - nvm install 8.11.3
+        - node -v
