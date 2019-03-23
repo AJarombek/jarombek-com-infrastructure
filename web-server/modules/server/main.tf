@@ -1,106 +1,294 @@
 /**
- * Configure the EC2 instance for the web server
+ * Infrastructure for the jarombek.com web server
  * Author: Andrew Jarombek
- * Date: 10/1/2018
+ * Date: 3/23/2019
  */
 
-# Fetch the availability zones for this AWS account
-# Each time terraform runs, the availability zones will be fetched from the AWS provider
-data "aws_availability_zones" "all" {}
-
-data "template_file" "user-data" {
-  template = "${file("setup.sh")}"
-
-  vars {}
+locals {
+  env = "${var.prod ? "prod" : "dev"}"
+  domain_cert = "${var.prod ? "jarombek.com" : "*.jarombek.com"}"
 }
 
-resource "aws_launch_configuration" "jaromek-com" {
-  image_id = "${var.ami}"
-  instance_type = "${var.instance_type}"
-  security_groups = ["${aws_security_group.jarombek-com-security.id}"]
+#-----------------------
+# Existing AWS Resources
+#-----------------------
 
-  user_data = "${data.template_file.user-data.rendered}"
-
-  lifecycle {
-    # Always create a replacement resource before destroying an original resource
-    create_before_destroy = true
+data "aws_vpc" "jarombekcom-vpc" {
+  tags {
+    Name = "jarombekcom-vpc"
   }
 }
 
-resource "aws_security_group" "jarombek-com-security" {
-  name = "jarombek-com"
+data "aws_subnet" "jarombek-com-yeezus-public-subnet" {
+  tags {
+    Name = "jarombek-com-yeezus-public-subnet"
+  }
+}
 
-  ingress {
-    from_port = "${var.server_port}"
-    to_port = "${var.server_port}"
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+data "aws_subnet" "jarombek-com-yandhi-public-subnet" {
+  tags {
+    Name = "jarombek-com-yandhi-public-subnet"
+  }
+}
+
+data "aws_ami" "jarombek-com-ami" {
+  most_recent = true
+
+  filter {
+    name = "name"
+    values = ["jarombek-com-app*"]
   }
 
-  # Lifecycle must be specified here since it was added to aws_launch_configuration (pg. 50)
+  owners = ["739088120071"]
+}
+
+data "aws_acm_certificate" "jarombek-com-certificate" {
+  domain = "${local.domain_cert}"
+  statuses = ["ISSUED"]
+}
+
+data "aws_acm_certificate" "jarombek-com-wildcard-certificate" {
+  domain = "*.${local.domain_cert}"
+  statuses = ["ISSUED"]
+}
+
+#--------------------------------------
+# Executed Before Resources are Created
+#--------------------------------------
+
+resource "null_resource" "key-gen" {
+  provisioner "local-exec" {
+    command = "bash ../../modules/server/key-gen.sh ${var.prod ? "jarombek-com-key" : "jarombek-com-dev-key"}"
+  }
+}
+
+#--------------------------------------------------
+# New AWS Resources for the jarombek.com Web Server
+#--------------------------------------------------
+
+resource "aws_launch_configuration" "jarombek-com-lc" {
+  name = "jarombek-com-${local.env}-lc"
+  image_id = "${data.aws_ami.jarombek-com-ami.id}"
+  instance_type = "t2.micro"
+  security_groups = ["${aws_security_group.jarombek-com-lc-security-group.id}"]
+  associate_public_ip_address = true
+  key_name = "${var.prod ? "jarombek-com-key" : "jarombek-com-dev-key"}"
+
+  user_data = ""
+
   lifecycle {
     create_before_destroy = true
   }
+
+  depends_on = ["null_resource.key-gen"]
 }
 
 resource "aws_autoscaling_group" "jarombek-com-asg" {
-  launch_configuration = "${aws_launch_configuration.jaromek-com.id}"
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
-
-  # Register each instance in the elastic load balancer
-  load_balancers = ["${aws_elb.jarombek-com-elb.name}"]
-
-  # Use the elastic load balancer health check to determine if an instance is healthy
-  health_check_type = "ELB"
+  name = "jarombek-com-${local.env}-asg"
+  launch_configuration = "${aws_launch_configuration.jarombek-com-lc.id}"
+  vpc_zone_identifier = [
+    "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
+    "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
+  ]
 
   max_size = "${var.max_size}"
   min_size = "${var.min_size}"
+  desired_capacity = "${var.desired_capacity}"
+
+  target_group_arns = [
+    "${aws_lb_target_group.jarombek-com-lb-target-group.arn}",
+    "${aws_lb_target_group.jarombek-com-lb-target-group-http.arn}"
+  ]
+
+  health_check_type = "ELB"
+  health_check_grace_period = 600
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   tag {
     key = "Name"
     propagate_at_launch = true
-    value = "jarombek-com-asg"
+    value = "jarombek-com-${local.env}-asg"
   }
 }
 
-resource "aws_elb" "jarombek-com-elb" {
-  name = "jarombek-com-elb"
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
+resource "aws_autoscaling_schedule" "jarombek-com-asg-schedule" {
+  count = "${length(var.autoscaling_schedules)}"
 
-  security_groups = [
-    "${aws_security_group.jarombek-com-elb-security.id}",
-    "${var.security_group_id}"
+  autoscaling_group_name = "${aws_autoscaling_group.jarombek-com-asg.name}"
+  scheduled_action_name = "${lookup(var.autoscaling_schedules[count.index], "name", "default-schedule")}"
+
+  max_size = "${lookup(var.autoscaling_schedules[count.index], "max_size", 0)}"
+  min_size = "${lookup(var.autoscaling_schedules[count.index], "min_size", 0)}"
+  desired_capacity = "${lookup(var.autoscaling_schedules[count.index], "desired_capacity", 0)}"
+
+  recurrence = "${lookup(var.autoscaling_schedules[count.index], "recurrence", "0 5 * * *")}"
+}
+
+resource "aws_lb" "jarombek-com-application-lb" {
+  name = "jarombek-com-${local.env}-lb"
+  load_balancer_type = "application"
+
+  subnets = [
+    "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}",
+    "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}"
   ]
 
-  listener {
-    # Port and protocol to receive requests on the load balancer
-    lb_port = 80
-    lb_protocol = "http"
+  security_groups = ["${aws_security_group.jarombek-com-lb-security-group.id}"]
 
-    # Port and protocol to route requests to the EC2 instances
-    instance_port = "${var.server_port}"
-    instance_protocol = "http"
-  }
-
-  # Health checks will stop routing traffic to an instance if it is unhealthy
-  health_check {
-    healthy_threshold = 2
-    unhealthy_threshold = 2
-    timeout = 3
-    interval = 30
-    target = "HTTP:${var.server_port}/"
+  tags {
+    Name = "jarombek-com-${local.env}-application-lb"
   }
 }
 
-# Additional security group for the elastic load balancer
-resource "aws_security_group" "jarombek-com-elb-security" {
-  name = "jarombek-com-elb-security"
+resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
+  name = "jarombek-com-lb-target"
 
-  # Outbound requests are needed for health checks to work
-  egress {
-    from_port = 0
-    protocol = "-1"
-    to_port = 0
-    cidr_blocks = ["0.0.0.0/0"]
+  health_check {
+    interval = 10
+    timeout = 5
+    healthy_threshold = 3
+    unhealthy_threshold = 2
+    protocol = "HTTPS"
+    path = "/"
+    matcher = "200-299"
   }
+
+  port = 443
+  protocol = "HTTPS"
+  vpc_id = "${data.aws_vpc.jarombekcom-vpc.id}"
+
+  tags {
+    Name = "jarombek-com-${local.env}-lb-target-group"
+  }
+}
+
+resource "aws_lb_listener" "jarombek-com-lb-listener-https" {
+  load_balancer_arn = "${aws_lb.jarombek-com-application-lb.arn}"
+  port = 443
+  protocol = "HTTPS"
+
+  certificate_arn = "${data.aws_acm_certificate.jarombek-com-certificate.arn}"
+
+  default_action {
+    target_group_arn = "${aws_lb_target_group.jarombek-com-lb-target-group.arn}"
+    type = "forward"
+  }
+}
+
+resource "aws_lb_listener_certificate" "jarombek-com-lb-listener-wc-cert" {
+  listener_arn    = "${aws_lb_listener.jarombek-com-lb-listener-https.arn}"
+  certificate_arn = "${data.aws_acm_certificate.jarombek-com-wildcard-certificate.arn}"
+}
+
+resource "aws_lb_target_group" "jarombek-com-lb-target-group-http" {
+  name = "jarombek-com-lb-target-http"
+
+  health_check {
+    interval = 10
+    timeout = 5
+    healthy_threshold = 3
+    unhealthy_threshold = 2
+    protocol = "HTTP"
+    path = "/"
+    matcher = "200-299"
+  }
+
+  port = 80
+  protocol = "HTTP"
+  vpc_id = "${data.aws_vpc.jarombekcom-vpc.id}"
+
+  tags {
+    Name = "jarombek-com-${local.env}-lb-target-group-http"
+  }
+}
+
+resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
+  load_balancer_arn = "${aws_lb.jarombek-com-application-lb.arn}"
+  port = 80
+  protocol = "HTTP"
+
+  default_action {
+    target_group_arn = "${aws_lb_target_group.jarombek-com-lb-target-group-http.arn}"
+    type = "forward"
+  }
+}
+
+resource "aws_security_group" "jarombek-com-lc-security-group" {
+  name = "jarombek-com-${local.env}-lc-security-group"
+  vpc_id = "${data.aws_vpc.jarombekcom-vpc.id}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags {
+    Name = "jarombek-com-${local.env}-lc-security-group"
+  }
+}
+
+# You can't have both cidr_blocks and source_security_group_id in a security group rule.  Because of this limitation,
+# the security group rules are separated into two resources.  One uses CIDR blocks, the other uses
+# Source Security Groups.
+resource "aws_security_group_rule" "jarombek-com-lc-security-group-rule-cidr" {
+  count = "${length(var.launch-config-sg-rules-cidr)}"
+
+  security_group_id = "${aws_security_group.jarombek-com-lc-security-group.id}"
+  type = "${lookup(var.launch-config-sg-rules-cidr[count.index], "type", "ingress")}"
+
+  from_port = "${lookup(var.launch-config-sg-rules-cidr[count.index], "from_port", 0)}"
+  to_port = "${lookup(var.launch-config-sg-rules-cidr[count.index], "to_port", 0)}"
+  protocol = "${lookup(var.launch-config-sg-rules-cidr[count.index], "protocol", "-1")}"
+
+  cidr_blocks = ["${lookup(var.launch-config-sg-rules-cidr[count.index], "cidr_blocks", "")}"]
+}
+
+resource "aws_security_group_rule" "jarombek-com-lc-security-group-rule-source" {
+  count = "${length(var.launch-config-sg-rules-source)}"
+
+  security_group_id = "${aws_security_group.jarombek-com-lc-security-group.id}"
+  type = "${lookup(var.launch-config-sg-rules-source[count.index], "type", "ingress")}"
+
+  from_port = "${lookup(var.launch-config-sg-rules-source[count.index], "from_port", 0)}"
+  to_port = "${lookup(var.launch-config-sg-rules-source[count.index], "to_port", 0)}"
+  protocol = "${lookup(var.launch-config-sg-rules-source[count.index], "protocol", "-1")}"
+
+  source_security_group_id = "${lookup(var.launch-config-sg-rules-source[count.index], "source_sg", "")}"
+}
+
+resource "aws_security_group" "jarombek-com-lb-security-group" {
+  name = "jarombek-com-${local.env}-server-elb-security-group"
+  vpc_id = "${data.aws_vpc.jarombekcom-vpc.id}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-cidr" {
+  count = "${length(var.load-balancer-sg-rules-cidr)}"
+
+  security_group_id = "${aws_security_group.jarombek-com-lb-security-group.id}"
+  type = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "type", "ingress")}"
+
+  from_port = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "from_port", 0)}"
+  to_port = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "to_port", 0)}"
+  protocol = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "protocol", "-1")}"
+
+  cidr_blocks = ["${lookup(var.load-balancer-sg-rules-cidr[count.index], "cidr_blocks", "")}"]
+}
+
+resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-source" {
+  count = "${length(var.load-balancer-sg-rules-source)}"
+
+  security_group_id = "${aws_security_group.jarombek-com-lb-security-group.id}"
+  type = "${lookup(var.load-balancer-sg-rules-source[count.index], "type", "ingress")}"
+
+  from_port = "${lookup(var.load-balancer-sg-rules-source[count.index], "from_port", 0)}"
+  to_port = "${lookup(var.load-balancer-sg-rules-source[count.index], "to_port", 0)}"
+  protocol = "${lookup(var.load-balancer-sg-rules-source[count.index], "protocol", "-1")}"
+
+  source_security_group_id = "${lookup(var.load-balancer-sg-rules-source[count.index], "source_sg", "")}"
 }
