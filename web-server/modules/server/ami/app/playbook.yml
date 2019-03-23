@@ -1,0 +1,38 @@
+# Ansible Playbook for my web application jarombek.com AMI
+# Author: Andrew Jarombek
+# Date: 3/22/2019
+
+- hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+
+    - name: Clone Git Repository
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - cd ~
+        - git clone git@github.com:AJarombek/jarombek-com.git
+
+    - name: Install Application Dependencies
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - cd ~/jarombek-com/
+        - yarn
+
+    - name: Install Application Dependencies
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - cd ~/jarombek-com/
+        - yarn server:build
+        - yarn client:build
+
+    - name: Copy Final Application Code for Distribution
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - cp -r ~/jarombek-com/dist/ ~/app/
+        - rm -rf ~/jarombek-com

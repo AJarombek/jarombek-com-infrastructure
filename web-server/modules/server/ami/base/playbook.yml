@@ -28,3 +28,32 @@
         - . ~/.nvm/nvm.sh
         - nvm install 8.11.3
         - node -v
+
+    - name: Install Git
+      become: yes
+      yum:
+        state: present
+        name:
+          - git
+
+    - name: Install Global npm Modules
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - npm install yarn -g
+        - npm install pm2 -g
+
+    - name: Add CertBot Repository
+      become: yes
+      command: "{{item}}"
+      with_items:
+        - curl -O http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+    - name: Install CertBot
+      become: yes
+      yum:
+        state: present
+        name:
+          - epel-release-latest-7.noarch.rpm
+          - certbot
+          - python2-certbot-nginx
