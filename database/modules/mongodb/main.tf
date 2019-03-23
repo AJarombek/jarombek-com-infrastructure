@@ -6,6 +6,7 @@
 
 locals {
   public_cidr = "0.0.0.0/0"
+  env = "${var.prod ? "prod" : "dev"}"
   jarombekcom_mongodb_sg_rules = [
     {
       # Inbound traffic from the internet
@@ -45,7 +46,7 @@ data "aws_subnet" "jarombek-com-red-private-subnet" {
 #---------------------------------
 
 resource "aws_docdb_cluster" "mongodb-cluster" {
-  cluster_identifier = "jarombek-com-docdb-cluster"
+  cluster_identifier = "jarombek-com-docdb-${local.env}-cluster"
   engine = "docdb"
   master_username = "${var.username}"
   master_password = "${var.password}"
@@ -60,7 +61,7 @@ resource "aws_docdb_cluster" "mongodb-cluster" {
 
 resource "aws_docdb_instance" "mongodb-cluster-instances" {
   count = 2
-  identifier = "jarombek-com-docdb-instance-${count.index}"
+  identifier = "jarombek-com-docdb-${local.env}-instance-${count.index}"
   cluster_identifier = "${aws_docdb_cluster.mongodb-cluster.id}"
   instance_class = "db.t2.micro"
 }
@@ -73,7 +74,7 @@ resource "aws_docdb_subnet_group" "mongodb-cluster-subnet-group" {
   ]
 
   tags = {
-    Name = "jarombek-com-docdb-subnet-group"
+    Name = "jarombek-com-docdb-subnet-group-${local.env}"
   }
 }
 
@@ -81,8 +82,8 @@ module "jarombek-com-mongodb-security-group" {
   source = "github.com/ajarombek/terraform-modules//security-group?ref=v0.1.0"
 
   # Mandatory arguments
-  name = "jarombek-com-mongodb-security"
-  tag_name = "jarombek-com-mongodb-security"
+  name = "jarombek-com-mongodb-security-${local.env}"
+  tag_name = "jarombek-com-mongodb-security-${local.env}"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
 
   # Optional arguments
