@@ -36,7 +36,7 @@ data "aws_security_group" "jarombek-com-mongodb-sg" {
   }
 }
 
-module "launch-config" {
+module "server" {
   source = "../../modules/server"
   prod = "${local.prod}"
   instance_port = "${local.instance_port}"

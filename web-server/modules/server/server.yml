@@ -1,0 +1,72 @@
+# CloudFormation template for the jarombek.com Launch Configuration.  Parameters are supplied by Terraform.
+# Author: Andrew Jarombek
+# Date: 3/25/2019
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'jarombek.com Launch Configuration Setup'
+
+Parameters:
+
+  KeyName:
+    Type: "String"
+    Description: "Name of the key used to connect to instances via SSH"
+  SecurityGroupId:
+    Type: "String"
+    Description: "Identifier for the launch configurations security group"
+  ImageId:
+    Type: "String"
+    Description: "Identifier for the AMI used by the launch configuration"
+  LCName:
+    Type: "String"
+    Description: "Name of the launch configuration resource"
+
+Metadata:
+
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    -
+      Label:
+        default: "Terraform AWS Data"
+      Parameters:
+      - KeyName
+      - SecurityGroupId
+      - ImageId
+      - LCName
+    ParameterLabels:
+      KeyName:
+        default: "Name of the key used to connect to instances via SSH"
+      SecurityGroupId:
+        default: "Identifier for the launch configurations security group"
+      ImageId:
+        default: "Identifier for the AMI used by the launch configuration"
+      LCName:
+        default: "Name of the launch configuration resource"
+
+Resources:
+
+  # Launch configuration for jarombek.com
+  LaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      AssociatePublicIpAddress: true
+      # us-east-1 custom baked AMI based on Amazon Linux 2
+      ImageId: !Ref ImageId
+      InstanceType: "t2.micro"
+      KeyName: !Ref KeyName
+      LaunchConfigurationName: !Ref LCName
+      SecurityGroups:
+        - !Ref SecurityGroupId
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash
+            echo "Hello"
+
+Outputs:
+
+  LaunchConfigId:
+    Value: !Ref LaunchConfig
+    Description: The ID of the Launch Configuration
+    Export:
+      Name:
+        Fn::Sub: "${AWS::StackName}LaunchConfigId"

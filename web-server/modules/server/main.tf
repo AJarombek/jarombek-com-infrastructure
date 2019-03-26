@@ -66,18 +66,23 @@ resource "null_resource" "key-gen" {
 # New AWS Resources for the jarombek.com Web Server
 #--------------------------------------------------
 
-resource "aws_launch_configuration" "jarombek-com-lc" {
-  name = "jarombek-com-${local.env}-lc"
-  image_id = "${data.aws_ami.jarombek-com-ami.id}"
-  instance_type = "t2.micro"
-  security_groups = ["${aws_security_group.jarombek-com-lc-security-group.id}"]
-  associate_public_ip_address = true
-  key_name = "${var.prod ? "jarombek-com-key" : "jarombek-com-dev-key"}"
+resource "aws_cloudformation_stack" "jarombek-com-server-cf-stack" {
+  name = "jarombek-com-server-cf-stack"
+  template_body = "${file("server.yml")}"
+  on_failure = "DELETE"
+  timeout_in_minutes = 20
 
-  user_data = ""
+  parameters {
+    KeyName = "${var.prod ? "jarombek-com-key" : "jarombek-com-dev-key"}"
+    SecurityGroupId = "${aws_security_group.jarombek-com-lc-security-group.id}"
+    ImageId = "${data.aws_ami.jarombek-com-ami.id}"
+    LCName = "jarombek-com-${local.env}-lc"
+  }
 
-  lifecycle {
-    create_before_destroy = true
+  capabilities = ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
+
+  tags {
+    Name = "jarombek-com-server-cf-stack"
   }
 
   depends_on = ["null_resource.key-gen"]
@@ -85,7 +90,7 @@ resource "aws_launch_configuration" "jarombek-com-lc" {
 
 resource "aws_autoscaling_group" "jarombek-com-asg" {
   name = "jarombek-com-${local.env}-asg"
-  launch_configuration = "${aws_launch_configuration.jarombek-com-lc.id}"
+  launch_configuration = "${aws_cloudformation_stack.jarombek-com-server-cf-stack.outputs["LaunchConfigId"]}"
   vpc_zone_identifier = [
     "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
     "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
