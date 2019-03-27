@@ -36,7 +36,7 @@ data "aws_ami" "jarombek-com-ami" {
 
   filter {
     name = "name"
-    values = ["jarombek-com-app*"]
+    values = ["jarombek-com-${local.env}*"]
   }
 
   owners = ["739088120071"]

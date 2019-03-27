@@ -47,6 +47,16 @@ Resources:
   # Launch configuration for jarombek.com
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          default:
+            - "runServer"
+        runServer:
+          commands:
+            00StartPm2:
+              command: pm2 start bundle.js
+              cwd: "/home/ec2-user/app/server/"
     Properties:
       AssociatePublicIpAddress: true
       # us-east-1 custom baked AMI based on Amazon Linux 2
