@@ -1,10 +1,24 @@
 /**
+ * DocumentDB backups on S3
  * Author: Andrew Jarombek
  * Date: 10/3/2018
  */
 
-resource "aws_s3_bucket" "mongodb-backup" {
-  bucket = "jarombek-com-mongodb-backup"
+locals {
+  env = "${var.prod ? "prod" : "dev"}"
+}
+
+#-------------
+# S3 Resources
+#-------------
+
+resource "aws_s3_bucket" "saints-xctf-db-backups" {
+  bucket = "jarombek-com-db-backups-${local.env}"
+
+  # Bucket owner gets full control, nobody else has access
+  acl = "private"
+
+  policy = "${file("${path.module}/policies/policy-${local.env}.json")}"
 
   versioning {
     enabled = true
@@ -12,16 +26,13 @@ resource "aws_s3_bucket" "mongodb-backup" {
 
   lifecycle_rule {
     enabled = true
-    abort_incomplete_multipart_upload_days = 1
-
-    expiration {
-      expired_object_delete_marker = true
-    }
 
     noncurrent_version_expiration {
-      # Since this bucket has versioning enabled, specify that versions that are not the latest
-      # will be expired and deleted after a certain number of days
-      days = "${var.expiration_days}"
+      days = 60
     }
+  }
+
+  tags {
+    Name = "jarombek-com-db-backups-${local.env}"
   }
 }

@@ -28,6 +28,11 @@
       "destination": "/etc/nginx/nginx.conf"
     },
     {
+      "type": "file",
+      "source": "../shared/certbot.sh",
+      "destination": "/home/ec2-user/certbot.sh"
+    },
+    {
       "type": "ansible-local",
       "playbook_file": "./playbook.yml"
     }
