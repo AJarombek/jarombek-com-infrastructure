@@ -11,7 +11,7 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_lambda_function" "welcome-email" {
-  function_name = "sendWelcomeEmial"
+  function_name = "sendWelcomeEmail"
   filename = "welcomeEmail.zip"
   handler = "sendEmailAWS.sendWelcomeEmail"
   role = "${aws_iam_role.lambda-role.arn}"

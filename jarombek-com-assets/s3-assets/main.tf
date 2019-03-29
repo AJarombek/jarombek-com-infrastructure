@@ -102,6 +102,20 @@ resource "aws_s3_bucket_object" "diamond-uml-png" {
   etag = "${md5(file("assets/diamond-uml.png"))}"
 }
 
+resource "aws_s3_bucket_object" "down-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "down.png"
+  source = "assets/down.png"
+  etag = "${md5(file("assets/down.png"))}"
+}
+
+resource "aws_s3_bucket_object" "down-black-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "down-black.png"
+  source = "assets/down-black.png"
+  etag = "${md5(file("assets/down-black.png"))}"
+}
+
 resource "aws_s3_bucket_object" "dynamic-jsx-png" {
   bucket = "${aws_s3_bucket.asset-jarombek.id}"
   key = "dynamic-jsx.png"
@@ -114,6 +128,27 @@ resource "aws_s3_bucket_object" "error-message-png" {
   key = "error-message.png"
   source = "assets/error-message.png"
   etag = "${md5(file("assets/error-message.png"))}"
+}
+
+resource "aws_s3_bucket_object" "flag-svg" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "flag.svg"
+  source = "assets/flag.svg"
+  etag = "${md5(file("assets/flag.svg"))}"
+}
+
+resource "aws_s3_bucket_object" "github-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "github.png"
+  source = "assets/github.png"
+  etag = "${md5(file("assets/github.png"))}"
+}
+
+resource "aws_s3_bucket_object" "home-png" {
+  bucket = "${aws_s3_bucket.asset-jarombek.id}"
+  key = "home.png"
+  source = "assets/home.png"
+  etag = "${md5(file("assets/home.png"))}"
 }
 
 resource "aws_s3_bucket_object" "jarombek-home-background-jpg" {

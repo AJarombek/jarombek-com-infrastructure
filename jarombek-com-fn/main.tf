@@ -1,7 +1,6 @@
 /**
- * Assets for the website located on an S3 bucket.  The S3 bucket has the domain assets.jarombek.com
  * Author: Andrew Jarombek
- * Date: 10/3/2018
+ * Date: 3/28/2019
  */
 
 provider "aws" {
@@ -21,6 +20,11 @@ terraform {
 # Terraform Modules
 #------------------
 
-module "s3-assets" {
-  source = "./s3-assets"
+module "lambda" {
+  source = "./lambda"
+}
+
+module "api-gateway" {
+  source = "./api-gateway"
+  lambda-function-name = "${module.lambda.function-name}"
 }
