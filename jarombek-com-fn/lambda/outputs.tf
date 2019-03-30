@@ -1,5 +1,5 @@
 /**
- * The AWS Lambda function for setting up emails
+ * Outputs for the AWS Lambda function for setting up emails
  * Author: Andrew Jarombek
  * Date: 3/28/2019
  */

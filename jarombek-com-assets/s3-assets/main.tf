@@ -4,6 +4,11 @@
  * Date: 9/12/2018
  */
 
+locals {
+  # A unique identifier for the S3 origin.  This is needed for CloudFront.
+  s3_origin_id = "assetJarombekCom"
+}
+
 resource "aws_s3_bucket" "asset-jarombek" {
   bucket = "asset-jarombek"
   acl = "public-read"
@@ -43,6 +48,78 @@ resource "aws_s3_bucket" "www-asset-jarombek" {
   website {
     redirect_all_requests_to = "https://asset.jarombek.com"
   }
+}
+
+resource "aws_cloudfront_distribution" "asset-jarombek-distribution" {
+  origin {
+    domain_name = "${aws_s3_bucket.asset-jarombek.bucket_regional_domain_name}"
+    origin_id = "${local.s3_origin_id}"
+
+    s3_origin_config {
+      origin_access_identity =
+      "${aws_cloudfront_origin_access_identity.origin-access-identity.cloudfront_access_identity_path}"
+    }
+  }
+
+  # Whether the cloudfront distribution is enabled to accept uer requests
+  enabled = true
+
+  # Whether the cloudfront distribution can use ipv6
+  is_ipv6_enabled = true
+
+  comment = "assets.jarombek.com CloudFront Distribution"
+  default_root_object = "index.json"
+
+  # Extra CNAMEs for this distribution
+  aliases = ["assets.jarombek.com"]
+
+  # The pricing model for CloudFront
+  price_class = "PriceClass_100"
+
+  default_cache_behavior {
+    # Which HTTP verbs CloudFront processes
+    allowed_methods = ["HEAD", "GET"]
+
+    # Which HTTP verbs CloudFront caches responses to requests
+    cached_methods = ["HEAD", "GET"]
+
+    forwarded_values {
+      cookies {
+        forward = "none"
+      }
+      query_string = false
+    }
+
+    target_origin_id = "${local.s3_origin_id}"
+
+    # Which protocols to use which accessing items from CloudFront
+    viewer_protocol_policy = "https-only"
+
+    # Determines the amount of time an object exists in the CloudFront cache
+    min_ttl = 0
+    default_ttl = 3600
+    max_ttl = 86400
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "blacklist"
+      locations = []
+    }
+  }
+
+  # The SSL certificate for CloudFront
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
+
+  tags {
+    Environment = "production"
+  }
+}
+
+resource "aws_cloudfront_origin_access_identity" "origin-access-identity" {
+  comment = "assets.jarombek.com origin access identity"
 }
 
 /*
