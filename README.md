@@ -1,5 +1,7 @@
 # jarombek-com-infrastructure
 
+## Overview
+
 AWS Infrastructure for the website [jarombek.com](https://jarombek.com).  This is application specific infrastructure, 
 existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/global-aws-infrastructure).
 
@@ -7,7 +9,10 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 
 | Directory Name         | Description                                                                 |
 |------------------------|-----------------------------------------------------------------------------|
-| `data-storage`         | Infrastructure for the applications persistent data storage.                |
-| `jarombek-com`         | Infrastructure for the main web application.                                |
+| `acm`                  | HTTPS certificates for the website.                                         |
+| `bastion`              | Bastion host to connect to resources in the private VPC.                    |
+| `database`             | Infrastructure for the applications persistent data storage.                |
 | `jarombek-com-assets`  | Infrastructure for the S3 bucket, which exposes an API for assets.          |
 | `jarombek-com-fn`      | Infrastructure for the AWS Lambda functions used by the website.            |
+| `route53`              | DNS for the application.                                                    |
+| `web-server`           | Infrastructure for the main web application.                                |

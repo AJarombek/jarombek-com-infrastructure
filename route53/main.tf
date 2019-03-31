@@ -12,8 +12,8 @@ data "aws_s3_bucket" "www-asset-jarombek-bucket" {
   bucket = "www-asset-jarombek"
 }
 
-data "aws_elb" "jarombek-com-elb" {
-  name = "jarombek-com-elb"
+data "aws_lb" "jarombek-com-lb" {
+  name = "jarombek-com-lb"
 }
 
 resource "aws_route53_zone" "jarombek" {
@@ -40,7 +40,7 @@ resource "aws_route53_record" "jarombek_a" {
   zone_id = "${aws_route53_zone.jarombek.zone_id}"
   ttl = 300
 
-  records = ["${data.aws_elb.jarombek-com-elb.dns_name}"]
+  records = ["${data.aws_lb.jarombek-com-lb.dns_name}"]
 }
 
 resource "aws_route53_record" "fn_jarombek_a" {
