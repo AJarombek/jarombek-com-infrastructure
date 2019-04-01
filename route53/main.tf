@@ -57,7 +57,7 @@ resource "aws_route53_record" "fn_jarombek_a" {
 }
 
 resource "aws_route53_record" "asset_jarombek_a" {
-  name = "asset.jarombek.com."
+  name = "assets.jarombek.com."
   type = "A"
   zone_id = "${aws_route53_zone.jarombek.zone_id}"
 
@@ -70,7 +70,7 @@ resource "aws_route53_record" "asset_jarombek_a" {
 }
 
 resource "aws_route53_record" "www_asset_jarombek_a" {
-  name = "www.asset.jarombek.com."
+  name = "www.assets.jarombek.com."
   type = "A"
   zone_id = "${aws_route53_zone.jarombek.zone_id}"
 
