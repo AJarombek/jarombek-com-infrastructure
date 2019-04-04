@@ -743,6 +743,13 @@ resource "aws_s3_bucket_object" "c-png" {
   etag = "${md5(file("${path.cwd}/s3-assets/assets/logos/c.png"))}"
 }
 
+resource "aws_s3_bucket_object" "cloudformation-png" {
+  bucket = "${aws_s3_bucket.assets-jarombek.id}"
+  key = "logos/cloudformation.png"
+  source = "s3-assets/assets/logos/cloudformation.png"
+  etag = "${md5(file("${path.cwd}/s3-assets/assets/logos/cloudformation.png"))}"
+}
+
 resource "aws_s3_bucket_object" "cpp-png" {
   bucket = "${aws_s3_bucket.assets-jarombek.id}"
   key = "logos/cpp.png"
@@ -783,6 +790,13 @@ resource "aws_s3_bucket_object" "ec2-png" {
   key = "logos/ec2.png"
   source = "s3-assets/assets/logos/ec2.png"
   etag = "${md5(file("${path.cwd}/s3-assets/assets/logos/ec2.png"))}"
+}
+
+resource "aws_s3_bucket_object" "eks-png" {
+  bucket = "${aws_s3_bucket.assets-jarombek.id}"
+  key = "logos/eks.png"
+  source = "s3-assets/assets/logos/eks.png"
+  etag = "${md5(file("${path.cwd}/s3-assets/assets/logos/eks.png"))}"
 }
 
 resource "aws_s3_bucket_object" "es6-png" {
