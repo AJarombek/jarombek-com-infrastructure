@@ -1,0 +1,62 @@
+# CloudFormation template for an EC2 instance running MongoDB.
+# Parameters are supplied by Terraform.
+# Author: Andrew Jarombek
+# Date: 4/4/2019
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'An EC2 instance running MongoDB'
+
+Parameters:
+
+  VpcId:
+    Type: "AWS::EC2::VPC::Id"
+    Description: "VPC to deploy the EC2 instance in"
+  SubnetId:
+    Type: "AWS::EC2::Subnet::Id"
+    Description: "Subnet to deploy the EC2 instance in"
+  MyCidr:
+    Type: "String"
+    Description: "CIDR for my local environment"
+  PublicCidr:
+    Type: "String"
+    Description: "CIDR for all IP addresses"
+
+Metadata:
+
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    -
+      Label:
+        default: "Terraform AWS Data"
+      Parameters:
+      - VpcId
+      - SubnetId
+      - MyCidr
+      - PublicCidr
+    ParameterLabels:
+      VpcId:
+        default: "VPC to deploy the EC2 instance in"
+      SubnetId:
+        default: "Subnet to deploy the EC2 instance in"
+      MyCidr:
+        Type: "String"
+        Description: "CIDR for my local environment"
+      PublicCidr:
+        Type: "String"
+        Description: "CIDR for all IP addresses"
+
+Resources:
+
+  # Create a n EC2 instance with a MongoDB database on Amazon Linux 2
+  MongoDBInstance:
+    Type: AWS::EC2::Instance
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          default:
+            - "installMongoDB"
+        installMongoDB:
+          commands:
+            00DownloadMongoDB:
+              command: echo ""
+              cwd: "~"

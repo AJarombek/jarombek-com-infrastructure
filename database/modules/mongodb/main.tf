@@ -6,6 +6,7 @@
 
 locals {
   public_cidr = "0.0.0.0/0"
+  my_cidr = "69.124.72.192/32"
   env = "${var.prod ? "prod" : "dev"}"
   jarombekcom_mongodb_sg_rules = [
     {
@@ -35,9 +36,23 @@ data "aws_subnet" "jarombek-com-reputation-private-subnet" {
   }
 }
 
-data "aws_subnet" "jarombek-com-red-private-subnet" {
-  tags {
-    Name = "jarombek-com-red-private-subnet"
+data "aws_ami" "amazon-linux" {
+  most_recent = true
+  owners = ["137112412989"]
+
+  filter {
+    name = "name"
+    values = ["amzn2-ami-hvm-2.0.*-x86_64-gp2"]
+  }
+
+  filter {
+    name = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name = "virtualization-type"
+    values = ["hvm"]
   }
 }
 
@@ -45,36 +60,21 @@ data "aws_subnet" "jarombek-com-red-private-subnet" {
 # JarombekCom DocumentDB Resources
 #---------------------------------
 
-resource "aws_docdb_cluster" "mongodb-cluster" {
-  cluster_identifier = "jarombek-com-docdb-${local.env}-cluster"
-  engine = "docdb"
-  master_username = "${var.username}"
-  master_password = "${var.password}"
-  port = 27017
-  backup_retention_period = 3
-  preferred_backup_window = "05:00-07:00"
-  skip_final_snapshot = true
+resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
+  name = "jarombek-com-mongodb"
+  template_body = "${file("mongodb.yml")}"
+  on_failure = "DELETE"
+  timeout_in_minutes = 20
 
-  vpc_security_group_ids = ["${module.jarombek-com-mongodb-security-group.security_group_id[0]}"]
-  db_subnet_group_name = "${aws_docdb_subnet_group.mongodb-cluster-subnet-group.id}"
-}
+  parameters {
+    VpcId = "${data.aws_vpc.jarombek-com-vpc.id}"
+    SubnetId = "${data.aws_subnet.jarombek-com-reputation-private-subnet.id}"
+  }
 
-resource "aws_docdb_instance" "mongodb-cluster-instances" {
-  count = 2
-  identifier = "jarombek-com-docdb-${local.env}-instance-${count.index}"
-  cluster_identifier = "${aws_docdb_cluster.mongodb-cluster.id}"
-  instance_class = "db.t2.micro"
-}
+  capabilities = ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
 
-resource "aws_docdb_subnet_group" "mongodb-cluster-subnet-group" {
-  name = "jarombek-com-docdb-subnet-group"
-  subnet_ids = [
-    "${data.aws_subnet.jarombek-com-red-private-subnet.id}",
-    "${data.aws_subnet.jarombek-com-reputation-private-subnet.id}"
-  ]
-
-  tags = {
-    Name = "jarombek-com-docdb-subnet-group-${local.env}"
+  tags {
+    Name = "jarombek-com-mongodb"
   }
 }
 

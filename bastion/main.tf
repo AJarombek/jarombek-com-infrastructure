@@ -46,6 +46,26 @@ data "template_file" "bastion-startup" {
   template = "${file("bastion-setup.sh")}"
 }
 
+data "aws_ami" "amazon-linux" {
+  most_recent = true
+  owners = ["137112412989"]
+
+  filter {
+    name = "name"
+    values = ["amzn2-ami-hvm-2.0.*-x86_64-gp2"]
+  }
+
+  filter {
+    name = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 #--------------------------------------
 # Executed Before Resources are Created
 #--------------------------------------
@@ -62,8 +82,7 @@ resource "null_resource" "bastion-key-gen" {
 
 /* EC2 instance for the bastion host.  It runs Amazon Linux 2 and can be accessed with bastion-key */
 resource "aws_instance" "bastion" {
-  # Use Amazon Linux 2
-  ami = "ami-035be7bafff33b6b6"
+  ami = "${data.aws_ami.amazon-linux.id}"
 
   instance_type = "t2.micro"
   key_name = "jarombek-com-bastion-key"
