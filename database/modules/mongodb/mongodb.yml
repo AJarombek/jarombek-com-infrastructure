@@ -20,6 +20,9 @@ Parameters:
   PublicCidr:
     Type: "String"
     Description: "CIDR for all IP addresses"
+  AMI:
+    Type: "String"
+    Description: "AMI for the EC2 instance"
 
 Metadata:
 
@@ -33,6 +36,7 @@ Metadata:
       - SubnetId
       - MyCidr
       - PublicCidr
+      - AMI
     ParameterLabels:
       VpcId:
         default: "VPC to deploy the EC2 instance in"
@@ -44,6 +48,9 @@ Metadata:
       PublicCidr:
         Type: "String"
         Description: "CIDR for all IP addresses"
+      AMI:
+        Type: "String"
+        Description: "AMI for the EC2 instance"
 
 Resources:
 
@@ -60,3 +67,89 @@ Resources:
             00DownloadMongoDB:
               command: echo ""
               cwd: "~"
+    Properties:
+      # us-east-1 Amazon Linux 2
+      ImageId: !Ref AMI
+      InstanceType: "t2.micro"
+      KeyName: "jarombek-com-mongodb-key"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: !Ref SubnetId
+          GroupSet:
+          - !Ref BastionSecurityGroup
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash
+            echo "Beginning UserData Step"
+            sudo yum install -y aws-cfn-bootstrap
+            /opt/aws/bin/cfn-init -v -s ${AWS::StackName} -r MongoDBInstance -c default --region ${AWS::Region}
+            echo "Finishing UserData Step"
+      Tags:
+        - Key: Name
+          Value: jarombek-com-mongodb
+        - Key: Application
+          Value: jarombek-com
+
+  MongoDBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "jarombek-com-mongodb-security-group"
+      GroupDescription: "Security Group for the jarombek.com MongoDB instance"
+      VpcId: !Ref VpcId
+      Tags:
+        - Key: Name
+          Value: jarombek-com-mongodb-security-group
+        - Key: Application
+          Value: jarombek-com
+
+  # MongoDB security group rule allowing my computer to connect to the instance via SSH
+  MongoDBSecurityGroupIngressSSH:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref BastionSecurityGroup
+      IpProtocol: tcp
+      ToPort: 22
+      FromPort: 22
+      CidrIp: !Ref MyCidr
+
+  # MongoDB security group rule allowing inbound traffic to the database
+  MongoDBSecurityGroupIngressDB:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref BastionSecurityGroup
+      IpProtocol: tcp
+      ToPort: 27017
+      FromPort: 27017
+      CidrIp: !Ref MyCidr
+
+  # MongoDB security group rule allowing inbound traffic for ping
+  MongoDBSecurityGroupIngressICMP:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref BastionSecurityGroup
+      IpProtocol: icmp
+      ToPort: -1
+      FromPort: -1
+      CidrIp: !Ref PublicCidr
+
+  # MongoDB security group rule allowing outbound internet access over HTTP
+  MongoDBSecurityGroupEgressHTTP:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref BastionSecurityGroup
+      IpProtocol: tcp
+      ToPort: 80
+      FromPort: 80
+      CidrIp: !Ref PublicCidr
+
+  # MongoDB security group rule allowing outbound internet access over HTTPS
+  MongoDBSecurityGroupEgressHTTPS:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref BastionSecurityGroup
+      IpProtocol: tcp
+      ToPort: 443
+      FromPort: 443
+      CidrIp: !Ref PublicCidr

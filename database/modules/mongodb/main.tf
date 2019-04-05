@@ -8,16 +8,6 @@ locals {
   public_cidr = "0.0.0.0/0"
   my_cidr = "69.124.72.192/32"
   env = "${var.prod ? "prod" : "dev"}"
-  jarombekcom_mongodb_sg_rules = [
-    {
-      # Inbound traffic from the internet
-      type = "ingress"
-      from_port = 27017
-      to_port = 27017
-      protocol = "tcp"
-      cidr_blocks = "${local.public_cidr}"
-    }
-  ]
 }
 
 #-----------------------------------
@@ -60,33 +50,31 @@ data "aws_ami" "amazon-linux" {
 # JarombekCom DocumentDB Resources
 #---------------------------------
 
+resource "null_resource" "key-gen" {
+  provisioner "local-exec" {
+    command = "bash key-gen.sh jarombek-com-mongodb-key"
+  }
+}
+
 resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
-  name = "jarombek-com-mongodb"
+  name = "jarombek-com-mongodb-${local.env}"
   template_body = "${file("mongodb.yml")}"
   on_failure = "DELETE"
   timeout_in_minutes = 20
 
   parameters {
+    AMI = "${data.aws_ami.amazon-linux.id}"
     VpcId = "${data.aws_vpc.jarombek-com-vpc.id}"
     SubnetId = "${data.aws_subnet.jarombek-com-reputation-private-subnet.id}"
+    MyCidr = "${local.my_cidr}"
+    PublicCidr = "${local.public_cidr}"
   }
 
   capabilities = ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
 
   tags {
-    Name = "jarombek-com-mongodb"
+    Name = "jarombek-com-mongodb-${local.env}"
   }
-}
 
-module "jarombek-com-mongodb-security-group" {
-  source = "github.com/ajarombek/terraform-modules//security-group?ref=v0.1.0"
-
-  # Mandatory arguments
-  name = "jarombek-com-mongodb-security-${local.env}"
-  tag_name = "jarombek-com-mongodb-security-${local.env}"
-  vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
-
-  # Optional arguments
-  sg_rules = "${local.jarombekcom_mongodb_sg_rules}"
-  description = "Allow incoming connections on the default MongoDB port"
+  depends_on = ["null_resource.key-gen"]
 }
