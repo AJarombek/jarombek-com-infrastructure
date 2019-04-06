@@ -4,6 +4,23 @@
  * Date: 9/5/2018
  */
 
+provider "aws" {
+  region = "us-east-1"
+}
+
+terraform {
+  backend "s3" {
+    bucket = "andrew-jarombek-terraform-state"
+    encrypt = true
+    key = "jarombek-com-infrastructure/route53"
+    region = "us-east-1"
+  }
+}
+
+#-----------------------
+# Existing AWS Resources
+#-----------------------
+
 data "aws_s3_bucket" "asset-jarombek-bucket" {
   bucket = "asset-jarombek"
 }
@@ -15,6 +32,10 @@ data "aws_s3_bucket" "www-asset-jarombek-bucket" {
 data "aws_lb" "jarombek-com-lb" {
   name = "jarombek-com-lb"
 }
+
+#------------------------------
+# New AWS Resources for Route53
+#------------------------------
 
 resource "aws_route53_zone" "jarombek" {
   name = "jarombek.com."

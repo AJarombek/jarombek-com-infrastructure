@@ -23,6 +23,9 @@ Parameters:
   AMI:
     Type: "String"
     Description: "AMI for the EC2 instance"
+  Env:
+    Type: "String"
+    Description: "Environment for the EC2 instance"
 
 Metadata:
 
@@ -37,6 +40,7 @@ Metadata:
       - MyCidr
       - PublicCidr
       - AMI
+      - Env
     ParameterLabels:
       VpcId:
         default: "VPC to deploy the EC2 instance in"
@@ -51,6 +55,9 @@ Metadata:
       AMI:
         Type: "String"
         Description: "AMI for the EC2 instance"
+      Env:
+        Type: "String"
+        Description: "Environment for the EC2 instance"
 
 Resources:
 
@@ -61,12 +68,23 @@ Resources:
       AWS::CloudFormation::Init:
         configSets:
           default:
+            - "mongoDBRepo"
             - "installMongoDB"
         installMongoDB:
           commands:
-            00DownloadMongoDB:
-              command: echo ""
+            00InstallMongoDB:
+              command: sudo yum install -y mongodb-org
               cwd: "~"
+        mongoDBRepo:
+          files:
+            /etc/yum.repos.d/mongodb-org-3.4.repo:
+              content: |
+                [mongodb-org-3.4]
+                name=MongoDB Repository
+                baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.4/x86_64/
+                gpgcheck=1
+                enabled=1
+                gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
     Properties:
       # us-east-1 Amazon Linux 2
       ImageId: !Ref AMI
@@ -88,7 +106,7 @@ Resources:
             echo "Finishing UserData Step"
       Tags:
         - Key: Name
-          Value: jarombek-com-mongodb
+          Value: !Sub jarombek-com-mongodb-${Env}
         - Key: Application
           Value: jarombek-com
 

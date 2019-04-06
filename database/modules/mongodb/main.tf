@@ -46,15 +46,9 @@ data "aws_ami" "amazon-linux" {
   }
 }
 
-#---------------------------------
-# JarombekCom DocumentDB Resources
-#---------------------------------
-
-resource "null_resource" "key-gen" {
-  provisioner "local-exec" {
-    command = "bash key-gen.sh jarombek-com-mongodb-key"
-  }
-}
+#------------------------------
+# JarombekCom MongoDB Resources
+#------------------------------
 
 resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
   name = "jarombek-com-mongodb-${local.env}"
@@ -68,6 +62,7 @@ resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
     SubnetId = "${data.aws_subnet.jarombek-com-reputation-private-subnet.id}"
     MyCidr = "${local.my_cidr}"
     PublicCidr = "${local.public_cidr}"
+    Env = "${local.env}"
   }
 
   capabilities = ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
