@@ -14,5 +14,6 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 | `database`             | Infrastructure for the applications persistent data storage.                |
 | `jarombek-com-assets`  | Infrastructure for the S3 bucket, which exposes an API for assets.          |
 | `jarombek-com-fn`      | Infrastructure for the AWS Lambda functions used by the website.            |
+| `key`                  | Generate SSH keys.                                                          |
 | `route53`              | DNS for the application.                                                    |
 | `web-server`           | Infrastructure for the main web application.                                |
