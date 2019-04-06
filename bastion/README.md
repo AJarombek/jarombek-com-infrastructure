@@ -3,6 +3,15 @@
 Infrastructure for a Bastion host, which connects to the private resources in the VPC.  A Bastion host is needed because 
 resources inside private VPCs are not publicly available outside the VPC.
 
+### Commands
+
+```bash
+terraform init
+terraform plan
+sudo -s
+terraform apply -auto-approve
+```
+
 ### Files
 
 | Filename                | Description                                                                                      |

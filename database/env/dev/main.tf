@@ -17,11 +17,9 @@ terraform {
   }
 }
 
-module "rds" {
+module "mongodb" {
   source = "../../modules/mongodb"
   prod = false
-  username = "${var.username}"
-  password = "${var.password}"
 }
 
 module "s3" {

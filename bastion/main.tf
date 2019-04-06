@@ -6,7 +6,7 @@
 
 locals {
   public_cidr = "0.0.0.0/0"
-  my_cidr = "69.124.72.192/32"
+  my_cidr = "192.168.86.59/32"
 }
 
 provider "aws" {
@@ -36,14 +36,6 @@ data "aws_subnet" "jarombek-com-yandhi-public-subnet" {
   tags {
     Name = "jarombek-com-yandhi-public-subnet"
   }
-}
-
-data "aws_iam_role" "document-db-access-role" {
-  name = "docdb-access-role"
-}
-
-data "template_file" "bastion-startup" {
-  template = "${file("bastion-setup.sh")}"
 }
 
 data "aws_ami" "amazon-linux" {
@@ -90,25 +82,17 @@ resource "aws_instance" "bastion" {
 
   subnet_id = "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
   security_groups = ["${module.bastion-subnet-security-group.security_group_id}"]
-  iam_instance_profile = "${aws_iam_instance_profile.bastion-instance-profile.name}"
 
   lifecycle {
     create_before_destroy = true
   }
 
-  user_data = "${data.template_file.bastion-startup.rendered}"
-
   tags {
     Name = "jarombek-com-bastion-host"
+    Application = "jarombek-com"
   }
 
   depends_on = ["null_resource.bastion-key-gen"]
-}
-
-/* The instance profile assigns the DocumentDB access IAM role to the bastion EC2 instance */
-resource "aws_iam_instance_profile" "bastion-instance-profile" {
-  name = "bastion-instance-profile"
-  role = "${data.aws_iam_role.document-db-access-role.name}"
 }
 
 /* Security group rules for the Bastion EC2 instance.  Most important is SSH access for the AWS admin */
@@ -155,7 +139,7 @@ module "bastion-subnet-security-group" {
       cidr_blocks = "${local.public_cidr}"
     },
     {
-      # Outbound traffic for DocumentDB
+      # Outbound traffic for MongoDB
       type = "egress"
       from_port = 27017
       to_port = 27017

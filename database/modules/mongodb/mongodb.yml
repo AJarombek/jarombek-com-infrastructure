@@ -131,7 +131,7 @@ Resources:
           DeviceIndex: 0
           SubnetId: !Ref SubnetId
           GroupSet:
-          - !Ref BastionSecurityGroup
+          - !Ref MongoDBSecurityGroup
       UserData:
         Fn::Base64:
           !Sub |
@@ -162,7 +162,7 @@ Resources:
   MongoDBSecurityGroupIngressSSH:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
-      GroupId: !Ref BastionSecurityGroup
+      GroupId: !Ref MongoDBSecurityGroup
       IpProtocol: tcp
       ToPort: 22
       FromPort: 22
@@ -172,17 +172,17 @@ Resources:
   MongoDBSecurityGroupIngressDB:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
-      GroupId: !Ref BastionSecurityGroup
+      GroupId: !Ref MongoDBSecurityGroup
       IpProtocol: tcp
       ToPort: 27017
       FromPort: 27017
-      CidrIp: !Ref MyCidr
+      CidrIp: !Ref PublicCidr
 
   # MongoDB security group rule allowing inbound traffic for ping
   MongoDBSecurityGroupIngressICMP:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
-      GroupId: !Ref BastionSecurityGroup
+      GroupId: !Ref MongoDBSecurityGroup
       IpProtocol: icmp
       ToPort: -1
       FromPort: -1
@@ -192,7 +192,7 @@ Resources:
   MongoDBSecurityGroupEgressHTTP:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
-      GroupId: !Ref BastionSecurityGroup
+      GroupId: !Ref MongoDBSecurityGroup
       IpProtocol: tcp
       ToPort: 80
       FromPort: 80
@@ -202,7 +202,7 @@ Resources:
   MongoDBSecurityGroupEgressHTTPS:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
-      GroupId: !Ref BastionSecurityGroup
+      GroupId: !Ref MongoDBSecurityGroup
       IpProtocol: tcp
       ToPort: 443
       FromPort: 443

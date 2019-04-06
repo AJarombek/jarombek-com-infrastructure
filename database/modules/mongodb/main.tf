@@ -6,7 +6,7 @@
 
 locals {
   public_cidr = "0.0.0.0/0"
-  my_cidr = "69.124.72.192/32"
+  my_cidr = "192.168.86.59/32"
   env = "${var.prod ? "prod" : "dev"}"
 }
 
@@ -62,7 +62,7 @@ data "template_file" "private-key" {
 
 resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
   name = "jarombek-com-mongodb-${local.env}"
-  template_body = "${file("mongodb.yml")}"
+  template_body = "${file("${path.module}/mongodb.yml")}"
   on_failure = "DELETE"
   timeout_in_minutes = 20
 
@@ -81,7 +81,6 @@ resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
 
   tags {
     Name = "jarombek-com-mongodb-${local.env}"
+    Application = "jarombek-com"
   }
-
-  depends_on = ["null_resource.key-gen"]
 }
