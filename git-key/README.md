@@ -1,7 +1,7 @@
 ### Overview
 
-Terraform module for creating SSH keys.  This module could easily be strictly Bash, but for consistency its wrapped in 
-Terraform. 
+Terraform module for creating SSH keys used for cloning private repositories from GitHub.  This module could easily be 
+strictly Bash, but for consistency its wrapped in Terraform. 
 
 ```bash
 terraform init

@@ -46,6 +46,16 @@ data "aws_ami" "amazon-linux" {
   }
 }
 
+data "template_file" "public-key" {
+  template = "${file("${path.module}/cred/jarombek_com_rsa.pub")}"
+  vars {}
+}
+
+data "template_file" "private-key" {
+  template = "${file("${path.module}/cred/jarombek_com_rsa")}"
+  vars {}
+}
+
 #------------------------------
 # JarombekCom MongoDB Resources
 #------------------------------
@@ -63,6 +73,8 @@ resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
     MyCidr = "${local.my_cidr}"
     PublicCidr = "${local.public_cidr}"
     Env = "${local.env}"
+    PublicKey = "${data.template_file.public-key.rendered}"
+    PrivateKey = "${data.template_file.private-key.rendered}"
   }
 
   capabilities = ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]

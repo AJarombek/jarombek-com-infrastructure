@@ -26,6 +26,12 @@ Parameters:
   Env:
     Type: "String"
     Description: "Environment for the EC2 instance"
+  PublicKey:
+    Type: "String"
+    Description: "SSH public key file for connecting to GitHub private repos"
+  PrivateKey:
+    Type: "String"
+    Description: "SSH private key file for connecting to GitHub private repos"
 
 Metadata:
 
@@ -41,6 +47,7 @@ Metadata:
       - PublicCidr
       - AMI
       - Env
+      - SSHKey
     ParameterLabels:
       VpcId:
         default: "VPC to deploy the EC2 instance in"
@@ -58,6 +65,12 @@ Metadata:
       Env:
         Type: "String"
         Description: "Environment for the EC2 instance"
+      PublicKey:
+        Type: "String"
+        Description: "SSH public key file for connecting to GitHub private repos"
+      PrivateKey:
+        Type: "String"
+        Description: "SSH private key file for connecting to GitHub private repos"
 
 Resources:
 
@@ -68,14 +81,33 @@ Resources:
       AWS::CloudFormation::Init:
         configSets:
           default:
-            - "mongoDBRepo"
+            - "mongoDBFiles"
             - "installMongoDB"
+            - "cloneGitRepo"
+            - "startMongoDB"
+            - "buildMongoDBDocuments"
         installMongoDB:
           commands:
             00InstallMongoDB:
               command: sudo yum install -y mongodb-org
               cwd: "~"
-        mongoDBRepo:
+        cloneGitRepo:
+          commands:
+            00CloneRepo:
+              command: git clone git@github.com:AJarombek/jarombek-com-database.git
+              cwd: "~"
+        startMongoDB:
+          commands:
+            00StartMongoDB:
+              command: sudo systemctl start mongod
+            01CheckMongoDBStatus:
+              command: sudo systemctl status mongod
+        buildMongoDBDocuments:
+          commands:
+            00Build:
+              command: mongo < loadScripts.js
+              cwd: "~/jarombek-com-database/"
+        mongoDBFiles:
           files:
             /etc/yum.repos.d/mongodb-org-3.4.repo:
               content: |
@@ -85,6 +117,10 @@ Resources:
                 gpgcheck=1
                 enabled=1
                 gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
+            /root/.ssh/jarombek_com_rsa:
+              content: !Ref PrivateKey
+            /root/.ssh/jarombek_com_rsa.pub:
+              content: !Ref PublicKey
     Properties:
       # us-east-1 Amazon Linux 2
       ImageId: !Ref AMI

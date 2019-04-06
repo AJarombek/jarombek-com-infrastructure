@@ -7,5 +7,5 @@
 variable "key-names" {
   description = "The name of the SSH keys"
   type = "list"
-  default = ["jarombek-com-mongodb-key"]
+  default = ["jarombek_com_rsa"]
 }
