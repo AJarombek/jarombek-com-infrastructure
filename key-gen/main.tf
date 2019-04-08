@@ -17,9 +17,14 @@ terraform {
   }
 }
 
-resource "null_resource" "key-gen" {
-  count = "${length(var.key-names)}"
+resource "null_resource" "git-key-gen" {
   provisioner "local-exec" {
-    command = "bash key-gen.sh ${var.key-names[count.index]}"
+    command = "bash git-key-gen.sh jarombek_com_rsa"
+  }
+}
+
+resource "null_resource" "ec2-key-gen" {
+  provisioner "local-exec" {
+    command = "bash ec2-key-gen.sh jarombek-com-key"
   }
 }

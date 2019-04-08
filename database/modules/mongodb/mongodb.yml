@@ -83,18 +83,13 @@ Resources:
           default:
             - "mongoDBFiles"
             - "installMongoDB"
-            - "cloneGitRepo"
             - "startMongoDB"
+            - "cloneGitRepo"
             - "buildMongoDBDocuments"
         installMongoDB:
           commands:
             00InstallMongoDB:
-              command: sudo yum install -y mongodb-org
-              cwd: "~"
-        cloneGitRepo:
-          commands:
-            00CloneRepo:
-              command: git clone git@github.com:AJarombek/jarombek-com-database.git
+              command: sudo yum -y install mongodb-org
               cwd: "~"
         startMongoDB:
           commands:
@@ -102,6 +97,14 @@ Resources:
               command: sudo systemctl start mongod
             01CheckMongoDBStatus:
               command: sudo systemctl status mongod
+        cloneGitRepo:
+          commands:
+            00InstallGit:
+              command: sudo yum -y install git
+            01CloneRepo:
+              test: git version
+              command: git clone git@github.com:AJarombek/jarombek-com-database.git
+              cwd: "~"
         buildMongoDBDocuments:
           commands:
             00Build:
@@ -121,11 +124,15 @@ Resources:
               content: !Ref PrivateKey
             /root/.ssh/jarombek_com_rsa.pub:
               content: !Ref PublicKey
+            /home/ec2-user/.ssh/jarombek_com_rsa:
+              content: !Ref PrivateKey
+            /home/ec2-user/.ssh/jarombek_com_rsa.pub:
+              content: !Ref PublicKey
     Properties:
       # us-east-1 Amazon Linux 2
       ImageId: !Ref AMI
       InstanceType: "t2.micro"
-      KeyName: "jarombek-com-mongodb-key"
+      KeyName: "jarombek-com-key"
       NetworkInterfaces:
         - AssociatePublicIpAddress: true
           DeviceIndex: 0
@@ -166,7 +173,7 @@ Resources:
       IpProtocol: tcp
       ToPort: 22
       FromPort: 22
-      CidrIp: !Ref MyCidr
+      CidrIp: !Ref PublicCidr
 
   # MongoDB security group rule allowing inbound traffic to the database
   MongoDBSecurityGroupIngressDB:
@@ -207,3 +214,13 @@ Resources:
       ToPort: 443
       FromPort: 443
       CidrIp: !Ref PublicCidr
+
+  # MongoDB security group rule for cloning a git repo with SSH
+  MongoDBSecurityGroupEgressSSH:
+      Type: AWS::EC2::SecurityGroupEgress
+      Properties:
+        GroupId: !Ref MongoDBSecurityGroup
+        IpProtocol: tcp
+        ToPort: 22
+        FromPort: 22
+        CidrIp: !Ref PublicCidr

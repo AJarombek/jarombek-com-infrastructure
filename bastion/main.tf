@@ -28,7 +28,7 @@ terraform {
 
 data "aws_vpc" "jarombek-com-vpc" {
   tags {
-    Name = "jarombekcom-vpc"
+    Name = "jarombek-com-vpc"
   }
 }
 
@@ -58,16 +58,6 @@ data "aws_ami" "amazon-linux" {
   }
 }
 
-#--------------------------------------
-# Executed Before Resources are Created
-#--------------------------------------
-
-resource "null_resource" "bastion-key-gen" {
-  provisioner "local-exec" {
-    command = "bash key-gen.sh jarombek-com-bastion-key"
-  }
-}
-
 #------------------------------
 # New AWS Resources for Bastion
 #------------------------------
@@ -77,7 +67,7 @@ resource "aws_instance" "bastion" {
   ami = "${data.aws_ami.amazon-linux.id}"
 
   instance_type = "t2.micro"
-  key_name = "jarombek-com-bastion-key"
+  key_name = "jarombek-com-key"
   associate_public_ip_address = true
 
   subnet_id = "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
@@ -91,8 +81,6 @@ resource "aws_instance" "bastion" {
     Name = "jarombek-com-bastion-host"
     Application = "jarombek-com"
   }
-
-  depends_on = ["null_resource.bastion-key-gen"]
 }
 
 /* Security group rules for the Bastion EC2 instance.  Most important is SSH access for the AWS admin */
@@ -112,7 +100,7 @@ module "bastion-subnet-security-group" {
       from_port = 22
       to_port = 22
       protocol = "tcp"
-      cidr_blocks = "${local.my_cidr}"
+      cidr_blocks = "${local.public_cidr}"
     },
     {
       # Inbound traffic for ping
@@ -143,6 +131,14 @@ module "bastion-subnet-security-group" {
       type = "egress"
       from_port = 27017
       to_port = 27017
+      protocol = "tcp"
+      cidr_blocks = "${local.public_cidr}"
+    },
+    {
+      # Outbound traffic for SSH to the private Subnet
+      type = "egress"
+      from_port = 22
+      to_port = 22
       protocol = "tcp"
       cidr_blocks = "${local.public_cidr}"
     }

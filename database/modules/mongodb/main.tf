@@ -16,13 +16,13 @@ locals {
 
 data "aws_vpc" "jarombek-com-vpc" {
   tags {
-    Name = "jarombekcom-vpc"
+    Name = "jarombek-com-vpc"
   }
 }
 
-data "aws_subnet" "jarombek-com-reputation-private-subnet" {
+data "aws_subnet" "jarombek-com-yandhi-public-subnet" {
   tags {
-    Name = "jarombek-com-reputation-private-subnet"
+    Name = "jarombek-com-yandhi-public-subnet"
   }
 }
 
@@ -69,7 +69,7 @@ resource "aws_cloudformation_stack" "jarombek-com-mongodb" {
   parameters {
     AMI = "${data.aws_ami.amazon-linux.id}"
     VpcId = "${data.aws_vpc.jarombek-com-vpc.id}"
-    SubnetId = "${data.aws_subnet.jarombek-com-reputation-private-subnet.id}"
+    SubnetId = "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
     MyCidr = "${local.my_cidr}"
     PublicCidr = "${local.public_cidr}"
     Env = "${local.env}"

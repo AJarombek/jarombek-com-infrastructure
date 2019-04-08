@@ -1,5 +1,5 @@
 /**
- * DocumentDB backups on S3
+ * MongoDB backups on S3
  * Author: Andrew Jarombek
  * Date: 10/3/2018
  */

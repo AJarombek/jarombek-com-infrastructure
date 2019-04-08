@@ -12,9 +12,13 @@ sudo -s
 terraform apply -auto-approve
 ```
 
+### Dependencies
+
+Depends on the `key-gen` module.  The Bastion host needs access to the EC2 SSH key, which is created in that module for 
+the entire `jarombek.com` application infrastructure.
+
 ### Files
 
 | Filename                | Description                                                                                      |
 |-------------------------|--------------------------------------------------------------------------------------------------|
 | `main.tf`               | Terraform script for creating a Bastion host in the `jarombek-com-yandhi-public-subnet` subnet.  |
-| `key-gen.sh`            | Before the terraform resources are created, create public/private keys for Bastion connections.  |

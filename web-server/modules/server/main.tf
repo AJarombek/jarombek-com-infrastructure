@@ -52,16 +52,6 @@ data "aws_acm_certificate" "jarombek-com-wildcard-certificate" {
   statuses = ["ISSUED"]
 }
 
-#--------------------------------------
-# Executed Before Resources are Created
-#--------------------------------------
-
-resource "null_resource" "key-gen" {
-  provisioner "local-exec" {
-    command = "bash ../../modules/server/key-gen.sh ${var.prod ? "jarombek-com-key" : "jarombek-com-dev-key"}"
-  }
-}
-
 #--------------------------------------------------
 # New AWS Resources for the jarombek.com Web Server
 #--------------------------------------------------
@@ -73,7 +63,7 @@ resource "aws_cloudformation_stack" "jarombek-com-server-cf-stack" {
   timeout_in_minutes = 20
 
   parameters {
-    KeyName = "${var.prod ? "jarombek-com-key" : "jarombek-com-dev-key"}"
+    KeyName = "jarombek-com-key"
     SecurityGroupId = "${aws_security_group.jarombek-com-lc-security-group.id}"
     ImageId = "${data.aws_ami.jarombek-com-ami.id}"
     LCName = "jarombek-com-${local.env}-lc"

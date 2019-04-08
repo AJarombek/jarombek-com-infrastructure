@@ -1,4 +1,5 @@
 /**
+ * Variables for the S3 bucket containing MongoDB backups
  * Author: Andrew Jarombek
  * Date: 10/3/2018
  */
