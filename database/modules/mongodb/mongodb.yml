@@ -101,15 +101,34 @@ Resources:
           commands:
             00InstallGit:
               command: sudo yum -y install git
-            01CloneRepo:
+            01PrivateKeyAccess:
+              command: chmod 400 id_rsa
+              cwd: "/home/ec2-user/.ssh/"
+            02PrivateKeyAccess:
+              command: chmod 400 id_rsa
+              cwd: "/root/.ssh/"
+            03GitHubKey:
+              command: ssh-keyscan github.com >> gitHubKey
+              cwd: "/home/ec2-user/"
+            # Check if fingerprint matches the one on GitHub (https://help.github.com/en/articles/githubs-ssh-key-fingerprints)
+            04SSHFingerprint:
+              command: ssh-keygen -lf gitHubKey
+              cwd: "/home/ec2-user/"
+            05AddHost:
+              command: echo $(cat gitHubKey) >> /home/ec2-user/.ssh/known_hosts
+              cwd: "/home/ec2-user/"
+            06AddHostRoot:
+              command: echo $(cat gitHubKey) >> /root/.ssh/known_hosts
+              cwd: "/home/ec2-user/"
+            07CloneRepo:
               test: git version
               command: git clone git@github.com:AJarombek/jarombek-com-database.git
-              cwd: "~"
+              cwd: "/home/ec2-user/"
         buildMongoDBDocuments:
           commands:
             00Build:
               command: mongo < loadScripts.js
-              cwd: "~/jarombek-com-database/"
+              cwd: "/home/ec2-user/jarombek-com-database/"
         mongoDBFiles:
           files:
             /etc/yum.repos.d/mongodb-org-3.4.repo:
@@ -120,14 +139,18 @@ Resources:
                 gpgcheck=1
                 enabled=1
                 gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
-            /root/.ssh/jarombek_com_rsa:
+            /root/.ssh/id_rsa:
               content: !Ref PrivateKey
-            /root/.ssh/jarombek_com_rsa.pub:
+              owner: root
+            /root/.ssh/id_rsa.pub:
               content: !Ref PublicKey
-            /home/ec2-user/.ssh/jarombek_com_rsa:
+              owner: root
+            /home/ec2-user/.ssh/id_rsa:
               content: !Ref PrivateKey
-            /home/ec2-user/.ssh/jarombek_com_rsa.pub:
+              owner: ec2-user
+            /home/ec2-user/.ssh/id_rsa.pub:
               content: !Ref PublicKey
+              owner: ec2-user
     Properties:
       # us-east-1 Amazon Linux 2
       ImageId: !Ref AMI

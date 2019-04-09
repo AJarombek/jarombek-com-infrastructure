@@ -20,3 +20,7 @@ sudo nano /var/log/cfn-init.log
 
 # Test connecting to GitHub with SSH
 ssh -T git@github.com
+
+# Try running AWS::CloudFormation::Init again
+sudo /opt/aws/bin/cfn-init -v -s jarombek-com-mongodb-dev -r MongoDBInstance -c default --region us-east-1
+git clone git@github.com:AJarombek/jarombek-com-database.git
