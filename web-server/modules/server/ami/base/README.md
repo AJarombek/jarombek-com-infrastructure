@@ -11,6 +11,5 @@ of Amazon Linux.
 
 | Filename                 | Description                                                                                      |
 |--------------------------|--------------------------------------------------------------------------------------------------|
+| `provisioners/`          | Provisioners for installing software on the AMI.                                                 |
 | `image.json`             | Packer configuration for building the AMI.                                                       |
-| `playbook.yml`           | Ansible Playbook used for installing software on the AMI.                                        |
-| `setup-image.sh`         | Bash script used to install Ansible on the AMI.                                                  |

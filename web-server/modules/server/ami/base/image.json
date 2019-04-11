@@ -24,11 +24,11 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "./setup-image.sh"
+      "script": "./provisioners/00-ansible.sh"
     },
     {
-      "type": "ansible-local",
-      "playbook_file": "./playbook.yml"
+      "type": "shell",
+      "script": "./provisioners/01-nginx-node.sh"
     }
   ]
 }

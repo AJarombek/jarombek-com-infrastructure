@@ -6,6 +6,6 @@
 
 sleep 30
 
-apt-add-repository ppa:ansible/ansible -y
-sudo apt-get update
-sudo apt-get -y install ansible
+sudo yum -y update
+sudo yum -y install python-pip
+sudo pip install ansible

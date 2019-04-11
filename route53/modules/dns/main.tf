@@ -71,15 +71,6 @@ resource "aws_route53_record" "jarombek_mx" {
   ]
 }
 
-resource "aws_route53_record" "jarombek_soa" {
-  name = "jarombek.com."
-  type = "SOA"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
-  ttl = 900
-
-  records = ["ns-1626.awsdns-11.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
-}
-
 resource "aws_route53_record" "fn_jarombek_txt" {
   name = "_acme-challenge.fn.jarombek.com."
   type = "TXT"
