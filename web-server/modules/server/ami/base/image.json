@@ -27,8 +27,8 @@
       "script": "./provisioners/00-ansible.sh"
     },
     {
-      "type": "shell",
-      "script": "./provisioners/01-nginx-node.sh"
+      "type": "ansible-local",
+      "playbook_file": "./provisioners/01-base-dependencies.yml"
     }
   ]
 }

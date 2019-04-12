@@ -18,7 +18,11 @@ node -v
 
 # Install Global npm Modules
 npm install yarn -g
+yarn --version
+echo "export PATH=\"\$PATH:`yarn global bin`\"" >> .bash_profile
+
 npm install pm2 -g
+pm2 ls
 
 # Add CertBot Repository
 curl -O http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm

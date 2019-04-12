@@ -8,6 +8,13 @@ along with the application itself on top of the
 2) **Create `app` AMI**
 3) Create `dev` or `prod` AMI
 
+### Commands
+
+```bash
+packer validate image.json
+packer build image.json
+```
+
 ### Files
 
 | Filename                 | Description                                                                                      |
