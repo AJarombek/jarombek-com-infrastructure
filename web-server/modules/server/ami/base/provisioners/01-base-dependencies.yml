@@ -14,7 +14,6 @@
     - name: Install Nginx
       shell: amazon-linux-extras install nginx1.12
       args:
-        chdir: ~
         executable: /bin/bash
 
     - name: Enable Nginx
@@ -33,12 +32,19 @@
         executable: /bin/bash
 
     - name: Add nvm to .bash_profile
-      shell: export NVM_DIR=~/.nvm source >> .bash_profile
+      shell: echo "export NVM_DIR=~/.nvm source" >> .bash_profile
       args:
+        chdir: ~
         executable: /bin/bash
 
     - name: Add nvm to .bash_profile
-      shell: ~/.nvm/nvm.sh >> .bash_profile
+      shell: echo "~/.nvm/nvm.sh" >> .bash_profile
+      args:
+        chdir: ~
+        executable: /bin/bash
+
+    - name: Debug
+      shell: cat .bash_profile
       args:
         executable: /bin/bash
 

@@ -16,18 +16,6 @@
         version: master
         dest: ~/jarombek-com
 
-    - name: Install Yarn Globally
-      become: yes
-      npm:
-        name: yarn
-        global: yes
-
-    - name: Install PM2 Globally
-      become: yes
-      npm:
-        name: pm2
-        global: yes
-
     - name: Install Application Dependencies
       become: yes
       yarn:
