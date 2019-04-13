@@ -134,7 +134,7 @@ resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
 }
 
 resource "aws_security_group" "jarombek-com-lb-security-group" {
-  name = "jarombek-com-${local.env}-server-elb-security-group"
+  name = "jarombek-com-${local.env}-alb-security-group"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
 
   lifecycle {

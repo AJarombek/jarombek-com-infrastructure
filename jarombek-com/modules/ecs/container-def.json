@@ -1,0 +1,15 @@
+[
+  {
+    "cpu": 256,
+    "memory": 512,
+    "image": "ajarombek/jarombek-com:latest",
+    "name": "jarombek-com",
+    "networkMode": "awsvpc",
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 80
+      }
+    ]
+  }
+]
