@@ -1,0 +1,10 @@
+/**
+ * Ouput variables for the ALB needed for ECS
+ * Author: Andrew Jarombek
+ * Date: 4/23/2019
+ */
+
+output "alb-sg" {
+  description = "Security Group for the ALB"
+  value = "${aws_security_group.jarombek-com-lb-security-group.id}"
+}

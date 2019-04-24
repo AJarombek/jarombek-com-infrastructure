@@ -13,3 +13,7 @@ variable "desired_count" {
   description = "The desired number of tasks to run in the ECS cluster"
   default = 1
 }
+
+variable "alb_security_group" {
+  description = "Security group for the ALB used by the ECS cluster"
+}

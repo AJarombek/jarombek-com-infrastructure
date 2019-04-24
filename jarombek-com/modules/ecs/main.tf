@@ -18,14 +18,6 @@ data "aws_vpc" "jarombek-com-vpc" {
   }
 }
 
-data "aws_alb" "jarombek-com-alb" {
-  name = "jarombek-com-${local.env}-alb"
-}
-
-data "aws_security_group" "jarombek-com-alb-sg" {
-  name = "jarombek-com-${local.env}-alb-security-group"
-}
-
 #---------------------
 # ECS Cluser Resources
 #---------------------
@@ -41,7 +33,7 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
   cpu = 256
   memory = 512
 
-  container_definitions = "${file("container-def.json")}"
+  container_definitions = "${file("${path.module}/container-def.json")}"
 }
 
 resource "aws_ecs_service" "jarombek-com-service" {
@@ -64,14 +56,14 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
     protocol = "tcp"
     from_port = 80
     to_port = 80
-    security_groups = ["${data.aws_security_group.jarombek-com-alb-sg.id}"]
+    security_groups = ["${var.alb_security_group}"]
   }
 
   ingress {
     protocol = "tcp"
     from_port = 443
     to_port = 80
-    security_groups = ["${data.aws_security_group.jarombek-com-alb-sg.id}"]
+    security_groups = ["${var.alb_security_group}"]
   }
 
   egress {

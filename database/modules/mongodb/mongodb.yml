@@ -179,12 +179,12 @@ Resources:
   MongoDBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: "jarombek-com-mongodb-security-group"
+      GroupName: "jarombek-com-mongodb-sg"
       GroupDescription: "Security Group for the jarombek.com MongoDB instance"
       VpcId: !Ref VpcId
       Tags:
         - Key: Name
-          Value: jarombek-com-mongodb-security-group
+          Value: jarombek-com-mongodb-sg
         - Key: Application
           Value: jarombek-com
 

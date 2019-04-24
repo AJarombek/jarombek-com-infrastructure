@@ -29,7 +29,7 @@ terraform {
 
 data "aws_security_group" "jarombek-com-mongodb-sg" {
   tags {
-    Name = "jarombek-com-mongodb-security-${local.env}"
+    Name = "jarombek-com-mongodb-sg"
   }
 }
 
@@ -96,4 +96,5 @@ module "ecs" {
   source = "../../modules/ecs"
   prod = "${local.prod}"
   desired_count = 1
+  alb_security_group = "${module.alb.alb-sg}"
 }
