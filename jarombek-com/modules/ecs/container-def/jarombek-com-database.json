@@ -1,0 +1,15 @@
+[
+  {
+    "cpu": 256,
+    "memory": 512,
+    "image": "ajarombek/jarombek-com-database:latest",
+    "name": "jarombek-com-database",
+    "networkMode": "awsvpc",
+    "portMappings": [
+      {
+        "containerPort": 27017,
+        "hostPort": 27017
+      }
+    ]
+  }
+]

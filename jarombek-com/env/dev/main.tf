@@ -27,12 +27,6 @@ terraform {
   }
 }
 
-data "aws_security_group" "jarombek-com-mongodb-sg" {
-  tags {
-    Name = "jarombek-com-mongodb-sg"
-  }
-}
-
 module "alb" {
   source = "../../modules/alb"
   prod = "${local.prod}"
@@ -80,21 +74,13 @@ module "alb" {
     }
   ]
 
-  load-balancer-sg-rules-source = [
-    {
-      # Outbound traffic to the MongoDB database
-      type = "egress"
-      from_port = 27017
-      to_port = 27017
-      protocol = "tcp"
-      source_sg = "${data.aws_security_group.jarombek-com-mongodb-sg.id}"
-    }
-  ]
+  load-balancer-sg-rules-source = []
 }
 
 module "ecs" {
   source = "../../modules/ecs"
   prod = "${local.prod}"
-  desired_count = 1
+  jarombek_com_desired_count = 1
+  jarombek_com_database_desired_count = 1
   alb_security_group = "${module.alb.alb-sg}"
 }

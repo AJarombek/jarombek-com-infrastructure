@@ -9,8 +9,13 @@ variable "prod" {
   default = false
 }
 
-variable "desired_count" {
-  description = "The desired number of tasks to run in the ECS cluster"
+variable "jarombek_com_desired_count" {
+  description = "The desired number of jarombek-com task instances to run in the ECS cluster"
+  default = 1
+}
+
+variable "jarombek_com_database_desired_count" {
+  description = "The desired number of jarombek-com-database task instances to run in the ECS cluster"
   default = 1
 }
 

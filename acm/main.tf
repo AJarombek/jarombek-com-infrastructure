@@ -30,6 +30,39 @@ data "aws_route53_zone" "saints-xctf-zone" {
 # New AWS Resources for ACM
 #--------------------------
 
+#------------------------------
+# Protects '*.dev.jarombek.com'
+#------------------------------
+
+resource "aws_acm_certificate" "jarombek-dev-wildcard-acm-certificate" {
+  domain_name = "*.dev.jarombek.io"
+  validation_method = "DNS"
+
+  tags {
+    Environment = "dev"
+    Application = "jarombek-com"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_route53_record" "jarombek-dev-wc-cert-validation-record" {
+  name = "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options.0.resource_record_type}"
+  zone_id = "${data.aws_route53_zone.saints-xctf-zone.id}"
+  records = [
+    "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options.0.resource_record_value}"
+  ]
+  ttl = 60
+}
+
+resource "aws_acm_certificate_validation" "jarombek-dev-wc-cert-validation" {
+  certificate_arn = "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.arn}"
+  validation_record_fqdns = ["${aws_route53_record.jarombek-dev-wc-cert-validation-record.fqdn}"]
+}
+
 #--------------------------
 # Protects '*.jarombek.com'
 #--------------------------
@@ -40,6 +73,7 @@ resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
 
   tags {
     Environment = "all"
+    Application = "jarombek-com"
   }
 
   lifecycle {
@@ -47,17 +81,9 @@ resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
   }
 }
 
-resource "aws_route53_record" "jarombek-wc-cert-validation-record" {
-  name = "${aws_acm_certificate.jarombek-wildcard-acm-certificate.domain_validation_options.0.resource_record_name}"
-  type = "${aws_acm_certificate.jarombek-wildcard-acm-certificate.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.saints-xctf-zone.id}"
-  records = ["${aws_acm_certificate.jarombek-wildcard-acm-certificate.domain_validation_options.0.resource_record_value}"]
-  ttl = 60
-}
-
 resource "aws_acm_certificate_validation" "jarombek-wc-cert-validation" {
   certificate_arn = "${aws_acm_certificate.jarombek-wildcard-acm-certificate.arn}"
-  validation_record_fqdns = ["${aws_route53_record.jarombek-wc-cert-validation-record.fqdn}"]
+  validation_record_fqdns = ["${aws_route53_record.jarombek-cert-validation-record.fqdn}"]
 }
 
 #------------------------
@@ -70,6 +96,7 @@ resource "aws_acm_certificate" "jarombek-acm-certificate" {
 
   tags {
     Environment = "prod"
+    Application = "jarombek-com"
   }
 
   lifecycle {

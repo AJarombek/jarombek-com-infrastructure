@@ -6,7 +6,8 @@
 
 locals {
   env = "${var.prod ? "prod" : "dev"}"
-  domain_cert = "${var.prod ? "jarombek.com" : "dev.jarombek.com"}"
+  domain_cert = "${var.prod ? "jarombek.io" : "*.jarombek.io"}"
+  wildcard_domain_cert = "${var.prod ? "*.jarombek.io" : "*.dev.jarombek.io"}"
 }
 
 #-----------------------
@@ -37,7 +38,7 @@ data "aws_acm_certificate" "jarombek-com-certificate" {
 }
 
 data "aws_acm_certificate" "jarombek-com-wildcard-certificate" {
-  domain = "*.${local.domain_cert}"
+  domain = "${local.wildcard_domain_cert}"
   statuses = ["ISSUED"]
 }
 

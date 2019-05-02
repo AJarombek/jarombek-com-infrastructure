@@ -669,6 +669,13 @@ resource "aws_s3_bucket_object" "3-12-19-cd-project-gif" {
   etag = "${md5(file("${path.cwd}/s3-assets/assets/posts/3-12-19-cd-project.gif"))}"
 }
 
+resource "aws_s3_bucket_object" "4-28-19-app-png" {
+  bucket = "${aws_s3_bucket.assets-jarombek.id}"
+  key = "posts/4-28-19-app.png"
+  source = "s3-assets/assets/posts/4-28-19-app.png"
+  etag = "${md5(file("${path.cwd}/s3-assets/assets/posts/4-28-19-app.png"))}"
+}
+
 /*
  * Logos Directory
  */
