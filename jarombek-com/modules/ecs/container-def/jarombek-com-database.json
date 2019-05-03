@@ -4,11 +4,22 @@
     "memory": 512,
     "image": "ajarombek/jarombek-com-database:latest",
     "name": "jarombek-com-database",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/fargate-task-definition",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
     "networkMode": "awsvpc",
+    "essential": true,
+    "executionRoleArn": "arn:aws:iam::739088120071:role/ecsTaskExecutionRole",
     "portMappings": [
       {
         "containerPort": 27017,
-        "hostPort": 27017
+        "hostPort": 27017,
+        "protocol": "tcp"
       }
     ]
   }
