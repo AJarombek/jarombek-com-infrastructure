@@ -18,6 +18,22 @@ data "aws_vpc" "jarombek-com-vpc" {
   }
 }
 
+data "aws_subnet" "jarombek-com-yeezus-public-subnet" {
+  tags {
+    Name = "jarombek-com-yeezus-public-subnet"
+  }
+}
+
+data "aws_subnet" "jarombek-com-yandhi-public-subnet" {
+  tags {
+    Name = "jarombek-com-yandhi-public-subnet"
+  }
+}
+
+data "aws_iam_role" "ecs-task-role" {
+  name = "ecs-task-role"
+}
+
 #---------------------
 # ECS Cluser Resources
 #---------------------
@@ -30,6 +46,7 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
   family = "jarombek-com"
   network_mode = "awsvpc"
   requires_compatibilities = ["FARGATE"]
+  execution_role_arn = "${data.aws_iam_role.ecs-task-role.arn}"
   cpu = 256
   memory = 512
 
@@ -42,12 +59,27 @@ resource "aws_ecs_service" "jarombek-com-service" {
   task_definition = "${aws_ecs_task_definition.jarombek-com-task.arn}"
   desired_count = "${var.jarombek_com_desired_count}"
   launch_type = "FARGATE"
+
+  network_configuration {
+    security_groups = ["${aws_security_group.jarombek-com-ecs-sg.id}"]
+    subnets = [
+      "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
+      "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
+    ]
+  }
+
+  load_balancer {
+    target_group_arn = "${var.jarombek-com-lb-target-group}"
+    container_name = "jarombek-com"
+    container_port = 8080
+  }
 }
 
 resource "aws_ecs_task_definition" "jarombek-com-database-task" {
   family = "jarombek-com-database"
   network_mode = "awsvpc"
   requires_compatibilities = ["FARGATE"]
+  execution_role_arn = "${data.aws_iam_role.ecs-task-role.arn}"
   cpu = 256
   memory = 512
 
@@ -60,6 +92,20 @@ resource "aws_ecs_service" "jarombek-com-database-service" {
   task_definition = "${aws_ecs_task_definition.jarombek-com-database-task.arn}"
   desired_count = "${var.jarombek_com_database_desired_count}"
   launch_type = "FARGATE"
+
+  network_configuration {
+    security_groups = ["${aws_security_group.jarombek-com-ecs-sg.id}"]
+    subnets = [
+      "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
+      "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
+    ]
+  }
+
+  load_balancer {
+    target_group_arn = "${var.jarombek-com-lb-target-group}"
+    container_name = "jarombek-com-database"
+    container_port = 27017
+  }
 }
 
 resource "aws_security_group" "jarombek-com-ecs-sg" {
@@ -80,7 +126,7 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
   ingress {
     protocol = "tcp"
     from_port = 443
-    to_port = 80
+    to_port = 443
     security_groups = ["${var.alb_security_group}"]
   }
 
@@ -101,7 +147,7 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
   egress {
     protocol = "tcp"
     from_port = 443
-    to_port = 80
+    to_port = 443
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

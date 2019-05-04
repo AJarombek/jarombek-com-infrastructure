@@ -8,3 +8,8 @@ output "alb-sg" {
   description = "Security Group for the ALB"
   value = "${aws_security_group.jarombek-com-lb-security-group.id}"
 }
+
+output "jarombek-com-lb-target-group" {
+  description = "Target Group for the jarombek-com Load Balancer"
+  value = "${aws_lb_target_group.jarombek-com-lb-target-group.arn}"
+}

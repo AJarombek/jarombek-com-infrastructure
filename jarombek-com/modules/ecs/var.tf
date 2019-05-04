@@ -22,3 +22,7 @@ variable "jarombek_com_database_desired_count" {
 variable "alb_security_group" {
   description = "Security group for the ALB used by the ECS cluster"
 }
+
+variable "jarombek-com-lb-target-group" {
+  description = "Target Group for the jarombek-com Load Balancer"
+}
