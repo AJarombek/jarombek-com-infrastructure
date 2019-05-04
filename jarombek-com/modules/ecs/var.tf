@@ -4,6 +4,11 @@
  * Date: 4/13/2019
  */
 
+variable "dependencies" {
+  description = "Resources that this module is dependent on"
+  type = "list"
+}
+
 variable "prod" {
   description = "If the environment for the ECS cluster is production"
   default = false

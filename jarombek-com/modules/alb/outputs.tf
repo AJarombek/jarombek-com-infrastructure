@@ -4,6 +4,11 @@
  * Date: 4/23/2019
  */
 
+output "depended_on" {
+  description = "Resources that other modules depend on"
+  value = "${null_resource.dependency-setter.id}"
+}
+
 output "alb-sg" {
   description = "Security Group for the ALB"
   value = "${aws_security_group.jarombek-com-lb-security-group.id}"

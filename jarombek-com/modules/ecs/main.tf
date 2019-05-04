@@ -38,6 +38,17 @@ data "aws_iam_role" "ecs-task-role" {
 # ECS Cluser Resources
 #---------------------
 
+/*
+  Get dependencies from other modules.  When a resource 'depends_on' the dependency-getter, it effectively depends on
+  resources in the other module.  Based off the following design:
+  https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
+*/
+resource "null_resource" "dependency-getter" {
+  provisioner "local-exec" {
+    command = "echo ${length(var.dependencies)}"
+  }
+}
+
 resource "aws_ecs_cluster" "jarombek-com-ecs-cluster" {
   name = "jarombek-com-ecs-cluster"
 }
@@ -51,6 +62,8 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
   memory = 512
 
   container_definitions = "${file("${path.module}/container-def/jarombek-com.json")}"
+
+  depends_on = ["null_resource.dependency-getter"]
 }
 
 resource "aws_ecs_service" "jarombek-com-service" {
@@ -73,6 +86,8 @@ resource "aws_ecs_service" "jarombek-com-service" {
     container_name = "jarombek-com"
     container_port = 8080
   }
+
+  depends_on = ["null_resource.dependency-getter"]
 }
 
 resource "aws_ecs_task_definition" "jarombek-com-database-task" {
@@ -84,6 +99,8 @@ resource "aws_ecs_task_definition" "jarombek-com-database-task" {
   memory = 512
 
   container_definitions = "${file("${path.module}/container-def/jarombek-com-database.json")}"
+
+  depends_on = ["null_resource.dependency-getter"]
 }
 
 resource "aws_ecs_service" "jarombek-com-database-service" {
@@ -106,6 +123,8 @@ resource "aws_ecs_service" "jarombek-com-database-service" {
     container_name = "jarombek-com-database"
     container_port = 27017
   }
+
+  depends_on = ["null_resource.dependency-getter"]
 }
 
 resource "aws_security_group" "jarombek-com-ecs-sg" {

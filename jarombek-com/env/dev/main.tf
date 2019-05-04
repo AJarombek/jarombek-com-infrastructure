@@ -84,4 +84,8 @@ module "ecs" {
   jarombek_com_database_desired_count = 1
   alb_security_group = "${module.alb.alb-sg}"
   jarombek-com-lb-target-group = "${module.alb.jarombek-com-lb-target-group}"
+
+  dependencies = [
+    "${module.alb.depended_on}"
+  ]
 }

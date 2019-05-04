@@ -77,6 +77,7 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
   port = 443
   protocol = "HTTPS"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
+  target_type = "ip"
 
   tags {
     Name = "jarombek-com-${local.env}-lb-target-group"
@@ -117,6 +118,7 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group-http" {
   port = 80
   protocol = "HTTP"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
+  target_type = "ip"
 
   tags {
     Name = "jarombek-com-${local.env}-lb-target-group-http"
@@ -167,4 +169,19 @@ resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-source" 
   protocol = "${lookup(var.load-balancer-sg-rules-source[count.index], "protocol", "-1")}"
 
   source_security_group_id = "${lookup(var.load-balancer-sg-rules-source[count.index], "source_sg", "")}"
+}
+
+/*
+  Dependencies required by resources in other modules.  Based of the following design:
+  https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
+*/
+resource "null_resource" "dependency-setter" {
+  depends_on = [
+    "aws_alb.jarombek-com-alb",
+    "aws_lb_listener.jarombek-com-lb-listener-http",
+    "aws_lb_listener.jarombek-com-lb-listener-https",
+    "aws_lb_listener_certificate.jarombek-com-lb-listener-wc-cert",
+    "aws_lb_target_group.jarombek-com-lb-target-group",
+    "aws_lb_target_group.jarombek-com-lb-target-group-http"
+  ]
 }
