@@ -6,6 +6,7 @@
 
 locals {
   env = "${var.prod ? "prod" : "dev"}"
+  env_tag = "${var.prod ? "production" : "development"}"
 }
 
 #-----------------------
@@ -50,7 +51,18 @@ resource "null_resource" "dependency-getter" {
 }
 
 resource "aws_ecs_cluster" "jarombek-com-ecs-cluster" {
-  name = "jarombek-com-ecs-cluster"
+  name = "jarombek-com-${local.env}-ecs-cluster"
+}
+
+resource "aws_cloudwatch_log_group" "jarombek-com-ecs-task-logs" {
+  name = "/ecs/fargate-tasks"
+  retention_in_days = 7
+
+  tags {
+    Name = "ecs-fargate-tasks"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
+  }
 }
 
 resource "aws_ecs_task_definition" "jarombek-com-task" {
@@ -63,7 +75,10 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
 
   container_definitions = "${file("${path.module}/container-def/jarombek-com.json")}"
 
-  depends_on = ["null_resource.dependency-getter"]
+  depends_on = [
+    "null_resource.dependency-getter",
+    "aws_cloudwatch_log_group.jarombek-com-ecs-task-logs"
+  ]
 }
 
 resource "aws_ecs_service" "jarombek-com-service" {
@@ -79,6 +94,7 @@ resource "aws_ecs_service" "jarombek-com-service" {
       "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
       "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
     ]
+    assign_public_ip = true
   }
 
   load_balancer {
@@ -100,7 +116,10 @@ resource "aws_ecs_task_definition" "jarombek-com-database-task" {
 
   container_definitions = "${file("${path.module}/container-def/jarombek-com-database.json")}"
 
-  depends_on = ["null_resource.dependency-getter"]
+  depends_on = [
+    "null_resource.dependency-getter",
+    "aws_cloudwatch_log_group.jarombek-com-ecs-task-logs"
+  ]
 }
 
 resource "aws_ecs_service" "jarombek-com-database-service" {
@@ -116,6 +135,7 @@ resource "aws_ecs_service" "jarombek-com-database-service" {
       "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
       "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
     ]
+    assign_public_ip = true
   }
 
   load_balancer {

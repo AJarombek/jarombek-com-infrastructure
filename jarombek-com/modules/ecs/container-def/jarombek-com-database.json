@@ -7,7 +7,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/fargate-task-definition",
+        "awslogs-group": "/ecs/fargate-tasks",
         "awslogs-region": "us-east-1",
         "awslogs-stream-prefix": "ecs"
       }

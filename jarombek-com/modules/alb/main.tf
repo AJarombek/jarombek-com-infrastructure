@@ -6,6 +6,7 @@
 
 locals {
   env = "${var.prod ? "prod" : "dev"}"
+  env_tag = "${var.prod ? "production" : "development"}"
   domain_cert = "${var.prod ? "jarombek.io" : "*.jarombek.io"}"
   wildcard_domain_cert = "${var.prod ? "*.jarombek.io" : "*.dev.jarombek.io"}"
 }
@@ -58,6 +59,8 @@ resource "aws_alb" "jarombek-com-alb" {
 
   tags {
     Name = "jarombek-com-${local.env}-alb"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
   }
 }
 
@@ -81,6 +84,8 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
 
   tags {
     Name = "jarombek-com-${local.env}-lb-target-group"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
   }
 }
 
@@ -122,6 +127,8 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group-http" {
 
   tags {
     Name = "jarombek-com-${local.env}-lb-target-group-http"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
   }
 }
 
