@@ -1,9 +1,32 @@
 [
   {
-    "cpu": 256,
-    "memory": 512,
+    "cpu": 128,
+    "memory": 256,
     "image": "ajarombek/jarombek-com:latest",
     "name": "jarombek-com",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/fargate-tasks",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "networkMode": "awsvpc",
+    "essential": false,
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 8080,
+        "protocol": "tcp"
+      }
+    ]
+  },
+  {
+    "cpu": 128,
+    "memory": 256,
+    "image": "ajarombek/jarombek-com-database:latest",
+    "name": "jarombek-com-database",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -16,8 +39,8 @@
     "essential": true,
     "portMappings": [
       {
-        "containerPort": 8080,
-        "hostPort": 8080,
+        "containerPort": 27017,
+        "hostPort": 27017,
         "protocol": "tcp"
       }
     ]

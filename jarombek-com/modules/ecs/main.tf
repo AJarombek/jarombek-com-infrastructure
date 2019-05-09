@@ -106,47 +106,6 @@ resource "aws_ecs_service" "jarombek-com-service" {
   depends_on = ["null_resource.dependency-getter"]
 }
 
-resource "aws_ecs_task_definition" "jarombek-com-database-task" {
-  family = "jarombek-com-database"
-  network_mode = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  execution_role_arn = "${data.aws_iam_role.ecs-task-role.arn}"
-  cpu = 256
-  memory = 512
-
-  container_definitions = "${file("${path.module}/container-def/jarombek-com-database.json")}"
-
-  depends_on = [
-    "null_resource.dependency-getter",
-    "aws_cloudwatch_log_group.jarombek-com-ecs-task-logs"
-  ]
-}
-
-resource "aws_ecs_service" "jarombek-com-database-service" {
-  name = "jarombek-com-database-ecs-service"
-  cluster = "${aws_ecs_cluster.jarombek-com-ecs-cluster.id}"
-  task_definition = "${aws_ecs_task_definition.jarombek-com-database-task.arn}"
-  desired_count = "${var.jarombek_com_database_desired_count}"
-  launch_type = "FARGATE"
-
-  network_configuration {
-    security_groups = ["${aws_security_group.jarombek-com-ecs-sg.id}"]
-    subnets = [
-      "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}",
-      "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}"
-    ]
-    assign_public_ip = true
-  }
-
-  load_balancer {
-    target_group_arn = "${var.jarombek-com-lb-target-group}"
-    container_name = "jarombek-com-database"
-    container_port = 27017
-  }
-
-  depends_on = ["null_resource.dependency-getter"]
-}
-
 resource "aws_security_group" "jarombek-com-ecs-sg" {
   name = "jarombek-com-${local.env}-ecs-security-group"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
@@ -166,6 +125,13 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
     protocol = "tcp"
     from_port = 443
     to_port = 443
+    security_groups = ["${var.alb_security_group}"]
+  }
+
+  ingress {
+    protocol = "tcp"
+    from_port = 8080
+    to_port = 8080
     security_groups = ["${var.alb_security_group}"]
   }
 

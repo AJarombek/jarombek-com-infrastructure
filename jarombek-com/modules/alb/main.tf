@@ -72,6 +72,7 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
     timeout = 5
     healthy_threshold = 3
     unhealthy_threshold = 2
+    port = "traffic-port"
     protocol = "HTTPS"
     path = "/"
     matcher = "200-299"
@@ -107,39 +108,19 @@ resource "aws_lb_listener_certificate" "jarombek-com-lb-listener-wc-cert" {
   certificate_arn = "${data.aws_acm_certificate.jarombek-com-wildcard-certificate.arn}"
 }
 
-resource "aws_lb_target_group" "jarombek-com-lb-target-group-http" {
-  name = "jarombek-com-lb-target-http"
-
-  health_check {
-    interval = 10
-    timeout = 5
-    healthy_threshold = 3
-    unhealthy_threshold = 2
-    protocol = "HTTP"
-    path = "/"
-    matcher = "200-299"
-  }
-
-  port = 80
-  protocol = "HTTP"
-  vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
-  target_type = "ip"
-
-  tags {
-    Name = "jarombek-com-${local.env}-lb-target-group-http"
-    Application = "jarombek-com"
-    Environment = "${local.env_tag}"
-  }
-}
-
 resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
   load_balancer_arn = "${aws_alb.jarombek-com-alb.arn}"
   port = 80
   protocol = "HTTP"
 
   default_action {
-    target_group_arn = "${aws_lb_target_group.jarombek-com-lb-target-group-http.arn}"
-    type = "forward"
+    type = "redirect"
+
+    redirect {
+      port = 443
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 
