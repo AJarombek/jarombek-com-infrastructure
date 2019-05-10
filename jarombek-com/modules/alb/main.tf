@@ -125,11 +125,17 @@ resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
 }
 
 resource "aws_security_group" "jarombek-com-lb-security-group" {
-  name = "jarombek-com-${local.env}-alb-security-group"
+  name = "jarombek-com-${local.env}-lb-security-group"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  tags {
+    Name = "jarombek-com-${local.env}-lb-security-group"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
   }
 }
 
@@ -169,7 +175,6 @@ resource "null_resource" "dependency-setter" {
     "aws_lb_listener.jarombek-com-lb-listener-http",
     "aws_lb_listener.jarombek-com-lb-listener-https",
     "aws_lb_listener_certificate.jarombek-com-lb-listener-wc-cert",
-    "aws_lb_target_group.jarombek-com-lb-target-group",
-    "aws_lb_target_group.jarombek-com-lb-target-group-http"
+    "aws_lb_target_group.jarombek-com-lb-target-group"
   ]
 }
