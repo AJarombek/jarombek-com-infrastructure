@@ -20,6 +20,17 @@
         "hostPort": 8080,
         "protocol": "tcp"
       }
+    ],
+    "healthCheck": {
+      "command": ["CMD-SHELL", "curl -f http://localhost/ || exit 1"],
+      "retries": 5,
+      "startPeriod": 60
+    },
+    "dependsOn": [
+      {
+        "containerName": "jarombek-com-database",
+        "condition": "START"
+      }
     ]
   },
   {

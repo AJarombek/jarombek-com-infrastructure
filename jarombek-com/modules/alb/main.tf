@@ -68,6 +68,7 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
   name = "jarombek-com-alb-target"
 
   health_check {
+    enabled = true
     interval = 10
     timeout = 5
     healthy_threshold = 3

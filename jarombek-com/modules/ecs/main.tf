@@ -52,6 +52,12 @@ resource "null_resource" "dependency-getter" {
 
 resource "aws_ecs_cluster" "jarombek-com-ecs-cluster" {
   name = "jarombek-com-${local.env}-ecs-cluster"
+
+  tags {
+    Name = "jarombek-com-${local.env}-ecs-cluster"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
+  }
 }
 
 resource "aws_cloudwatch_log_group" "jarombek-com-ecs-task-logs" {
@@ -116,23 +122,9 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
 
   ingress {
     protocol = "tcp"
-    from_port = 80
-    to_port = 80
-    security_groups = ["${var.alb_security_group}"]
-  }
-
-  ingress {
-    protocol = "tcp"
-    from_port = 443
-    to_port = 443
-    security_groups = ["${var.alb_security_group}"]
-  }
-
-  ingress {
-    protocol = "tcp"
     from_port = 8080
     to_port = 8080
-    security_groups = ["${var.alb_security_group}"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -142,17 +134,9 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  egress {
-    protocol = "tcp"
-    from_port = 80
-    to_port = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    protocol = "tcp"
-    from_port = 443
-    to_port = 443
-    cidr_blocks = ["0.0.0.0/0"]
+  tags {
+    Name = "jarombek-com-${local.env}-ecs-security-group"
+    Application = "jarombek-com"
+    Environment = "${local.env_tag}"
   }
 }
