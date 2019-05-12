@@ -9,6 +9,7 @@ locals {
   env_tag = "${var.prod ? "production" : "development"}"
   domain_cert = "${var.prod ? "jarombek.io" : "*.jarombek.io"}"
   wildcard_domain_cert = "${var.prod ? "*.jarombek.io" : "*.dev.jarombek.io"}"
+  web_domain = "${var.prod ? "jarombek.io." : "dev.jarombek.io."}"
 }
 
 #-----------------------
@@ -43,11 +44,15 @@ data "aws_acm_certificate" "jarombek-com-wildcard-certificate" {
   statuses = ["ISSUED"]
 }
 
+data "aws_route53_zone" "jarombek" {
+  name = "jarombek.io."
+}
+
 #--------------
 # ALB Resources
 #--------------
 
-resource "aws_alb" "jarombek-com-alb" {
+resource "aws_lb" "jarombek-com-lb" {
   name = "jarombek-com-${local.env}-alb"
 
   subnets = [
@@ -73,14 +78,14 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
     timeout = 5
     healthy_threshold = 3
     unhealthy_threshold = 2
-    port = "traffic-port"
-    protocol = "HTTPS"
+    port = 8080
+    protocol = "HTTP"
     path = "/"
     matcher = "200-299"
   }
 
-  port = 443
-  protocol = "HTTPS"
+  port = 8080
+  protocol = "HTTP"
   vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
   target_type = "ip"
 
@@ -92,7 +97,7 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
 }
 
 resource "aws_lb_listener" "jarombek-com-lb-listener-https" {
-  load_balancer_arn = "${aws_alb.jarombek-com-alb.arn}"
+  load_balancer_arn = "${aws_lb.jarombek-com-lb.arn}"
   port = 443
   protocol = "HTTPS"
 
@@ -110,7 +115,7 @@ resource "aws_lb_listener_certificate" "jarombek-com-lb-listener-wc-cert" {
 }
 
 resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
-  load_balancer_arn = "${aws_alb.jarombek-com-alb.arn}"
+  load_balancer_arn = "${aws_lb.jarombek-com-lb.arn}"
   port = 80
   protocol = "HTTP"
 
@@ -166,13 +171,42 @@ resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-source" 
   source_security_group_id = "${lookup(var.load-balancer-sg-rules-source[count.index], "source_sg", "")}"
 }
 
+#--------------
+# DNS Resources
+#--------------
+
+resource "aws_route53_record" "jarombek_a" {
+  name = "${local.web_domain}"
+  type = "A"
+  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+
+  alias {
+    evaluate_target_health = true
+    name = "${aws_lb.jarombek-com-lb.dns_name}"
+    zone_id = "${aws_lb.jarombek-com-lb.zone_id}"
+  }
+}
+
+resource "aws_route53_record" "jarombek_cname" {
+  name = "www.${local.web_domain}"
+  type = "CNAME"
+  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  ttl = 300
+
+  records = ["${local.web_domain}"]
+}
+
+#--------------------
+# Module Dependencies
+#--------------------
+
 /*
   Dependencies required by resources in other modules.  Based of the following design:
   https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
 */
 resource "null_resource" "dependency-setter" {
   depends_on = [
-    "aws_alb.jarombek-com-alb",
+    "aws_lb.jarombek-com-lb",
     "aws_lb_listener.jarombek-com-lb-listener-http",
     "aws_lb_listener.jarombek-com-lb-listener-https",
     "aws_lb_listener_certificate.jarombek-com-lb-listener-wc-cert",

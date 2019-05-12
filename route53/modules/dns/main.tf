@@ -13,10 +13,6 @@ locals {
 # Existing AWS Resources
 #-----------------------
 
-data "aws_lb" "jarombek-com-lb" {
-  name = "jarombek-com-lb-${local.env}"
-}
-
 data "aws_route53_zone" "jarombek" {
   name = "jarombek.com."
 }
@@ -24,15 +20,6 @@ data "aws_route53_zone" "jarombek" {
 #------------------------------
 # New AWS Resources for Route53
 #------------------------------
-
-resource "aws_route53_record" "jarombek_a" {
-  name = "jarombek.com."
-  type = "A"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
-  ttl = 300
-
-  records = ["${data.aws_lb.jarombek-com-lb.dns_name}"]
-}
 
 resource "aws_route53_record" "fn_jarombek_a" {
   name = "fn.jarombek.com."
