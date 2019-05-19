@@ -697,6 +697,20 @@ resource "aws_s3_bucket_object" "5-13-19-cluster-png" {
   etag = "${md5(file("${path.cwd}/s3-assets/assets/posts/5-13-19-cluster.png"))}"
 }
 
+resource "aws_s3_bucket_object" "5-20-19-web-browser" {
+  bucket = "${aws_s3_bucket.assets-jarombek.id}"
+  key = "posts/5-20-19-web-browser.png"
+  source = "s3-assets/assets/posts/5-20-19-web-browser.png"
+  etag = "${md5(file("${path.cwd}/s3-assets/assets/posts/5-20-19-web-browser.png"))}"
+}
+
+resource "aws_s3_bucket_object" "5-20-19-aws-console" {
+  bucket = "${aws_s3_bucket.assets-jarombek.id}"
+  key = "posts/5-20-19-aws-console.png"
+  source = "s3-assets/assets/posts/5-20-19-aws-console.png"
+  etag = "${md5(file("${path.cwd}/s3-assets/assets/posts/5-20-19-aws-console.png"))}"
+}
+
 /*
  * Logos Directory
  */

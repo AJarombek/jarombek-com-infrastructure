@@ -7,6 +7,7 @@
 locals {
   env = "${var.prod ? "prod" : "dev"}"
   env_tag = "${var.prod ? "production" : "development"}"
+  container_def = "${var.prod ? "jarombek-com.json" : "dev-jarombek-com.json"}"
 }
 
 #-----------------------
@@ -79,7 +80,7 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
   cpu = 256
   memory = 512
 
-  container_definitions = "${file("${path.module}/container-def/jarombek-com.json")}"
+  container_definitions = "${file("${path.module}/container-def/${local.container_def}")}"
 
   depends_on = [
     "null_resource.dependency-getter",

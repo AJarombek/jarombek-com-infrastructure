@@ -2,7 +2,7 @@
   {
     "cpu": 128,
     "memory": 256,
-    "image": "ajarombek/jarombek-com:1.1.5",
+    "image": "ajarombek/jarombek-com:latest",
     "name": "jarombek-com",
     "logConfiguration": {
       "logDriver": "awslogs",
@@ -24,7 +24,7 @@
     "environment": [
       {
         "name": "NODE_ENV",
-        "value": "production"
+        "value": "development"
       }
     ],
     "healthCheck": {
@@ -42,7 +42,7 @@
   {
     "cpu": 128,
     "memory": 256,
-    "image": "ajarombek/jarombek-com-database:1.0.0",
+    "image": "ajarombek/jarombek-com-database:latest",
     "name": "jarombek-com-database",
     "logConfiguration": {
       "logDriver": "awslogs",
