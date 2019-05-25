@@ -6,7 +6,7 @@
 
 variable "dependencies" {
   description = "Resources that this module is dependent on"
-  type = "list"
+  type = list
 }
 
 variable "prod" {

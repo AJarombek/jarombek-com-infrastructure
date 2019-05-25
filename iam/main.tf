@@ -9,6 +9,8 @@ provider "aws" {
 }
 
 terraform {
+  required_version = ">= 0.12"
+
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true
@@ -24,12 +26,12 @@ terraform {
 resource "aws_iam_role" "ecs-task-role" {
   name = "ecs-task-role"
   path = "/admin/"
-  assume_role_policy = "${file("policies/ecs-tasks-assume-role-policy.json")}"
+  assume_role_policy = file("policies/ecs-tasks-assume-role-policy.json")
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-role-policy" {
-  policy_arn = "${aws_iam_policy.ecs-task-policy.arn}"
-  role = "${aws_iam_role.ecs-task-role.name}"
+  policy_arn = aws_iam_policy.ecs-task-policy.arn
+  role = aws_iam_role.ecs-task-role.name
 }
 
 # ------------
@@ -39,5 +41,5 @@ resource "aws_iam_role_policy_attachment" "ecs-task-role-policy" {
 resource "aws_iam_policy" "ecs-task-policy" {
   name = "ecs-task-policy"
   path = "/jarombek-com/"
-  policy = "${file("policies/ecs-task-policy.json")}"
+  policy = file("policies/ecs-task-policy.json")
 }

@@ -7,7 +7,7 @@
 locals {
   # Environment
   prod = false
-  env = "${local.prod ? "prod" : "dev"}"
+  env = local.prod ? "prod" : "dev"
 
   # CIDR blocks for firewalls
   public_cidr = "0.0.0.0/0"
@@ -19,6 +19,8 @@ provider "aws" {
 }
 
 terraform {
+  required_version = ">= 0.12"
+
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true
@@ -29,7 +31,7 @@ terraform {
 
 module "alb" {
   source = "../../modules/alb"
-  prod = "${local.prod}"
+  prod = local.prod
 
   load-balancer-sg-rules-cidr = [
     {
@@ -38,7 +40,7 @@ module "alb" {
       from_port = 80
       to_port = 80
       protocol = "tcp"
-      cidr_blocks = "${local.public_cidr}"
+      cidr_blocks = local.public_cidr
     },
     {
       # Inbound traffic from the internet
@@ -46,7 +48,7 @@ module "alb" {
       from_port = 443
       to_port = 443
       protocol = "tcp"
-      cidr_blocks = "${local.public_cidr}"
+      cidr_blocks = local.public_cidr
     },
     {
       # Outbound traffic on all ports
@@ -54,7 +56,7 @@ module "alb" {
       from_port = 0
       to_port = 0
       protocol = "-1"
-      cidr_blocks = "${local.public_cidr}"
+      cidr_blocks = local.public_cidr
     }
   ]
 
@@ -63,13 +65,13 @@ module "alb" {
 
 module "ecs" {
   source = "../../modules/ecs"
-  prod = "${local.prod}"
+  prod = local.prod
   jarombek_com_desired_count = 1
   jarombek_com_database_desired_count = 1
-  alb_security_group = "${module.alb.alb-sg}"
-  jarombek-com-lb-target-group = "${module.alb.jarombek-com-lb-target-group}"
+  alb_security_group = module.alb.alb-sg
+  jarombek-com-lb-target-group = module.alb.jarombek-com-lb-target-group
 
   dependencies = [
-    "${module.alb.depended_on}"
+    module.alb.depended_on
   ]
 }

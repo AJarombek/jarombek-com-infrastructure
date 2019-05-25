@@ -9,6 +9,8 @@ provider "aws" {
 }
 
 terraform {
+  required_version = ">= 0.12"
+
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true
@@ -38,7 +40,7 @@ resource "aws_acm_certificate" "jarombek-dev-wildcard-acm-certificate" {
   domain_name = "*.dev.jarombek.io"
   validation_method = "DNS"
 
-  tags {
+  tags = {
     Environment = "dev"
     Application = "jarombek-com"
   }
@@ -49,18 +51,18 @@ resource "aws_acm_certificate" "jarombek-dev-wildcard-acm-certificate" {
 }
 
 resource "aws_route53_record" "jarombek-dev-wc-cert-validation-record" {
-  name = "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options.0.resource_record_name}"
-  type = "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.saints-xctf-zone.id}"
+  name = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_name
+  type = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_type
+  zone_id = data.aws_route53_zone.saints-xctf-zone.id
   records = [
-    "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options.0.resource_record_value}"
+    aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_value
   ]
   ttl = 60
 }
 
 resource "aws_acm_certificate_validation" "jarombek-dev-wc-cert-validation" {
-  certificate_arn = "${aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.arn}"
-  validation_record_fqdns = ["${aws_route53_record.jarombek-dev-wc-cert-validation-record.fqdn}"]
+  certificate_arn = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.arn
+  validation_record_fqdns = [aws_route53_record.jarombek-dev-wc-cert-validation-record.fqdn]
 }
 
 #--------------------------
@@ -71,7 +73,7 @@ resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
   domain_name = "*.jarombek.io"
   validation_method = "DNS"
 
-  tags {
+  tags = {
     Environment = "all"
     Application = "jarombek-com"
   }
@@ -82,8 +84,8 @@ resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
 }
 
 resource "aws_acm_certificate_validation" "jarombek-wc-cert-validation" {
-  certificate_arn = "${aws_acm_certificate.jarombek-wildcard-acm-certificate.arn}"
-  validation_record_fqdns = ["${aws_route53_record.jarombek-cert-validation-record.fqdn}"]
+  certificate_arn = aws_acm_certificate.jarombek-wildcard-acm-certificate.arn
+  validation_record_fqdns = [aws_route53_record.jarombek-cert-validation-record.fqdn]
 }
 
 #------------------------
@@ -94,7 +96,7 @@ resource "aws_acm_certificate" "jarombek-acm-certificate" {
   domain_name = "jarombek.io"
   validation_method = "DNS"
 
-  tags {
+  tags = {
     Environment = "prod"
     Application = "jarombek-com"
   }
@@ -105,14 +107,14 @@ resource "aws_acm_certificate" "jarombek-acm-certificate" {
 }
 
 resource "aws_route53_record" "jarombek-cert-validation-record" {
-  name = "${aws_acm_certificate.jarombek-acm-certificate.domain_validation_options.0.resource_record_name}"
-  type = "${aws_acm_certificate.jarombek-acm-certificate.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.saints-xctf-zone.id}"
-  records = ["${aws_acm_certificate.jarombek-acm-certificate.domain_validation_options.0.resource_record_value}"]
+  name = aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_name
+  type = aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_type
+  zone_id = data.aws_route53_zone.saints-xctf-zone.id
+  records = [aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_value]
   ttl = 60
 }
 
 resource "aws_acm_certificate_validation" "jarombek-cert-validation" {
-  certificate_arn = "${aws_acm_certificate.jarombek-acm-certificate.arn}"
-  validation_record_fqdns = ["${aws_route53_record.jarombek-cert-validation-record.fqdn}"]
+  certificate_arn = aws_acm_certificate.jarombek-acm-certificate.arn
+  validation_record_fqdns = [aws_route53_record.jarombek-cert-validation-record.fqdn]
 }

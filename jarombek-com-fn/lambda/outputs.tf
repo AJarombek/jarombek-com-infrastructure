@@ -5,5 +5,5 @@
  */
 
 output "function-name" {
-  value = "${aws_lambda_function.welcome-email.function_name}"
+  value = aws_lambda_function.welcome-email.function_name
 }

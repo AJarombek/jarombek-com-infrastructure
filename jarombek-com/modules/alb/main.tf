@@ -5,11 +5,11 @@
  */
 
 locals {
-  env = "${var.prod ? "prod" : "dev"}"
-  env_tag = "${var.prod ? "production" : "development"}"
-  domain_cert = "${var.prod ? "jarombek.io" : "*.jarombek.io"}"
-  wildcard_domain_cert = "${var.prod ? "*.jarombek.io" : "*.dev.jarombek.io"}"
-  web_domain = "${var.prod ? "jarombek.io." : "dev.jarombek.io."}"
+  env = var.prod ? "prod" : "dev"
+  env_tag = var.prod ? "production" : "development"
+  domain_cert = var.prod ? "jarombek.io" : "*.jarombek.io"
+  wildcard_domain_cert = var.prod ? "*.jarombek.io" : "*.dev.jarombek.io"
+  web_domain = var.prod ? "jarombek.io." : "dev.jarombek.io."
 }
 
 #-----------------------
@@ -17,30 +17,30 @@ locals {
 #-----------------------
 
 data "aws_vpc" "jarombek-com-vpc" {
-  tags {
+  tags = {
     Name = "jarombek-com-vpc"
   }
 }
 
 data "aws_subnet" "jarombek-com-yeezus-public-subnet" {
-  tags {
+  tags = {
     Name = "jarombek-com-yeezus-public-subnet"
   }
 }
 
 data "aws_subnet" "jarombek-com-yandhi-public-subnet" {
-  tags {
+  tags = {
     Name = "jarombek-com-yandhi-public-subnet"
   }
 }
 
 data "aws_acm_certificate" "jarombek-com-certificate" {
-  domain = "${local.domain_cert}"
+  domain = local.domain_cert
   statuses = ["ISSUED"]
 }
 
 data "aws_acm_certificate" "jarombek-com-wildcard-certificate" {
-  domain = "${local.wildcard_domain_cert}"
+  domain = local.wildcard_domain_cert
   statuses = ["ISSUED"]
 }
 
@@ -56,16 +56,16 @@ resource "aws_lb" "jarombek-com-lb" {
   name = "jarombek-com-${local.env}-alb"
 
   subnets = [
-    "${data.aws_subnet.jarombek-com-yandhi-public-subnet.id}",
-    "${data.aws_subnet.jarombek-com-yeezus-public-subnet.id}"
+    data.aws_subnet.jarombek-com-yandhi-public-subnet.id,
+    data.aws_subnet.jarombek-com-yeezus-public-subnet.id
   ]
 
-  security_groups = ["${aws_security_group.jarombek-com-lb-security-group.id}"]
+  security_groups = [aws_security_group.jarombek-com-lb-security-group.id]
 
-  tags {
+  tags = {
     Name = "jarombek-com-${local.env}-alb"
     Application = "jarombek-com"
-    Environment = "${local.env_tag}"
+    Environment = local.env_tag
   }
 }
 
@@ -86,36 +86,36 @@ resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
 
   port = 8080
   protocol = "HTTP"
-  vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
+  vpc_id = data.aws_vpc.jarombek-com-vpc.id
   target_type = "ip"
 
-  tags {
+  tags = {
     Name = "jarombek-com-${local.env}-lb-target-group"
     Application = "jarombek-com"
-    Environment = "${local.env_tag}"
+    Environment = local.env_tag
   }
 }
 
 resource "aws_lb_listener" "jarombek-com-lb-listener-https" {
-  load_balancer_arn = "${aws_lb.jarombek-com-lb.arn}"
+  load_balancer_arn = aws_lb.jarombek-com-lb.arn
   port = 443
   protocol = "HTTPS"
 
-  certificate_arn = "${data.aws_acm_certificate.jarombek-com-certificate.arn}"
+  certificate_arn = data.aws_acm_certificate.jarombek-com-certificate.arn
 
   default_action {
-    target_group_arn = "${aws_lb_target_group.jarombek-com-lb-target-group.arn}"
+    target_group_arn = aws_lb_target_group.jarombek-com-lb-target-group.arn
     type = "forward"
   }
 }
 
 resource "aws_lb_listener_certificate" "jarombek-com-lb-listener-wc-cert" {
-  listener_arn    = "${aws_lb_listener.jarombek-com-lb-listener-https.arn}"
-  certificate_arn = "${data.aws_acm_certificate.jarombek-com-wildcard-certificate.arn}"
+  listener_arn    = aws_lb_listener.jarombek-com-lb-listener-https.arn
+  certificate_arn = data.aws_acm_certificate.jarombek-com-wildcard-certificate.arn
 }
 
 resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
-  load_balancer_arn = "${aws_lb.jarombek-com-lb.arn}"
+  load_balancer_arn = aws_lb.jarombek-com-lb.arn
   port = 80
   protocol = "HTTP"
 
@@ -132,43 +132,43 @@ resource "aws_lb_listener" "jarombek-com-lb-listener-http" {
 
 resource "aws_security_group" "jarombek-com-lb-security-group" {
   name = "jarombek-com-${local.env}-lb-security-group"
-  vpc_id = "${data.aws_vpc.jarombek-com-vpc.id}"
+  vpc_id = data.aws_vpc.jarombek-com-vpc.id
 
   lifecycle {
     create_before_destroy = true
   }
 
-  tags {
+  tags = {
     Name = "jarombek-com-${local.env}-lb-security-group"
     Application = "jarombek-com"
-    Environment = "${local.env_tag}"
+    Environment = local.env_tag
   }
 }
 
 resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-cidr" {
-  count = "${length(var.load-balancer-sg-rules-cidr)}"
+  count = length(var.load-balancer-sg-rules-cidr)
 
-  security_group_id = "${aws_security_group.jarombek-com-lb-security-group.id}"
-  type = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "type", "ingress")}"
+  security_group_id = aws_security_group.jarombek-com-lb-security-group.id
+  type = lookup(var.load-balancer-sg-rules-cidr[count.index], "type", "ingress")
 
-  from_port = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "from_port", 0)}"
-  to_port = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "to_port", 0)}"
-  protocol = "${lookup(var.load-balancer-sg-rules-cidr[count.index], "protocol", "-1")}"
+  from_port = lookup(var.load-balancer-sg-rules-cidr[count.index], "from_port", 0)
+  to_port = lookup(var.load-balancer-sg-rules-cidr[count.index], "to_port", 0)
+  protocol = lookup(var.load-balancer-sg-rules-cidr[count.index], "protocol", "-1")
 
-  cidr_blocks = ["${lookup(var.load-balancer-sg-rules-cidr[count.index], "cidr_blocks", "")}"]
+  cidr_blocks = [lookup(var.load-balancer-sg-rules-cidr[count.index], "cidr_blocks", "")]
 }
 
 resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-source" {
-  count = "${length(var.load-balancer-sg-rules-source)}"
+  count = length(var.load-balancer-sg-rules-source)
 
-  security_group_id = "${aws_security_group.jarombek-com-lb-security-group.id}"
-  type = "${lookup(var.load-balancer-sg-rules-source[count.index], "type", "ingress")}"
+  security_group_id = aws_security_group.jarombek-com-lb-security-group.id
+  type = lookup(var.load-balancer-sg-rules-source[count.index], "type", "ingress")
 
-  from_port = "${lookup(var.load-balancer-sg-rules-source[count.index], "from_port", 0)}"
-  to_port = "${lookup(var.load-balancer-sg-rules-source[count.index], "to_port", 0)}"
-  protocol = "${lookup(var.load-balancer-sg-rules-source[count.index], "protocol", "-1")}"
+  from_port = lookup(var.load-balancer-sg-rules-source[count.index], "from_port", 0)
+  to_port = lookup(var.load-balancer-sg-rules-source[count.index], "to_port", 0)
+  protocol = lookup(var.load-balancer-sg-rules-source[count.index], "protocol", "-1")
 
-  source_security_group_id = "${lookup(var.load-balancer-sg-rules-source[count.index], "source_sg", "")}"
+  source_security_group_id = lookup(var.load-balancer-sg-rules-source[count.index], "source_sg", "")
 }
 
 #--------------
@@ -176,24 +176,24 @@ resource "aws_security_group_rule" "jarombek-com-lb-security-group-rule-source" 
 #--------------
 
 resource "aws_route53_record" "jarombek_a" {
-  name = "${local.web_domain}"
+  name = local.web_domain
   type = "A"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
 
   alias {
     evaluate_target_health = true
-    name = "${aws_lb.jarombek-com-lb.dns_name}"
-    zone_id = "${aws_lb.jarombek-com-lb.zone_id}"
+    name = aws_lb.jarombek-com-lb.dns_name
+    zone_id = aws_lb.jarombek-com-lb.zone_id
   }
 }
 
 resource "aws_route53_record" "jarombek_cname" {
   name = "www.${local.web_domain}"
   type = "CNAME"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
   ttl = 300
 
-  records = ["${local.web_domain}"]
+  records = [local.web_domain]
 }
 
 #--------------------
@@ -206,10 +206,10 @@ resource "aws_route53_record" "jarombek_cname" {
 */
 resource "null_resource" "dependency-setter" {
   depends_on = [
-    "aws_lb.jarombek-com-lb",
-    "aws_lb_listener.jarombek-com-lb-listener-http",
-    "aws_lb_listener.jarombek-com-lb-listener-https",
-    "aws_lb_listener_certificate.jarombek-com-lb-listener-wc-cert",
-    "aws_lb_target_group.jarombek-com-lb-target-group"
+    aws_lb.jarombek-com-lb,
+    aws_lb_listener.jarombek-com-lb-listener-http,
+    aws_lb_listener.jarombek-com-lb-listener-https,
+    aws_lb_listener_certificate.jarombek-com-lb-listener-wc-cert,
+    aws_lb_target_group.jarombek-com-lb-target-group
   ]
 }

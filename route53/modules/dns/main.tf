@@ -5,8 +5,8 @@
  */
 
 locals {
-  env = "${var.prod ? "prod" : "dev"}"
-  web_domain = "${var.prod ? "jarombek.com." : "dev.jarombek.com."}"
+  env = var.prod ? "prod" : "dev"
+  web_domain = var.prod ? "jarombek.com." : "dev.jarombek.com."
 }
 
 #-----------------------
@@ -24,7 +24,7 @@ data "aws_route53_zone" "jarombek" {
 resource "aws_route53_record" "fn_jarombek_a" {
   name = "fn.jarombek.com."
   type = "A"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
 
   # TTL for all alias records is 60 seconds
   alias {
@@ -37,7 +37,7 @@ resource "aws_route53_record" "fn_jarombek_a" {
 resource "aws_route53_record" "jarombek_cname" {
   name = "www.jarombek.com."
   type = "CNAME"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
   ttl = 300
 
   records = ["jarombek.com."]
@@ -46,7 +46,7 @@ resource "aws_route53_record" "jarombek_cname" {
 resource "aws_route53_record" "jarombek_mx" {
   name = "jarombek.com."
   type = "MX"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
   ttl = 300
 
   records = [
@@ -61,7 +61,7 @@ resource "aws_route53_record" "jarombek_mx" {
 resource "aws_route53_record" "fn_jarombek_txt" {
   name = "_acme-challenge.fn.jarombek.com."
   type = "TXT"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
   ttl = 300
 
   records = ["xc0Vilgr6au429PaMEDwMRwiu7XvVHp3e5Ttf-CLzmM"]
@@ -70,7 +70,7 @@ resource "aws_route53_record" "fn_jarombek_txt" {
 resource "aws_route53_record" "jarombek_google_txt" {
   name = "jarombek.com."
   type = "TXT"
-  zone_id = "${data.aws_route53_zone.jarombek.zone_id}"
+  zone_id = data.aws_route53_zone.jarombek.zone_id
   ttl = 300
 
   records = ["google-site-verification=ZRGy5ArALIOLvjcIh-_P-io1-1uSKHtJyA9MxxAzyyE"]
