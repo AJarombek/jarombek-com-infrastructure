@@ -14,7 +14,7 @@ terraform {
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/route53/env/all"
+    key = "jarombek-com-infrastructure/route53"
     region = "us-east-1"
   }
 }
@@ -24,11 +24,11 @@ terraform {
 #-----------------------
 
 data "aws_s3_bucket" "asset-jarombek-bucket" {
-  bucket = "asset-jarombek"
+  bucket = "assets.jarombek.com"
 }
 
 data "aws_s3_bucket" "www-asset-jarombek-bucket" {
-  bucket = "www-asset-jarombek"
+  bucket = "www.assets.jarombek.com"
 }
 
 #------------------------------
@@ -37,20 +37,6 @@ data "aws_s3_bucket" "www-asset-jarombek-bucket" {
 
 resource "aws_route53_zone" "jarombek" {
   name = "jarombek.com."
-}
-
-resource "aws_route53_record" "jarombek_ns" {
-  name = "jarombek.com."
-  type = "NS"
-  zone_id = "${aws_route53_zone.jarombek.zone_id}"
-  ttl = 172800
-
-  records = [
-    "${aws_route53_zone.jarombek.name_servers.0}",
-    "${aws_route53_zone.jarombek.name_servers.1}",
-    "${aws_route53_zone.jarombek.name_servers.2}",
-    "${aws_route53_zone.jarombek.name_servers.3}"
-  ]
 }
 
 resource "aws_route53_record" "asset_jarombek_a" {
@@ -77,4 +63,19 @@ resource "aws_route53_record" "www_asset_jarombek_a" {
     name = "${data.aws_s3_bucket.www-asset-jarombek-bucket.website_domain}"
     zone_id = "${data.aws_s3_bucket.www-asset-jarombek-bucket.hosted_zone_id}"
   }
+}
+
+resource "aws_route53_record" "jarombek_mx" {
+  name = "jarombek.com."
+  type = "MX"
+  zone_id = aws_route53_zone.jarombek.zone_id
+  ttl = 300
+
+  records = [
+    "1 ASPMX.L.GOOGLE.COM.",
+    "5 ALT1.ASPMX.L.GOOGLE.COM.",
+    "5 ALT2.ASPMX.L.GOOGLE.COM.",
+    "10 ALT3.ASPMX.L.GOOGLE.COM.",
+    "10 ALT4.ASPMX.L.GOOGLE.COM."
+  ]
 }

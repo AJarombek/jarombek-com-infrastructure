@@ -24,6 +24,10 @@ locals {
   s3_origin_id = "assetsJarombekCom"
 }
 
+data "aws_acm_certificate" "wildcard-jarombek-com-cert" {
+  domain = "*.jarombek.com"
+}
+
 resource "aws_s3_bucket" "assets-jarombek" {
   bucket = "assets.jarombek.com"
   acl = "public-read"
@@ -123,7 +127,7 @@ resource "aws_cloudfront_distribution" "assets-jarombek-distribution" {
 
   # The SSL certificate for CloudFront
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = data.aws_acm_certificate.wildcard-jarombek-com-cert.arn
   }
 
   tags = {

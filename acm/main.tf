@@ -23,8 +23,8 @@ terraform {
 # Existing AWS Resources
 #-----------------------
 
-data "aws_route53_zone" "saints-xctf-zone" {
-  name = "jarombek.io."
+data "aws_route53_zone" "jarombek-com-zone" {
+  name = "jarombek.com."
   private_zone = false
 }
 
@@ -37,7 +37,7 @@ data "aws_route53_zone" "saints-xctf-zone" {
 #------------------------------
 
 resource "aws_acm_certificate" "jarombek-dev-wildcard-acm-certificate" {
-  domain_name = "*.dev.jarombek.io"
+  domain_name = "*.dev.jarombek.com"
   validation_method = "DNS"
 
   tags = {
@@ -53,7 +53,7 @@ resource "aws_acm_certificate" "jarombek-dev-wildcard-acm-certificate" {
 resource "aws_route53_record" "jarombek-dev-wc-cert-validation-record" {
   name = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_name
   type = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_type
-  zone_id = data.aws_route53_zone.saints-xctf-zone.id
+  zone_id = data.aws_route53_zone.jarombek-com-zone.id
   records = [
     aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_value
   ]
@@ -70,7 +70,7 @@ resource "aws_acm_certificate_validation" "jarombek-dev-wc-cert-validation" {
 #--------------------------
 
 resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
-  domain_name = "*.jarombek.io"
+  domain_name = "*.jarombek.com"
   validation_method = "DNS"
 
   tags = {
@@ -93,7 +93,7 @@ resource "aws_acm_certificate_validation" "jarombek-wc-cert-validation" {
 #------------------------
 
 resource "aws_acm_certificate" "jarombek-acm-certificate" {
-  domain_name = "jarombek.io"
+  domain_name = "jarombek.com"
   validation_method = "DNS"
 
   tags = {
@@ -109,7 +109,7 @@ resource "aws_acm_certificate" "jarombek-acm-certificate" {
 resource "aws_route53_record" "jarombek-cert-validation-record" {
   name = aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_name
   type = aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_type
-  zone_id = data.aws_route53_zone.saints-xctf-zone.id
+  zone_id = data.aws_route53_zone.jarombek-com-zone.id
   records = [aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_value]
   ttl = 60
 }
