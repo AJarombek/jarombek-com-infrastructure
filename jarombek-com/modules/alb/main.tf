@@ -7,9 +7,9 @@
 locals {
   env = var.prod ? "prod" : "dev"
   env_tag = var.prod ? "production" : "development"
-  domain_cert = var.prod ? "jarombek.io" : "*.jarombek.io"
-  wildcard_domain_cert = var.prod ? "*.jarombek.io" : "*.dev.jarombek.io"
-  web_domain = var.prod ? "jarombek.io." : "dev.jarombek.io."
+  domain_cert = var.prod ? "jarombek.com" : "*.jarombek.com"
+  wildcard_domain_cert = var.prod ? "*.jarombek.com" : "*.dev.jarombek.com"
+  web_domain = var.prod ? "jarombek.com." : "dev.jarombek.com."
 }
 
 #-----------------------
