@@ -20,7 +20,6 @@ class TestACM(unittest.TestCase):
     def test_dev_wildcard_cert_issued(self) -> None:
         """
         Test that the dev wildcard ACM certificate exists
-        :return: True if the ACM certificate exists as expected, False otherwise
         """
         for cert in self.acm_certificates.get('CertificateSummaryList'):
             if cert.get('DomainName') == '*.dev.jarombek.com':
@@ -31,7 +30,6 @@ class TestACM(unittest.TestCase):
     def test_wildcard_cert_issued(self) -> None:
         """
         Test that the wildcard ACM certificate exists
-        :return: True if the ACM certificate exists as expected, False otherwise
         """
         for cert in self.acm_certificates.get('CertificateSummaryList'):
             if cert.get('DomainName') == '*.saintsxctf.com':
