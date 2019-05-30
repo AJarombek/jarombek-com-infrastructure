@@ -21,15 +21,15 @@ class TestJarombekComAssets(unittest.TestCase):
         """
         Test if an S3 bucket for asset.jarombek.com exists
         """
-        s3_bucket = self.s3.list_objects(Bucket='assets.jarombek.com')
+        s3_bucket = self.s3.list_objects(Bucket='asset.jarombek.com')
         print(s3_bucket)
-        self.assertEqual(s3_bucket.get('Name'), 'assets.jarombek.com')
+        self.assertEqual(s3_bucket.get('Name'), 'asset.jarombek.com')
 
     def test_assets_jarombek_com_bucket_not_empty(self) -> None:
         """
-        Test if the S3 bucket for assets.jarombek.com contains objects
+        Test if the S3 bucket for asset.jarombek.com contains objects
         """
-        contents = self.s3.list_objects(Bucket='assets.jarombek.com').get('Contents')
+        contents = self.s3.list_objects(Bucket='asset.jarombek.com').get('Contents')
         self.assertGreater(len(contents), 0)
 
     def test_assets_jarombek_com_reachable(self) -> None:
@@ -45,15 +45,15 @@ class TestJarombekComAssets(unittest.TestCase):
         """
         Test if an S3 bucket for www.asset.jarombek.com exists
         """
-        s3_bucket = self.s3.list_objects(Bucket='www.assets.jarombek.com')
+        s3_bucket = self.s3.list_objects(Bucket='www.asset.jarombek.com')
         print(s3_bucket)
-        self.assertEqual(s3_bucket.get('Name'), 'www.assets.jarombek.com')
+        self.assertEqual(s3_bucket.get('Name'), 'www.asset.jarombek.com')
 
     def test_www_assets_jarombek_com_bucket_not_empty(self) -> None:
         """
-        Test if the S3 bucket for www.assets.jarombek.com contains objects
+        Test if the S3 bucket for www.asset.jarombek.com contains objects
         """
-        contents = self.s3.list_objects(Bucket='www.assets.jarombek.com').get('Contents')
+        contents = self.s3.list_objects(Bucket='www.asset.jarombek.com').get('Contents')
         self.assertGreater(len(contents), 0)
 
     def test_www_assets_jarombek_com_reachable(self) -> None:

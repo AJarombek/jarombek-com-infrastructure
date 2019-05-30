@@ -6,7 +6,7 @@
 
 locals {
   # Environment
-  prod = false
+  prod = true
   env = local.prod ? "prod" : "dev"
 
   # CIDR blocks for firewalls

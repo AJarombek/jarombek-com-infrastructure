@@ -24,11 +24,11 @@ terraform {
 #-----------------------
 
 data "aws_s3_bucket" "asset-jarombek-bucket" {
-  bucket = "assets.jarombek.com"
+  bucket = "asset.jarombek.com"
 }
 
 data "aws_s3_bucket" "www-asset-jarombek-bucket" {
-  bucket = "www.assets.jarombek.com"
+  bucket = "www.asset.jarombek.com"
 }
 
 #------------------------------
@@ -40,7 +40,7 @@ resource "aws_route53_zone" "jarombek" {
 }
 
 resource "aws_route53_record" "asset_jarombek_a" {
-  name = "assets.jarombek.com."
+  name = "asset.jarombek.com."
   type = "A"
   zone_id = "${aws_route53_zone.jarombek.zone_id}"
 
@@ -53,7 +53,7 @@ resource "aws_route53_record" "asset_jarombek_a" {
 }
 
 resource "aws_route53_record" "www_asset_jarombek_a" {
-  name = "www.assets.jarombek.com."
+  name = "www.asset.jarombek.com."
   type = "A"
   zone_id = "${aws_route53_zone.jarombek.zone_id}"
 

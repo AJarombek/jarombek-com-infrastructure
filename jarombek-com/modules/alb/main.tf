@@ -45,7 +45,7 @@ data "aws_acm_certificate" "jarombek-com-wildcard-certificate" {
 }
 
 data "aws_route53_zone" "jarombek" {
-  name = "jarombek.io."
+  name = "jarombek.com."
 }
 
 #--------------
