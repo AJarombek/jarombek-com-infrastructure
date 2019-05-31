@@ -70,7 +70,7 @@ resource "aws_lb" "jarombek-com-lb" {
 }
 
 resource "aws_lb_target_group" "jarombek-com-lb-target-group" {
-  name = "jarombek-com-alb-target"
+  name = "jarombek-com-${local.env}-lb-target"
 
   health_check {
     enabled = true
