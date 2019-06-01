@@ -8,6 +8,7 @@ import unittest
 import boto3
 import os
 from utils.Route53 import Route53
+from utils.LoadBalancing import LB
 
 
 class TestJarombekCom(unittest.TestCase):
@@ -60,11 +61,7 @@ class TestJarombekCom(unittest.TestCase):
         """
         Prove that an application load balancer is running and has proper configuration
         """
-        response = self.elb.describe_load_balancers(
-            Names=[f'jarombek-com-{self.env}-alb']
-        )
-
-        load_balancers = response.get('LoadBalancers')
+        load_balancers = LB.get_load_balancers(name=f'jarombek-com-{self.env}-alb')
         self.assertEqual(len(load_balancers), 1)
 
         alb = load_balancers[0]
@@ -76,28 +73,68 @@ class TestJarombekCom(unittest.TestCase):
         """
         Prove that the listener for HTTP requests is configured properly
         """
-        response = self.elb.describe_load_balancers(
-            Names=[f'jarombek-com-{self.env}-alb']
-        )
-        load_balancer = response.get('LoadBalancers')[0]
-
-        response = self.elb.describe_listeners(
-            LoadBalancerArn=load_balancer.get('LoadBalancerArn')
-        )
-
-        listeners = response.get('Listeners')
+        listeners = LB.get_listeners(lb_name=f'jarombek-com-{self.env}-alb')
         self.assertEqual(len(listeners), 2)
+
+        http_listeners = [item for item in listeners if item.get('Protocol') == 'HTTP']
+        self.assertEqual(len(http_listeners), 1)
+
+        http_listener = http_listeners[0]
+        self.assertEqual(http_listener.get('Protocol'), 'HTTP')
+        self.assertEqual(http_listener.get('Port'), 80)
+
+        default_actions = http_listener.get('DefaultActions')
+        self.assertEqual(len(default_actions), 1)
+
+        default_action = default_actions[0]
+        self.assertEqual(default_action.get('Type'), 'redirect')
+        self.assertEqual(default_action.get('RedirectConfig').get('Protocol'), 'HTTPS')
+        self.assertEqual(default_action.get('RedirectConfig').get('Port'), 443)
+        self.assertEqual(default_action.get('RedirectConfig').get('StatusCode'), 'HTTP_301')
 
     def test_listener_https(self) -> None:
         """
         Prove that the listener for HTTPS requests is configured properly
         """
-        pass
+        listeners = LB.get_listeners(lb_name=f'jarombek-com-{self.env}-alb')
+        self.assertEqual(len(listeners), 2)
 
-    def test_target_group_http(self) -> None:
+        https_listeners = [item for item in listeners if item.get('Protocol') == 'HTTPS']
+        self.assertEqual(len(https_listeners), 1)
+
+        https_listener = https_listeners[0]
+        self.assertEqual(https_listener.get('Protocol'), 'HTTPS')
+        self.assertEqual(https_listener.get('Port'), 443)
+
+        default_actions = https_listener.get('DefaultActions')
+        self.assertEqual(len(default_actions), 1)
+
+        default_action = default_actions[0]
+        self.assertEqual(default_action.get('Type'), 'forward')
+
+        target_group = LB.get_target_group(f'jarombek-com-{self.env}-lb-target')
+        self.assertEqual(default_action.get('TargetGroupArn'), target_group.get('TargetGroupArn'))
+
+    def test_target_group(self) -> None:
         """
         Prove that the target group for the load balancer is configured properly
         """
-        response = self.elb.describe_target_groups(
-            Names=[f'jarombek-com-{self.env}-lb-target']
-        )
+        target_group = LB.get_target_group(f'jarombek-com-{self.env}-lb-target')
+
+        self.assertEqual(target_group.get('TargetGroupName'), f'jarombek-com-{self.env}-lb-target')
+        self.assertEqual(target_group.get('Protocol'), 'HTTP')
+        self.assertEqual(target_group.get('Port'), 8080)
+        self.assertEqual(target_group.get('TargetType'), 'ip')
+
+        self.assertEqual(target_group.get('HealthCheckProtocol'), 'HTTP')
+        self.assertEqual(target_group.get('HealthCheckPort'), 8080)
+        self.assertEqual(target_group.get('HealthCheckEnabled'), True)
+        self.assertEqual(target_group.get('HealthCheckIntervalSeconds'), 10)
+        self.assertEqual(target_group.get('HealthCheckTimeoutSeconds'), 5)
+        self.assertEqual(target_group.get('HealthyThresholdCount'), 3)
+        self.assertEqual(target_group.get('UnhealthyThresholdCount'), 2)
+        self.assertEqual(target_group.get('HealthCheckPath'), '/')
+        self.assertEqual(target_group.get('Matcher').get('HttpCode'), '200-299')
+
+    def test_listener_https_certificate(self) -> None:
+        pass
