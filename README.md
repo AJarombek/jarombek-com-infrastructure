@@ -10,7 +10,9 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 | Directory Name         | Description                                                                 |
 |------------------------|-----------------------------------------------------------------------------|
 | `acm`                  | HTTPS certificates for the website.                                         |
+| `iam`                  | IAM roles and policies for the AWS infrastructure.                          |
 | `jarombek-com`         | ECS Infrastructure for the main web application and database.               |
 | `jarombek-com-assets`  | Infrastructure for the S3 bucket, which exposes an API for assets.          |
 | `jarombek-com-fn`      | Infrastructure for the AWS Lambda functions used by the website.            |
 | `route53`              | DNS for the application.                                                    |
+| `test`                 | Unit tests for the infrastructure.  Written with boto3 AWS SDK.             |

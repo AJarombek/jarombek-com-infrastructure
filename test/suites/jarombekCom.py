@@ -10,6 +10,7 @@ import os
 from utils.Route53 import Route53
 from utils.LoadBalancing import LB
 from utils.SecurityGroup import SecurityGroup
+from utils.ECS import ECS
 
 
 class TestJarombekCom(unittest.TestCase):
@@ -175,6 +176,14 @@ class TestJarombekCom(unittest.TestCase):
         self.test_sg_rule_cidr(ingress[0], 'tcp', 80, 80, '0.0.0.0/0')
         self.test_sg_rule_cidr(ingress[1], 'tcp', 443, 443, '0.0.0.0/0')
         self.test_sg_rule_cidr(egress[0], '-1', 0, 0, '0.0.0.0/0')
+
+    def test_ecs_cluster_running(self) -> None:
+        """
+        Prove that the ECS cluster for the website is up and running as expected
+        """
+        cluster = ECS.get_cluster(f'jarombek-com-{self.env}-ecs-cluster')
+        self.assertEqual(cluster.get('clusterName'), f'jarombek-com-{self.env}-ecs-cluster')
+        self.assertEqual(cluster.get('status'), 'running')
 
     @unittest.skip("helper function")
     def test_sg_rule_cidr(self, rule: dict, protocol: str, from_port: int, to_port: int, cidr: str) -> None:
