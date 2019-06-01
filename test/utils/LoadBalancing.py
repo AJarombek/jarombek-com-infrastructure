@@ -64,14 +64,32 @@ class LB:
         :param names: A list of names of target groups
         :return: a list of target groups used by load balancer listeners
         """
-        return elb.describe_target_groups(
+        response = elb.describe_target_groups(
             Names=names
         )
+        return response.get('TargetGroups')
 
     @staticmethod
-    def get_listener_certs() -> list:
+    def get_listener_cert(lb_name: str = '') -> dict:
+        """
+        Get an ACM certificate associated with a load balancer listener
+        :param lb_name: Name of the load balancer with an HTTPS listener with an ACM cert attached
+        :return: a dictionary containing information about a certificate used by a load balancer listener
+        """
+        return LB.get_listener_certs(lb_name)[0]
+
+    @staticmethod
+    def get_listener_certs(lb_name: str = '') -> list:
         """
         Get a list of ACM certificates associates with a load balancer listener
+        :param lb_name: Name of the load balancer with an HTTPS listener with an ACM cert attached
         :return: a list of certificates used by a load balancer listener
         """
-        pass
+        listeners = LB.get_listeners(lb_name=lb_name)
+
+        # Certificates are only attached to HTTPS listeners
+        https_listeners = [item for item in listeners if item.get('Protocol') == 'HTTPS']
+        response = elb.describe_listener_certificates(
+            ListenerArn=https_listeners[0].get('ListenerArn')
+        )
+        return response.get('Certificates')

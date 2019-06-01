@@ -9,6 +9,7 @@ import boto3
 import os
 from utils.Route53 import Route53
 from utils.LoadBalancing import LB
+from utils.SecurityGroup import SecurityGroup
 
 
 class TestJarombekCom(unittest.TestCase):
@@ -20,6 +21,8 @@ class TestJarombekCom(unittest.TestCase):
         self.ec2 = boto3.client('ec2')
         self.route53 = boto3.client('route53')
         self.elb = boto3.client('elbv2')
+        self.acm = boto3.client('acm')
+        self.acm_certificates = self.acm.list_certificates(CertificateStatuses=['ISSUED']).get('CertificateSummaryList')
 
         try:
             prod_env = os.environ['TEST_ENV'] == "prod"
@@ -29,9 +32,13 @@ class TestJarombekCom(unittest.TestCase):
         if prod_env:
             self.env = "prod"
             self.website_url = "jarombek.com"
+            self.cert_url = "jarombek.com"
+            self.lb_cert = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url][0]
         else:
             self.env = "dev"
             self.website_url = "dev.jarombek.com"
+            self.cert_url = "*.jarombek.com"
+            self.lb_cert = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url][0]
 
     def test_jarombek_com_a_record_exists(self) -> None:
         """
@@ -137,4 +144,60 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(target_group.get('Matcher').get('HttpCode'), '200-299')
 
     def test_listener_https_certificate(self) -> None:
-        pass
+        """
+        Prove that the HTTPS listener for the load balancer has the expected ACM certificate
+        """
+        certs = LB.get_listener_certs(lb_name=f'jarombek-com-{self.env}-alb')
+        self.assertEqual(len(certs), 1)
+
+        cert = certs[0]
+        self.assertEqual(cert.get('CertificateArn'), self.lb_cert.get('CertificateArn'))
+
+    def test_lb_security_group_exists(self) -> None:
+        """
+        Prove that the security group for the load balancer exists
+        """
+        security_groups = SecurityGroup.get_security_groups(name=f'jarombek-com-{self.env}-lb-security-group')
+        self.assertEqual(len(security_groups), 1)
+
+        sg = security_groups[0]
+        self.assertEqual(sg.get('GroupName'), f'jarombek-com-{self.env}-lb-security-group')
+
+    def test_lb_security_group_rules_exist(self) -> None:
+        """
+        Prove that the security group rules for the load balancer exist as expected
+        """
+        sg = SecurityGroup.get_security_groups(name=f'jarombek-com-{self.env}-lb-security-group')[0]
+
+        ingress = sg.get('IpPermissions')
+        egress = sg.get('IpPermissionsEgress')
+
+        self.test_sg_rule_cidr(ingress[0], 'tcp', 80, 80, '0.0.0.0/0')
+        self.test_sg_rule_cidr(ingress[1], 'tcp', 443, 443, '0.0.0.0/0')
+        self.test_sg_rule_cidr(egress[0], '-1', 0, 0, '0.0.0.0/0')
+
+    @unittest.skip("helper function")
+    def test_sg_rule_cidr(self, rule: dict, protocol: str, from_port: int, to_port: int, cidr: str) -> None:
+        """
+        Determine if a security group rule which opens connections
+        from (ingress) or to (egress) a CIDR block exists as expected.
+        :param rule: A dictionary containing security group rule information
+        :param protocol: Which protocol the rule enables connections for
+        :param from_port: Lowest # port the rule enables connections for
+        :param to_port: Highest # port the rule enables connections for
+        :param cidr: The ingress or egress CIDR block
+        """
+        if from_port == 0:
+            from_port_valid = 'FromPort' not in rule.keys()
+        else:
+            from_port_valid = rule.get('FromPort') == from_port
+
+        if to_port == 0:
+            to_port_valid = 'ToPort' not in rule.keys()
+        else:
+            to_port_valid = rule.get('ToPort') == to_port
+
+        self.assertEqual(rule.get('IpProtocol'), protocol)
+        self.assertTrue(from_port_valid)
+        self.assertTrue(to_port_valid)
+        self.assertEqual(rule.get('IpRanges')[0].get('CidrIp'), cidr)
