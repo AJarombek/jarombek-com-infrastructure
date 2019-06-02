@@ -39,32 +39,6 @@ resource "aws_route53_zone" "jarombek" {
   name = "jarombek.com."
 }
 
-resource "aws_route53_record" "asset_jarombek_a" {
-  name = "asset.jarombek.com."
-  type = "A"
-  zone_id = "${aws_route53_zone.jarombek.zone_id}"
-
-  # TTL for all alias records is 60 seconds
-  alias {
-    evaluate_target_health = false
-    name = "${data.aws_s3_bucket.asset-jarombek-bucket.website_domain}"
-    zone_id = "${data.aws_s3_bucket.asset-jarombek-bucket.hosted_zone_id}"
-  }
-}
-
-resource "aws_route53_record" "www_asset_jarombek_a" {
-  name = "www.asset.jarombek.com."
-  type = "A"
-  zone_id = "${aws_route53_zone.jarombek.zone_id}"
-
-  # TTL for all alias records is 60 seconds
-  alias {
-    evaluate_target_health = false
-    name = "${data.aws_s3_bucket.www-asset-jarombek-bucket.website_domain}"
-    zone_id = "${data.aws_s3_bucket.www-asset-jarombek-bucket.hosted_zone_id}"
-  }
-}
-
 resource "aws_route53_record" "jarombek_mx" {
   name = "jarombek.com."
   type = "MX"
