@@ -33,6 +33,39 @@ data "aws_route53_zone" "jarombek-com-zone" {
 #--------------------------
 
 #------------------------------
+# Protects '*.asset.jarombek.com'
+#------------------------------
+
+resource "aws_acm_certificate" "jarombek-asset-wildcard-acm-certificate" {
+  domain_name = "*.asset.jarombek.com"
+  validation_method = "DNS"
+
+  tags = {
+    Environment = "prod"
+    Application = "jarombek-com"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_route53_record" "jarombek-asset-wc-cert-validation-record" {
+  name = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options[0].resource_record_name
+  type = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options[0].resource_record_type
+  zone_id = data.aws_route53_zone.jarombek-com-zone.id
+  records = [
+    aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options[0].resource_record_value
+  ]
+  ttl = 60
+}
+
+resource "aws_acm_certificate_validation" "jarombek-asset-wc-cert-validation" {
+  certificate_arn = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.arn
+  validation_record_fqdns = [aws_route53_record.jarombek-asset-wc-cert-validation-record.fqdn]
+}
+
+#------------------------------
 # Protects '*.dev.jarombek.com'
 #------------------------------
 
