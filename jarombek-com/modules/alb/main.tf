@@ -188,7 +188,7 @@ resource "aws_route53_record" "jarombek_a" {
 }
 
 resource "aws_route53_record" "jarombek_cname" {
-  name = "www." + local.web_domain
+  name = "www.${local.web_domain}"
   type = "CNAME"
   zone_id = data.aws_route53_zone.jarombek.zone_id
   ttl = 300
