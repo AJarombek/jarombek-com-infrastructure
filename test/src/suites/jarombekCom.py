@@ -185,6 +185,33 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(cluster.get('clusterName'), f'jarombek-com-{self.env}-ecs-cluster')
         self.assertEqual(cluster.get('status'), 'running')
 
+    def test_ecs_task_running(self) -> None:
+        """
+        Prove that the ECS task for the website and database is up and running as expected
+        """
+        tasks = ECS.get_tasks(f'jarombek-com-{self.env}-ecs-cluster', 'jarombek-com')
+        self.assertEqual(len(tasks), 1)
+
+        task = tasks[0]
+        self.assertEqual(task.get('lastStatus'), 'RUNNING')
+        self.assertEqual(task.get('desiredStatus'), 'RUNNING')
+
+        containers = task.get('containers')
+        self.assertEqual(len(containers), 2)
+
+        jarombek_com_container = containers[0]
+        self.assertEqual(jarombek_com_container.get('name'), 'jarombek-com')
+        self.assertEqual(jarombek_com_container.get('lastStatus'), 'RUNNING')
+
+        jarombek_com_database_container = containers[1]
+        self.assertEqual(jarombek_com_database_container.get('name'), 'jarombek-com')
+        self.assertEqual(jarombek_com_database_container.get('lastStatus'), 'RUNNING')
+
+    def test_ecs_service_running(self) -> None:
+        """
+        Prove that the ECS service for the website and database is up and running as expected
+        """
+
     @unittest.skip("helper function")
     def test_sg_rule_cidr(self, rule: dict, protocol: str, from_port: int, to_port: int, cidr: str) -> None:
         """

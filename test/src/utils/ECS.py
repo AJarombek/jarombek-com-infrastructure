@@ -28,3 +28,28 @@ class ECS:
         :return: a dictionary containing information about an ECS cluster
         """
         return ECS.get_clusters([name])[0]
+
+    @staticmethod
+    def get_tasks(cluster_name: str, family: str) -> list:
+        """
+        Retrieve a list of tasks in an ECS cluster
+        :param cluster_name: The name of the cluster containing the tasks
+        :param family: Family that the task resides in
+        :return: a list of tasks
+        """
+        task_arn_list = ecs.list_tasks(
+            cluster=cluster_name,
+            family=family,
+            desiredStatus='RUNNING'
+        )
+
+        task_list = ecs.describe_tasks(
+            cluster=cluster_name,
+            tasks=task_arn_list.get('taskArns')
+        )
+
+        return task_list.get('tasks')
+
+    @staticmethod
+    def get_services(name: str) -> list:
+        pass
