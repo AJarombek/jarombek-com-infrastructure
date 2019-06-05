@@ -82,6 +82,12 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
 
   container_definitions = file("${path.module}/container-def/${local.container_def}")
 
+  tags = {
+    Name = "jarombek-com-ecs-${local.env}-task"
+    Application = "jarombek-com"
+    Environment = local.env_tag
+  }
+
   depends_on = [
     null_resource.dependency-getter,
     aws_cloudwatch_log_group.jarombek-com-ecs-task-logs
@@ -89,7 +95,7 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
 }
 
 resource "aws_ecs_service" "jarombek-com-service" {
-  name = "jarombek-com-ecs-service"
+  name = "jarombek-com-ecs-${local.env}-service"
   cluster = aws_ecs_cluster.jarombek-com-ecs-cluster.id
   task_definition = aws_ecs_task_definition.jarombek-com-task.arn
   desired_count = var.jarombek_com_desired_count
@@ -108,6 +114,12 @@ resource "aws_ecs_service" "jarombek-com-service" {
     target_group_arn = var.jarombek-com-lb-target-group
     container_name = "jarombek-com"
     container_port = 8080
+  }
+
+  tags = {
+    Name = "jarombek-com-ecs-${local.env}-service"
+    Application = "jarombek-com"
+    Environment = local.env_tag
   }
 
   depends_on = [null_resource.dependency-getter]

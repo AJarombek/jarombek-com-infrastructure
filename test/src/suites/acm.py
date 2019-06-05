@@ -24,6 +24,7 @@ class TestACM(unittest.TestCase):
         for cert in self.acm_certificates.get('CertificateSummaryList'):
             if cert.get('DomainName') == '*.dev.jarombek.com':
                 self.assertTrue(True)
+                return
 
         self.assertFalse(True)
 
@@ -34,5 +35,6 @@ class TestACM(unittest.TestCase):
         for cert in self.acm_certificates.get('CertificateSummaryList'):
             if cert.get('DomainName') == '*.saintsxctf.com':
                 self.assertTrue(True)
+                return
 
         self.assertFalse(True)

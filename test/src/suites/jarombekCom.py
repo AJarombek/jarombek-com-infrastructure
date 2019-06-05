@@ -34,12 +34,16 @@ class TestJarombekCom(unittest.TestCase):
             self.env = "prod"
             self.website_url = "jarombek.com"
             self.cert_url = "jarombek.com"
-            self.lb_cert = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url][0]
+            self.wc_cert_url = "*.jarombek.com"
+            self.lb_certs = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url
+                             or cert.get('DomainName') == self.wc_cert_url]
         else:
             self.env = "dev"
             self.website_url = "dev.jarombek.com"
             self.cert_url = "*.jarombek.com"
-            self.lb_cert = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url][0]
+            self.wc_cert_url = "*.dev.jarombek.com"
+            self.lb_certs = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url
+                             or cert.get('DomainName') == self.wc_cert_url]
 
     def test_jarombek_com_a_record_exists(self) -> None:
         """
@@ -50,7 +54,7 @@ class TestJarombekCom(unittest.TestCase):
         except IndexError:
             self.assertFalse(True)
 
-        self.assertEqual(a_record.get('Name'), self.website_url)
+        self.assertEqual(a_record.get('Name'), f'{self.website_url}.')
         self.assertEqual(a_record.get('Type'), 'A')
 
     def test_www_jarombek_com_cname_record_exists(self) -> None:
@@ -58,11 +62,11 @@ class TestJarombekCom(unittest.TestCase):
         Determine if the 'CNAME' record exists for the 'www' prefixed website in Route53
         """
         try:
-            a_record = Route53.get_record('jarombek.com.', f'www.${self.website_url}', 'CNAME')
+            a_record = Route53.get_record('jarombek.com.', f'www.{self.website_url}', 'CNAME')
         except IndexError:
             self.assertFalse(True)
 
-        self.assertEqual(a_record.get('Name'), f'www.${self.website_url}')
+        self.assertEqual(a_record.get('Name'), f'www.{self.website_url}.')
         self.assertEqual(a_record.get('Type'), 'CNAME')
 
     def test_load_balancer_active(self) -> None:
@@ -97,7 +101,7 @@ class TestJarombekCom(unittest.TestCase):
         default_action = default_actions[0]
         self.assertEqual(default_action.get('Type'), 'redirect')
         self.assertEqual(default_action.get('RedirectConfig').get('Protocol'), 'HTTPS')
-        self.assertEqual(default_action.get('RedirectConfig').get('Port'), 443)
+        self.assertEqual(default_action.get('RedirectConfig').get('Port'), '443')
         self.assertEqual(default_action.get('RedirectConfig').get('StatusCode'), 'HTTP_301')
 
     def test_listener_https(self) -> None:
@@ -135,7 +139,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(target_group.get('TargetType'), 'ip')
 
         self.assertEqual(target_group.get('HealthCheckProtocol'), 'HTTP')
-        self.assertEqual(target_group.get('HealthCheckPort'), 8080)
+        self.assertEqual(target_group.get('HealthCheckPort'), '8080')
         self.assertEqual(target_group.get('HealthCheckEnabled'), True)
         self.assertEqual(target_group.get('HealthCheckIntervalSeconds'), 10)
         self.assertEqual(target_group.get('HealthCheckTimeoutSeconds'), 5)
@@ -149,10 +153,13 @@ class TestJarombekCom(unittest.TestCase):
         Prove that the HTTPS listener for the load balancer has the expected ACM certificate
         """
         certs = LB.get_listener_certs(lb_name=f'jarombek-com-{self.env}-alb')
-        self.assertEqual(len(certs), 1)
+        self.assertEqual(len(certs), 2)
 
         cert = certs[0]
-        self.assertEqual(cert.get('CertificateArn'), self.lb_cert.get('CertificateArn'))
+        self.assertEqual(cert.get('CertificateArn'), self.lb_certs[1].get('CertificateArn'))
+
+        cert = certs[1]
+        self.assertEqual(cert.get('CertificateArn'), self.lb_certs[0].get('CertificateArn'))
 
     def test_lb_security_group_exists(self) -> None:
         """
@@ -183,7 +190,7 @@ class TestJarombekCom(unittest.TestCase):
         """
         cluster = ECS.get_cluster(f'jarombek-com-{self.env}-ecs-cluster')
         self.assertEqual(cluster.get('clusterName'), f'jarombek-com-{self.env}-ecs-cluster')
-        self.assertEqual(cluster.get('status'), 'running')
+        self.assertEqual(cluster.get('status'), 'ACTIVE')
 
     def test_ecs_task_running(self) -> None:
         """
@@ -204,13 +211,26 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(jarombek_com_container.get('lastStatus'), 'RUNNING')
 
         jarombek_com_database_container = containers[1]
-        self.assertEqual(jarombek_com_database_container.get('name'), 'jarombek-com')
+        self.assertEqual(jarombek_com_database_container.get('name'), 'jarombek-com-database')
         self.assertEqual(jarombek_com_database_container.get('lastStatus'), 'RUNNING')
 
     def test_ecs_service_running(self) -> None:
         """
         Prove that the ECS service for the website and database is up and running as expected
         """
+        services = ECS.get_services(
+            cluster_name=f'jarombek-com-{self.env}-ecs-cluster',
+            service_names=[f'jarombek-com-ecs-{self.env}-service']
+        )
+        self.assertEqual(len(services), 1)
+
+        service = services[0]
+        self.assertEqual(service.get('serviceName'), f'jarombek-com-ecs-{self.env}-service')
+        self.assertEqual(service.get('launchType'), 'FARGATE')
+        self.assertEqual(service.get('status'), 'ACTIVE')
+        self.assertEqual(service.get('desiredCount'), 1)
+        self.assertEqual(service.get('runningCount'), 1)
+        self.assertEqual(service.get('pendingCount'), 0)
 
     @unittest.skip("helper function")
     def test_sg_rule_cidr(self, rule: dict, protocol: str, from_port: int, to_port: int, cidr: str) -> None:

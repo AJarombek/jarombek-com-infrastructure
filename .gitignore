@@ -1,3 +1,4 @@
 .idea/*
 **/.terraform/*
 database/modules/mongodb/cred
+**/__pycache__/

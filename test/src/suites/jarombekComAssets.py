@@ -7,6 +7,7 @@ Date: 5/28/2019
 import unittest
 import boto3
 import urllib.request as request
+import ssl
 
 
 class TestJarombekComAssets(unittest.TestCase):
@@ -22,7 +23,6 @@ class TestJarombekComAssets(unittest.TestCase):
         Test if an S3 bucket for asset.jarombek.com exists
         """
         s3_bucket = self.s3.list_objects(Bucket='asset.jarombek.com')
-        print(s3_bucket)
         self.assertEqual(s3_bucket.get('Name'), 'asset.jarombek.com')
 
     def test_assets_jarombek_com_bucket_not_empty(self) -> None:
@@ -46,15 +46,14 @@ class TestJarombekComAssets(unittest.TestCase):
         Test if an S3 bucket for www.asset.jarombek.com exists
         """
         s3_bucket = self.s3.list_objects(Bucket='www.asset.jarombek.com')
-        print(s3_bucket)
         self.assertEqual(s3_bucket.get('Name'), 'www.asset.jarombek.com')
 
-    def test_www_assets_jarombek_com_bucket_not_empty(self) -> None:
+    def test_www_assets_jarombek_com_bucket_empty(self) -> None:
         """
         Test if the S3 bucket for www.asset.jarombek.com contains objects
         """
         contents = self.s3.list_objects(Bucket='www.asset.jarombek.com').get('Contents')
-        self.assertGreater(len(contents), 0)
+        self.assertIsNone(contents)
 
     def test_www_assets_jarombek_com_reachable(self) -> None:
         """
