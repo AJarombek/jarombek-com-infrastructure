@@ -16,7 +16,7 @@ resource "aws_lambda_function" "welcome-email" {
   handler = "sendEmailAWS.sendWelcomeEmail"
   role = aws_iam_role.lambda-role.arn
   runtime = "nodejs8.10"
-  source_code_hash = base64sha256(file("${data.archive_file.lambda.output_path}"))
+  source_code_hash = base64sha256(file(data.archive_file.lambda.output_path))
 }
 
 resource "aws_iam_role" "lambda-role" {

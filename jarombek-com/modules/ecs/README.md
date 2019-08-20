@@ -19,3 +19,7 @@ Docker containers used in the ECS cluster.
 | `container-def/`  | JSON files representing container definitions for ECS tasks.                                 |
 | `main.tf`         | Main Terraform file for the `ecs` module.                                                    |
 | `var.tf`          | Input variables to pass into the main Terraform file.                                        |
+
+### Resources
+
+[1] [ECS vs. Fargate](https://cloudonaut.io/ecs-vs-fargate-whats-the-difference/)
