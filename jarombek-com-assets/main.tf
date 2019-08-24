@@ -267,6 +267,7 @@ resource "aws_s3_bucket_object" "jarombek-png" {
   key = "jarombek.png"
   source = "asset/jarombek.png"
   etag = filemd5("${path.cwd}/asset/jarombek.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "blizzard-png" {
@@ -274,6 +275,7 @@ resource "aws_s3_bucket_object" "blizzard-png" {
   key = "blizzard.png"
   source = "asset/blizzard.png"
   etag = filemd5("${path.cwd}/asset/blizzard.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "bulk-insert-png" {
@@ -281,6 +283,7 @@ resource "aws_s3_bucket_object" "bulk-insert-png" {
   key = "bulk-insert.png"
   source = "asset/bulk-insert.png"
   etag = filemd5("${path.cwd}/asset/bulk-insert.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "common-user-png" {
@@ -288,6 +291,7 @@ resource "aws_s3_bucket_object" "common-user-png" {
   key = "common-user.png"
   source = "asset/common-user.png"
   etag = filemd5("${path.cwd}/asset/common-user.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "computer-jpg" {
@@ -295,6 +299,7 @@ resource "aws_s3_bucket_object" "computer-jpg" {
   key = "computer.jpg"
   source = "asset/computer.jpg"
   etag = filemd5("${path.cwd}/asset/computer.jpg")
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_bucket_object" "database-er-png" {
@@ -302,6 +307,7 @@ resource "aws_s3_bucket_object" "database-er-png" {
   key = "Database-ER.png"
   source = "asset/Database-ER.png"
   etag = filemd5("${path.cwd}/asset/Database-ER.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "diamond-uml-png" {
@@ -309,6 +315,7 @@ resource "aws_s3_bucket_object" "diamond-uml-png" {
   key = "diamond-uml.png"
   source = "asset/diamond-uml.png"
   etag = filemd5("${path.cwd}/asset/diamond-uml.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "down-png" {
@@ -316,6 +323,7 @@ resource "aws_s3_bucket_object" "down-png" {
   key = "down.png"
   source = "asset/down.png"
   etag = filemd5("${path.cwd}/asset/down.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "down-black-png" {
@@ -323,6 +331,7 @@ resource "aws_s3_bucket_object" "down-black-png" {
   key = "down-black.png"
   source = "asset/down-black.png"
   etag = filemd5("${path.cwd}/asset/down-black.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "dynamic-jsx-png" {
@@ -330,6 +339,7 @@ resource "aws_s3_bucket_object" "dynamic-jsx-png" {
   key = "dynamic-jsx.png"
   source = "asset/dynamic-jsx.png"
   etag = filemd5("${path.cwd}/asset/dynamic-jsx.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "error-message-png" {
@@ -337,6 +347,7 @@ resource "aws_s3_bucket_object" "error-message-png" {
   key = "error-message.png"
   source = "asset/error-message.png"
   etag = filemd5("${path.cwd}/asset/error-message.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "flag-svg" {
@@ -352,6 +363,7 @@ resource "aws_s3_bucket_object" "home-png" {
   key = "home.png"
   source = "asset/home.png"
   etag = filemd5("${path.cwd}/asset/home.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "jarombek-home-background-jpg" {
@@ -359,6 +371,7 @@ resource "aws_s3_bucket_object" "jarombek-home-background-jpg" {
   key = "jarombek-home-background.jpg"
   source = "asset/jarombek-home-background.jpg"
   etag = filemd5("${path.cwd}/asset/jarombek-home-background.jpg")
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_bucket_object" "mean-stack-png" {
@@ -366,6 +379,7 @@ resource "aws_s3_bucket_object" "mean-stack-png" {
   key = "MEAN-Stack.png"
   source = "asset/MEAN-Stack.png"
   etag = filemd5("${path.cwd}/asset/MEAN-Stack.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "kayak-jpg" {
@@ -373,6 +387,7 @@ resource "aws_s3_bucket_object" "kayak-jpg" {
   key = "kayak.jpg"
   source = "asset/kayak.jpg"
   etag = filemd5("${path.cwd}/asset/kayak.jpg")
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_bucket_object" "login-component-png" {
@@ -380,6 +395,7 @@ resource "aws_s3_bucket_object" "login-component-png" {
   key = "login-component.png"
   source = "asset/login-component.png"
   etag = filemd5("${path.cwd}/asset/login-component.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "main-component-png" {
@@ -387,6 +403,7 @@ resource "aws_s3_bucket_object" "main-component-png" {
   key = "main-component.png"
   source = "asset/main-component.png"
   etag = filemd5("${path.cwd}/asset/main-component.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "meowcat-png" {
@@ -394,6 +411,7 @@ resource "aws_s3_bucket_object" "meowcat-png" {
   key = "meowcat.png"
   source = "asset/meowcat.png"
   etag = filemd5("${path.cwd}/asset/meowcat.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "search-png" {
@@ -401,6 +419,7 @@ resource "aws_s3_bucket_object" "search-png" {
   key = "search.png"
   source = "asset/search.png"
   etag = filemd5("${path.cwd}/asset/search.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "signup-component-png" {
@@ -408,6 +427,7 @@ resource "aws_s3_bucket_object" "signup-component-png" {
   key = "signup-component.png"
   source = "asset/signup-component.png"
   etag = filemd5("${path.cwd}/asset/signup-component.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "triangles-png" {
@@ -415,6 +435,7 @@ resource "aws_s3_bucket_object" "triangles-png" {
   key = "triangles.png"
   source = "asset/triangles.png"
   etag = filemd5("${path.cwd}/asset/triangles.png")
+  content_type = "image/png"
 }
 
 /*
@@ -426,6 +447,7 @@ resource "aws_s3_bucket_object" "dyslexie-bold-ttf" {
   key = "fonts/dyslexie-bold.ttf"
   source = "asset/fonts/dyslexie-bold.ttf"
   etag = filemd5("${path.cwd}/asset/fonts/dyslexie-bold.ttf")
+  content_type = "font/ttf"
 }
 
 resource "aws_s3_bucket_object" "fantasque-sans-mono-bold-ttf" {
@@ -433,6 +455,7 @@ resource "aws_s3_bucket_object" "fantasque-sans-mono-bold-ttf" {
   key = "fonts/FantasqueSansMono-Bold.ttf"
   source = "asset/fonts/FantasqueSansMono-Bold.ttf"
   etag = filemd5("${path.cwd}/asset/fonts/FantasqueSansMono-Bold.ttf")
+  content_type = "font/ttf"
 }
 
 resource "aws_s3_bucket_object" "longway-regular-otf" {
@@ -440,6 +463,7 @@ resource "aws_s3_bucket_object" "longway-regular-otf" {
   key = "fonts/Longway-Regular.otf"
   source = "asset/fonts/Longway-Regular.otf"
   etag = filemd5("${path.cwd}/asset/fonts/Longway-Regular.otf")
+  content_type = "font/otf"
 }
 
 resource "aws_s3_bucket_object" "sylexiad-sans-thin-ttf" {
@@ -447,6 +471,7 @@ resource "aws_s3_bucket_object" "sylexiad-sans-thin-ttf" {
   key = "fonts/SylexiadSansThin.ttf"
   source = "asset/fonts/SylexiadSansThin.ttf"
   etag = filemd5("${path.cwd}/asset/fonts/SylexiadSansThin.ttf")
+  content_type = "font/ttf"
 }
 
 resource "aws_s3_bucket_object" "sylexiad-sans-thin-bold-ttf" {
@@ -454,6 +479,7 @@ resource "aws_s3_bucket_object" "sylexiad-sans-thin-bold-ttf" {
   key = "fonts/SylexiadSansThin-Bold.ttf"
   source = "asset/fonts/SylexiadSansThin-Bold.ttf"
   etag = filemd5("${path.cwd}/asset/fonts/SylexiadSansThin-Bold.ttf")
+  content_type = "font/ttf"
 }
 
 /*
@@ -465,6 +491,7 @@ resource "aws_s3_bucket_object" "posts-11-6-17-graph-png" {
   key = "posts/11-6-17-FairfieldGraphImage.png"
   source = "asset/posts/11-6-17-FairfieldGraphImage.png"
   etag = filemd5("${path.cwd}/asset/posts/11-6-17-FairfieldGraphImage.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-11-13-17-prompt-png" {
@@ -472,6 +499,7 @@ resource "aws_s3_bucket_object" "posts-11-13-17-prompt-png" {
   key = "posts/11-13-17-prompt.png"
   source = "asset/posts/11-13-17-prompt.png"
   etag = filemd5("${path.cwd}/asset/posts/11-13-17-prompt.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-11-21-17-results-png" {
@@ -479,6 +507,7 @@ resource "aws_s3_bucket_object" "posts-11-21-17-results-png" {
   key = "posts/11-21-17-results.png"
   source = "asset/posts/11-21-17-results.png"
   etag = filemd5("${path.cwd}/asset/posts/11-21-17-results.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-11-26-17-results-png" {
@@ -486,6 +515,7 @@ resource "aws_s3_bucket_object" "posts-11-26-17-results-png" {
   key = "posts/11-26-17-results.png"
   source = "asset/posts/11-26-17-results.png"
   etag = filemd5("${path.cwd}/asset/posts/11-26-17-results.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-30-17-mongodb-png" {
@@ -493,6 +523,7 @@ resource "aws_s3_bucket_object" "posts-12-30-17-mongodb-png" {
   key = "posts/12-30-17-mongodb.png"
   source = "asset/posts/12-30-17-mongodb.png"
   etag = filemd5("${path.cwd}/asset/posts/12-30-17-mongodb.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-30-17-restapi-png" {
@@ -500,6 +531,7 @@ resource "aws_s3_bucket_object" "posts-12-30-17-restapi-png" {
   key = "posts/12-30-17-restapi.png"
   source = "asset/posts/12-30-17-restapi.png"
   etag = filemd5("${path.cwd}/asset/posts/12-30-17-restapi.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-30-17-xmlresponse-png" {
@@ -507,6 +539,7 @@ resource "aws_s3_bucket_object" "posts-12-30-17-xmlresponse-png" {
   key = "posts/12-30-17-xmlresponse.png"
   source = "asset/posts/12-30-17-xmlresponse.png"
   etag = filemd5("${path.cwd}/asset/posts/12-30-17-xmlresponse.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-30-17-xmlresponsetext-png" {
@@ -514,6 +547,7 @@ resource "aws_s3_bucket_object" "posts-12-30-17-xmlresponsetext-png" {
   key = "posts/12-30-17-xmlresponsetext.png"
   source = "asset/posts/12-30-17-xmlresponsetext.png"
   etag = filemd5("${path.cwd}/asset/posts/12-30-17-xmlresponsetext.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-14-18-html-png" {
@@ -521,6 +555,7 @@ resource "aws_s3_bucket_object" "posts-1-14-18-html-png" {
   key = "posts/1-14-18-html.png"
   source = "asset/posts/1-14-18-html.png"
   etag = filemd5("${path.cwd}/asset/posts/1-14-18-html.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-14-18-webresult-png" {
@@ -528,6 +563,7 @@ resource "aws_s3_bucket_object" "posts-1-14-18-webresult-png" {
   key = "posts/1-14-18-webresult.png"
   source = "asset/posts/1-14-18-webresult.png"
   etag = filemd5("${path.cwd}/asset/posts/1-14-18-webresult.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-27-17-postlazy-png" {
@@ -535,6 +571,7 @@ resource "aws_s3_bucket_object" "posts-1-27-17-postlazy-png" {
   key = "posts/1-27-17-postlazy.png"
   source = "asset/posts/1-27-17-postlazy.png"
   etag = filemd5("${path.cwd}/asset/posts/1-27-17-postlazy.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-27-17-prelazy-png" {
@@ -542,6 +579,7 @@ resource "aws_s3_bucket_object" "posts-1-27-17-prelazy-png" {
   key = "posts/1-27-17-prelazy.png"
   source = "asset/posts/1-27-17-prelazy.png"
   etag = filemd5("${path.cwd}/asset/posts/1-27-17-prelazy.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-20-18-blockchain-png" {
@@ -549,6 +587,7 @@ resource "aws_s3_bucket_object" "posts-5-20-18-blockchain-png" {
   key = "posts/5-20-18-blockchain.png"
   source = "asset/posts/5-20-18-blockchain.png"
   etag = filemd5("${path.cwd}/asset/posts/5-20-18-blockchain.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-20-18-simpleblock-png" {
@@ -556,6 +595,7 @@ resource "aws_s3_bucket_object" "posts-5-20-18-simpleblock-png" {
   key = "posts/5-20-18-simpleblock.png"
   source = "asset/posts/5-20-18-simpleblock.png"
   etag = filemd5("${path.cwd}/asset/posts/5-20-18-simpleblock.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-20-18-exercise-png" {
@@ -563,6 +603,7 @@ resource "aws_s3_bucket_object" "posts-5-20-18-exercise-png" {
   key = "posts/5-20-18-exercise.png"
   source = "asset/posts/5-20-18-exercise.png"
   etag = filemd5("${path.cwd}/asset/posts/5-20-18-exercise.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-31-18-seed-png" {
@@ -570,6 +611,7 @@ resource "aws_s3_bucket_object" "posts-5-31-18-seed-png" {
   key = "posts/5-31-18-seed.png"
   source = "asset/posts/5-31-18-seed.png"
   etag = filemd5("${path.cwd}/asset/posts/5-31-18-seed.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-9-18-array-chain-png" {
@@ -577,6 +619,7 @@ resource "aws_s3_bucket_object" "posts-6-9-18-array-chain-png" {
   key = "posts/6-9-18-array-chain.png"
   source = "asset/posts/6-9-18-array-chain.png"
   etag = filemd5("${path.cwd}/asset/posts/6-9-18-array-chain.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-9-18-function-chain-png" {
@@ -584,6 +627,7 @@ resource "aws_s3_bucket_object" "posts-6-9-18-function-chain-png" {
   key = "posts/6-9-18-function-chain.png"
   source = "asset/posts/6-9-18-function-chain.png"
   etag = filemd5("${path.cwd}/asset/posts/6-9-18-function-chain.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-9-18-object-chain-png" {
@@ -591,6 +635,7 @@ resource "aws_s3_bucket_object" "posts-6-9-18-object-chain-png" {
   key = "posts/6-9-18-object-chain.png"
   source = "asset/posts/6-9-18-object-chain.png"
   etag = filemd5("${path.cwd}/asset/posts/6-9-18-object-chain.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-9-18-prototype-traverse-png" {
@@ -598,6 +643,7 @@ resource "aws_s3_bucket_object" "posts-6-9-18-prototype-traverse-png" {
   key = "posts/6-9-18-prototype-traverse.png"
   source = "asset/posts/6-9-18-prototype-traverse.png"
   etag = filemd5("${path.cwd}/asset/posts/6-9-18-prototype-traverse.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-13-18-network-files-png" {
@@ -605,6 +651,7 @@ resource "aws_s3_bucket_object" "posts-6-13-18-network-files-png" {
   key = "posts/6-13-18-network-files.png"
   source = "asset/posts/6-13-18-network-files.png"
   etag = filemd5("${path.cwd}/asset/posts/6-13-18-network-files.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-13-18-writing-notes-gif" {
@@ -612,6 +659,7 @@ resource "aws_s3_bucket_object" "posts-6-13-18-writing-notes-gif" {
   key = "posts/6-13-18-writing-notes.gif"
   source = "asset/posts/6-13-18-writing-notes.gif"
   etag = filemd5("${path.cwd}/asset/posts/6-13-18-writing-notes.gif")
+  content_type = "image/gif"
 }
 
 resource "aws_s3_bucket_object" "posts-6-18-18-grid-0-png" {
@@ -619,6 +667,7 @@ resource "aws_s3_bucket_object" "posts-6-18-18-grid-0-png" {
   key = "posts/6-18-18-grid-0.png"
   source = "asset/posts/6-18-18-grid-0.png"
   etag = filemd5("${path.cwd}/asset/posts/6-18-18-grid-0.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-18-18-grid-1-png" {
@@ -626,6 +675,7 @@ resource "aws_s3_bucket_object" "posts-6-18-18-grid-1-png" {
   key = "posts/6-18-18-grid-1.png"
   source = "asset/posts/6-18-18-grid-1.png"
   etag = filemd5("${path.cwd}/asset/posts/6-18-18-grid-1.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-18-18-grid-2-png" {
@@ -633,6 +683,7 @@ resource "aws_s3_bucket_object" "posts-6-18-18-grid-2-png" {
   key = "posts/6-18-18-grid-2.png"
   source = "asset/posts/6-18-18-grid-2.png"
   etag = filemd5("${path.cwd}/asset/posts/6-18-18-grid-2.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-7-4-18-groovy-png" {
@@ -640,6 +691,7 @@ resource "aws_s3_bucket_object" "posts-7-4-18-groovy-png" {
   key = "posts/7-4-18-groovy-strict-type-check.png"
   source = "asset/posts/7-4-18-groovy-strict-type-check.png"
   etag = filemd5("${path.cwd}/asset/posts/7-4-18-groovy-strict-type-check.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-8-5-18-graphql-png" {
@@ -647,6 +699,7 @@ resource "aws_s3_bucket_object" "posts-8-5-18-graphql-png" {
   key = "posts/8-5-18-graphql.png"
   source = "asset/posts/8-5-18-graphql.png"
   etag = filemd5("${path.cwd}/asset/posts/8-5-18-graphql.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-8-8-18-graphiql-png" {
@@ -654,6 +707,7 @@ resource "aws_s3_bucket_object" "posts-8-8-18-graphiql-png" {
   key = "posts/8-8-18-graphiql.png"
   source = "asset/posts/8-8-18-graphiql.png"
   etag = filemd5("${path.cwd}/asset/posts/8-8-18-graphiql.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-8-5-18-restapi-png" {
@@ -661,6 +715,7 @@ resource "aws_s3_bucket_object" "posts-8-5-18-restapi-png" {
   key = "posts/8-5-18-restapi.png"
   source = "asset/posts/8-5-18-restapi.png"
   etag = filemd5("${path.cwd}/asset/posts/8-5-18-restapi.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-3-18-aws-png" {
@@ -668,6 +723,7 @@ resource "aws_s3_bucket_object" "posts-9-3-18-aws-png" {
   key = "posts/9-3-18-aws.png"
   source = "asset/posts/9-3-18-aws.png"
   etag = filemd5("${path.cwd}/asset/posts/9-3-18-aws.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-3-18-web-png" {
@@ -675,6 +731,7 @@ resource "aws_s3_bucket_object" "posts-9-3-18-web-png" {
   key = "posts/9-3-18-web.png"
   source = "asset/posts/9-3-18-web.png"
   etag = filemd5("${path.cwd}/asset/posts/9-3-18-web.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-7-18-serverless-png" {
@@ -682,6 +739,7 @@ resource "aws_s3_bucket_object" "posts-9-7-18-serverless-png" {
   key = "posts/9-7-18-serverless.png"
   source = "asset/posts/9-7-18-serverless.png"
   etag = filemd5("${path.cwd}/asset/posts/9-7-18-serverless.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-21-18-jenkins01-png" {
@@ -689,6 +747,7 @@ resource "aws_s3_bucket_object" "posts-9-21-18-jenkins01-png" {
   key = "posts/9-21-18-jenkins01.png"
   source = "asset/posts/9-21-18-jenkins01.png"
   etag = filemd5("${path.cwd}/asset/posts/9-21-18-jenkins01.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-21-18-jenkins02-png" {
@@ -696,6 +755,7 @@ resource "aws_s3_bucket_object" "posts-9-21-18-jenkins02-png" {
   key = "posts/9-21-18-jenkins02.png"
   source = "asset/posts/9-21-18-jenkins02.png"
   etag = filemd5("${path.cwd}/asset/posts/9-21-18-jenkins02.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-21-18-jenkins03-png" {
@@ -703,6 +763,7 @@ resource "aws_s3_bucket_object" "posts-9-21-18-jenkins03-png" {
   key = "posts/9-21-18-jenkins03.png"
   source = "asset/posts/9-21-18-jenkins03.png"
   etag = filemd5("${path.cwd}/asset/posts/9-21-18-jenkins03.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-21-18-jenkins04-png" {
@@ -710,6 +771,7 @@ resource "aws_s3_bucket_object" "posts-9-21-18-jenkins04-png" {
   key = "posts/9-21-18-jenkins04.png"
   source = "asset/posts/9-21-18-jenkins04.png"
   etag = filemd5("${path.cwd}/asset/posts/9-21-18-jenkins04.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-9-21-18-jenkins05-png" {
@@ -717,6 +779,7 @@ resource "aws_s3_bucket_object" "posts-9-21-18-jenkins05-png" {
   key = "posts/9-21-18-jenkins05.png"
   source = "asset/posts/9-21-18-jenkins05.png"
   etag = filemd5("${path.cwd}/asset/posts/9-21-18-jenkins05.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-11-7-18-bar-chart-gif" {
@@ -724,6 +787,7 @@ resource "aws_s3_bucket_object" "posts-11-7-18-bar-chart-gif" {
   key = "posts/11-7-18-bar-chart.gif"
   source = "asset/posts/11-7-18-bar-chart.gif"
   etag = filemd5("${path.cwd}/asset/posts/11-7-18-bar-chart.gif")
+  content_type = "image/gif"
 }
 
 resource "aws_s3_bucket_object" "posts-11-24-18-angular-lifecycle-png" {
@@ -731,6 +795,7 @@ resource "aws_s3_bucket_object" "posts-11-24-18-angular-lifecycle-png" {
   key = "posts/11-24-18-angular-lifecycle.png"
   source = "asset/posts/11-24-18-angular-lifecycle.png"
   etag = filemd5("${path.cwd}/asset/posts/11-24-18-angular-lifecycle.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-22-18-hierarchy1-png" {
@@ -738,6 +803,7 @@ resource "aws_s3_bucket_object" "posts-12-22-18-hierarchy1-png" {
   key = "posts/12-22-18-hierarchy1.png"
   source = "asset/posts/12-22-18-hierarchy1.png"
   etag = filemd5("${path.cwd}/asset/posts/12-22-18-hierarchy1.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-22-18-hierarchy2-png" {
@@ -745,6 +811,7 @@ resource "aws_s3_bucket_object" "posts-12-22-18-hierarchy2-png" {
   key = "posts/12-22-18-hierarchy2.png"
   source = "asset/posts/12-22-18-hierarchy2.png"
   etag = filemd5("${path.cwd}/asset/posts/12-22-18-hierarchy2.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-12-22-18-hierarchy3-png" {
@@ -752,6 +819,7 @@ resource "aws_s3_bucket_object" "posts-12-22-18-hierarchy3-png" {
   key = "posts/12-22-18-hierarchy3.png"
   source = "asset/posts/12-22-18-hierarchy3.png"
   etag = filemd5("${path.cwd}/asset/posts/12-22-18-hierarchy3.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-19-19-react-lifecycles-gif" {
@@ -759,6 +827,7 @@ resource "aws_s3_bucket_object" "posts-1-19-19-react-lifecycles-gif" {
   key = "posts/1-19-19-react-lifecycles.gif"
   source = "asset/posts/1-19-19-react-lifecycles.gif"
   etag = filemd5("${path.cwd}/asset/posts/1-19-19-react-lifecycles.gif")
+  content_type = "image/gif"
 }
 
 resource "aws_s3_bucket_object" "posts-1-24-19-example-1-png" {
@@ -766,6 +835,7 @@ resource "aws_s3_bucket_object" "posts-1-24-19-example-1-png" {
   key = "posts/1-24-19-example-1.png"
   source = "asset/posts/1-24-19-example-1.png"
   etag = filemd5("${path.cwd}/asset/posts/1-24-19-example-1.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-24-19-example-2-png" {
@@ -773,6 +843,7 @@ resource "aws_s3_bucket_object" "posts-1-24-19-example-2-png" {
   key = "posts/1-24-19-example-2.png"
   source = "asset/posts/1-24-19-example-2.png"
   etag = filemd5("${path.cwd}/asset/posts/1-24-19-example-2.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-24-19-example-3-png" {
@@ -780,6 +851,7 @@ resource "aws_s3_bucket_object" "posts-1-24-19-example-3-png" {
   key = "posts/1-24-19-example-3.png"
   source = "asset/posts/1-24-19-example-3.png"
   etag = filemd5("${path.cwd}/asset/posts/1-24-19-example-3.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-1-29-19-horse-picture-1-jpg" {
@@ -787,6 +859,7 @@ resource "aws_s3_bucket_object" "posts-1-29-19-horse-picture-1-jpg" {
   key = "posts/1-29-19-horse-picture-1.jpg"
   source = "asset/posts/1-29-19-horse-picture-1.jpg"
   etag = filemd5("${path.cwd}/asset/posts/1-29-19-horse-picture-1.jpg")
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_bucket_object" "posts-1-29-19-horse-picture-2-jpg" {
@@ -794,6 +867,7 @@ resource "aws_s3_bucket_object" "posts-1-29-19-horse-picture-2-jpg" {
   key = "posts/1-29-19-horse-picture-2.jpg"
   source = "asset/posts/1-29-19-horse-picture-2.jpg"
   etag = filemd5("${path.cwd}/asset/posts/1-29-19-horse-picture-2.jpg")
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_bucket_object" "posts-3-12-19-cd-project-gif" {
@@ -801,6 +875,7 @@ resource "aws_s3_bucket_object" "posts-3-12-19-cd-project-gif" {
   key = "posts/3-12-19-cd-project.gif"
   source = "asset/posts/3-12-19-cd-project.gif"
   etag = filemd5("${path.cwd}/asset/posts/3-12-19-cd-project.gif")
+  content_type = "image/gif"
 }
 
 resource "aws_s3_bucket_object" "posts-4-28-19-app-png" {
@@ -808,6 +883,7 @@ resource "aws_s3_bucket_object" "posts-4-28-19-app-png" {
   key = "posts/4-28-19-app.png"
   source = "asset/posts/4-28-19-app.png"
   etag = filemd5("${path.cwd}/asset/posts/4-28-19-app.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-13-19-k8s-master-png" {
@@ -815,6 +891,7 @@ resource "aws_s3_bucket_object" "posts-5-13-19-k8s-master-png" {
   key = "posts/5-13-19-k8s-master.png"
   source = "asset/posts/5-13-19-k8s-master.png"
   etag = filemd5("${path.cwd}/asset/posts/5-13-19-k8s-master.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-13-19-k8s-worker-png" {
@@ -822,6 +899,7 @@ resource "aws_s3_bucket_object" "posts-5-13-19-k8s-worker-png" {
   key = "posts/5-13-19-k8s-worker.png"
   source = "asset/posts/5-13-19-k8s-worker.png"
   etag = filemd5("${path.cwd}/asset/posts/5-13-19-k8s-worker.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-13-19-k8s-cluster-png" {
@@ -829,6 +907,7 @@ resource "aws_s3_bucket_object" "posts-5-13-19-k8s-cluster-png" {
   key = "posts/5-13-19-k8s-cluster.png"
   source = "asset/posts/5-13-19-k8s-cluster.png"
   etag = filemd5("${path.cwd}/asset/posts/5-13-19-k8s-cluster.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-20-19-web-browser" {
@@ -836,6 +915,7 @@ resource "aws_s3_bucket_object" "posts-5-20-19-web-browser" {
   key = "posts/5-20-19-web-browser.png"
   source = "asset/posts/5-20-19-web-browser.png"
   etag = filemd5("${path.cwd}/asset/posts/5-20-19-web-browser.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-5-20-19-aws-console" {
@@ -843,6 +923,7 @@ resource "aws_s3_bucket_object" "posts-5-20-19-aws-console" {
   key = "posts/5-20-19-aws-console.png"
   source = "asset/posts/5-20-19-aws-console.png"
   etag = filemd5("${path.cwd}/asset/posts/5-20-19-aws-console.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "posts-6-17-19-repos" {
@@ -850,6 +931,7 @@ resource "aws_s3_bucket_object" "posts-6-17-19-repos" {
   key = "posts/6-17-19-repos.png"
   source = "asset/posts/6-17-19-repos.png"
   etag = filemd5("${path.cwd}/asset/posts/6-17-19-repos.png")
+  content_type = "image/png"
 }
 
 /*
@@ -861,6 +943,7 @@ resource "aws_s3_bucket_object" "angular-png" {
   key = "logos/angular.png"
   source = "asset/logos/angular.png"
   etag = filemd5("${path.cwd}/asset/logos/angular.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "apigateway-svg" {
@@ -876,6 +959,7 @@ resource "aws_s3_bucket_object" "assembly-png" {
   key = "logos/assembly.png"
   source = "asset/logos/assembly.png"
   etag = filemd5("${path.cwd}/asset/logos/assembly.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "aws-png" {
@@ -883,6 +967,7 @@ resource "aws_s3_bucket_object" "aws-png" {
   key = "logos/aws.png"
   source = "asset/logos/aws.png"
   etag = filemd5("${path.cwd}/asset/logos/aws.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "awslambda-png" {
@@ -890,6 +975,7 @@ resource "aws_s3_bucket_object" "awslambda-png" {
   key = "logos/awslambda.png"
   source = "asset/logos/awslambda.png"
   etag = filemd5("${path.cwd}/asset/logos/awslambda.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "babel-png" {
@@ -897,6 +983,7 @@ resource "aws_s3_bucket_object" "babel-png" {
   key = "logos/babel.png"
   source = "asset/logos/babel.png"
   etag = filemd5("${path.cwd}/asset/logos/babel.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "batch-png" {
@@ -904,6 +991,7 @@ resource "aws_s3_bucket_object" "batch-png" {
   key = "logos/batch.png"
   source = "asset/logos/batch.png"
   etag = filemd5("${path.cwd}/asset/logos/batch.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "bash-png" {
@@ -911,6 +999,7 @@ resource "aws_s3_bucket_object" "bash-png" {
   key = "logos/bash.png"
   source = "asset/logos/bash.png"
   etag = filemd5("${path.cwd}/asset/logos/bash.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "bootstrap-png" {
@@ -918,6 +1007,7 @@ resource "aws_s3_bucket_object" "bootstrap-png" {
   key = "logos/bootstrap.png"
   source = "asset/logos/bootstrap.png"
   etag = filemd5("${path.cwd}/asset/logos/bootstrap.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "c-png" {
@@ -925,6 +1015,7 @@ resource "aws_s3_bucket_object" "c-png" {
   key = "logos/c.png"
   source = "asset/logos/c.png"
   etag = filemd5("${path.cwd}/asset/logos/c.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "cloudformation-png" {
@@ -932,6 +1023,7 @@ resource "aws_s3_bucket_object" "cloudformation-png" {
   key = "logos/cloudformation.png"
   source = "asset/logos/cloudformation.png"
   etag = filemd5("${path.cwd}/asset/logos/cloudformation.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "cpp-png" {
@@ -939,6 +1031,7 @@ resource "aws_s3_bucket_object" "cpp-png" {
   key = "logos/cpp.png"
   source = "asset/logos/cpp.png"
   etag = filemd5("${path.cwd}/asset/logos/cpp.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "csharp-png" {
@@ -946,6 +1039,7 @@ resource "aws_s3_bucket_object" "csharp-png" {
   key = "logos/csharp.png"
   source = "asset/logos/csharp.png"
   etag = filemd5("${path.cwd}/asset/logos/csharp.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "css-png" {
@@ -953,6 +1047,7 @@ resource "aws_s3_bucket_object" "css-png" {
   key = "logos/css.png"
   source = "asset/logos/css.png"
   etag = filemd5("${path.cwd}/asset/logos/css.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "docker-png" {
@@ -960,6 +1055,7 @@ resource "aws_s3_bucket_object" "docker-png" {
   key = "logos/docker.png"
   source = "asset/logos/docker.png"
   etag = filemd5("${path.cwd}/asset/logos/docker.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "d3-png" {
@@ -967,6 +1063,7 @@ resource "aws_s3_bucket_object" "d3-png" {
   key = "logos/d3.png"
   source = "asset/logos/d3.png"
   etag = filemd5("${path.cwd}/asset/logos/d3.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "ec2-png" {
@@ -974,6 +1071,7 @@ resource "aws_s3_bucket_object" "ec2-png" {
   key = "logos/ec2.png"
   source = "asset/logos/ec2.png"
   etag = filemd5("${path.cwd}/asset/logos/ec2.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "eks-png" {
@@ -981,6 +1079,7 @@ resource "aws_s3_bucket_object" "eks-png" {
   key = "logos/eks.png"
   source = "asset/logos/eks.png"
   etag = filemd5("${path.cwd}/asset/logos/eks.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "es6-png" {
@@ -988,6 +1087,7 @@ resource "aws_s3_bucket_object" "es6-png" {
   key = "logos/es6.png"
   source = "asset/logos/es6.png"
   etag = filemd5("${path.cwd}/asset/logos/es6.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "es2017-png" {
@@ -995,6 +1095,7 @@ resource "aws_s3_bucket_object" "es2017-png" {
   key = "logos/es2017.png"
   source = "asset/logos/es2017.png"
   etag = filemd5("${path.cwd}/asset/logos/es2017.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "express-png" {
@@ -1002,6 +1103,7 @@ resource "aws_s3_bucket_object" "express-png" {
   key = "logos/express.png"
   source = "asset/logos/express.png"
   etag = filemd5("${path.cwd}/asset/logos/express.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "github-png" {
@@ -1009,6 +1111,7 @@ resource "aws_s3_bucket_object" "github-png" {
   key = "logos/github.png"
   source = "asset/logos/github.png"
   etag = filemd5("${path.cwd}/asset/logos/github.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "graphql-png" {
@@ -1016,6 +1119,7 @@ resource "aws_s3_bucket_object" "graphql-png" {
   key = "logos/graphql.png"
   source = "asset/logos/graphql.png"
   etag = filemd5("${path.cwd}/asset/logos/graphql.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "groovy-png" {
@@ -1023,6 +1127,7 @@ resource "aws_s3_bucket_object" "groovy-png" {
   key = "logos/groovy.png"
   source = "asset/logos/groovy.png"
   etag = filemd5("${path.cwd}/asset/logos/groovy.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "gulp-svg" {
@@ -1038,6 +1143,7 @@ resource "aws_s3_bucket_object" "haskell-png" {
   key = "logos/haskell.png"
   source = "asset/logos/haskell.png"
   etag = filemd5("${path.cwd}/asset/logos/haskell.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "html-png" {
@@ -1045,6 +1151,7 @@ resource "aws_s3_bucket_object" "html-png" {
   key = "logos/html.png"
   source = "asset/logos/html.png"
   etag = filemd5("${path.cwd}/asset/logos/html.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "java-png" {
@@ -1052,6 +1159,7 @@ resource "aws_s3_bucket_object" "java-png" {
   key = "logos/java.png"
   source = "asset/logos/java.png"
   etag = filemd5("${path.cwd}/asset/logos/java.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "java8-png" {
@@ -1059,6 +1167,7 @@ resource "aws_s3_bucket_object" "java8-png" {
   key = "logos/java8.png"
   source = "asset/logos/java8.png"
   etag = filemd5("${path.cwd}/asset/logos/java8.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "jenkins-png" {
@@ -1066,6 +1175,7 @@ resource "aws_s3_bucket_object" "jenkins-png" {
   key = "logos/jenkins.png"
   source = "asset/logos/jenkins.png"
   etag = filemd5("${path.cwd}/asset/logos/jenkins.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "js-png" {
@@ -1073,6 +1183,7 @@ resource "aws_s3_bucket_object" "js-png" {
   key = "logos/js.png"
   source = "asset/logos/js.png"
   etag = filemd5("${path.cwd}/asset/logos/js.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "json-png" {
@@ -1080,6 +1191,7 @@ resource "aws_s3_bucket_object" "json-png" {
   key = "logos/json.png"
   source = "asset/logos/json.png"
   etag = filemd5("${path.cwd}/asset/logos/json.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "jwt-png" {
@@ -1087,6 +1199,7 @@ resource "aws_s3_bucket_object" "jwt-png" {
   key = "logos/jwt.png"
   source = "asset/logos/jwt.png"
   etag = filemd5("${path.cwd}/asset/logos/jwt.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "k8s-png" {
@@ -1094,6 +1207,7 @@ resource "aws_s3_bucket_object" "k8s-png" {
   key = "logos/k8s.png"
   source = "asset/logos/k8s.png"
   etag = filemd5("${path.cwd}/asset/logos/k8s.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "mongodb-png" {
@@ -1101,6 +1215,7 @@ resource "aws_s3_bucket_object" "mongodb-png" {
   key = "logos/mongodb.png"
   source = "asset/logos/mongodb.png"
   etag = filemd5("${path.cwd}/asset/logos/mongodb.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "mongoose-png" {
@@ -1108,6 +1223,7 @@ resource "aws_s3_bucket_object" "mongoose-png" {
   key = "logos/mongoose.png"
   source = "asset/logos/mongoose.png"
   etag = filemd5("${path.cwd}/asset/logos/mongoose.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "neo4j-png" {
@@ -1115,6 +1231,7 @@ resource "aws_s3_bucket_object" "neo4j-png" {
   key = "logos/neo4j.png"
   source = "asset/logos/neo4j.png"
   etag = filemd5("${path.cwd}/asset/logos/neo4j.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "nodejs-png" {
@@ -1122,6 +1239,7 @@ resource "aws_s3_bucket_object" "nodejs-png" {
   key = "logos/nodejs.png"
   source = "asset/logos/nodejs.png"
   etag = filemd5("${path.cwd}/asset/logos/nodejs.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "oracle-png" {
@@ -1129,6 +1247,7 @@ resource "aws_s3_bucket_object" "oracle-png" {
   key = "logos/oracle.png"
   source = "asset/logos/oracle.png"
   etag = filemd5("${path.cwd}/asset/logos/oracle.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "php-svg" {
@@ -1144,6 +1263,7 @@ resource "aws_s3_bucket_object" "powershell-png" {
   key = "logos/powershell.png"
   source = "asset/logos/powershell.png"
   etag = filemd5("${path.cwd}/asset/logos/powershell.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "python-png" {
@@ -1151,6 +1271,7 @@ resource "aws_s3_bucket_object" "python-png" {
   key = "logos/python.png"
   source = "asset/logos/python.png"
   etag = filemd5("${path.cwd}/asset/logos/python.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "rabbitmq-png" {
@@ -1158,6 +1279,7 @@ resource "aws_s3_bucket_object" "rabbitmq-png" {
   key = "logos/rabbitmq.png"
   source = "asset/logos/rabbitmq.png"
   etag = filemd5("${path.cwd}/asset/logos/rabbitmq.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "react-png" {
@@ -1165,6 +1287,7 @@ resource "aws_s3_bucket_object" "react-png" {
   key = "logos/react.png"
   source = "asset/logos/react.png"
   etag = filemd5("${path.cwd}/asset/logos/react.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "sass-png" {
@@ -1172,6 +1295,7 @@ resource "aws_s3_bucket_object" "sass-png" {
   key = "logos/sass.png"
   source = "asset/logos/sass.png"
   etag = filemd5("${path.cwd}/asset/logos/sass.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "sql-png" {
@@ -1179,6 +1303,7 @@ resource "aws_s3_bucket_object" "sql-png" {
   key = "logos/sql.png"
   source = "asset/logos/sql.png"
   etag = filemd5("${path.cwd}/asset/logos/sql.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "swift-png" {
@@ -1186,6 +1311,7 @@ resource "aws_s3_bucket_object" "swift-png" {
   key = "logos/swift.png"
   source = "asset/logos/swift.png"
   etag = filemd5("${path.cwd}/asset/logos/swift.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "tech-logos-svg" {
@@ -1209,6 +1335,7 @@ resource "aws_s3_bucket_object" "terraform-png" {
   key = "logos/terraform.png"
   source = "asset/logos/terraform.png"
   etag = filemd5("${path.cwd}/asset/logos/terraform.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "travisci-png" {
@@ -1216,6 +1343,7 @@ resource "aws_s3_bucket_object" "travisci-png" {
   key = "logos/travisci.png"
   source = "asset/logos/travisci.png"
   etag = filemd5("${path.cwd}/asset/logos/travisci.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "ts-png" {
@@ -1223,6 +1351,7 @@ resource "aws_s3_bucket_object" "ts-png" {
   key = "logos/ts.png"
   source = "asset/logos/ts.png"
   etag = filemd5("${path.cwd}/asset/logos/ts.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "unicode-png" {
@@ -1230,6 +1359,7 @@ resource "aws_s3_bucket_object" "unicode-png" {
   key = "logos/unicode.png"
   source = "asset/logos/unicode.png"
   etag = filemd5("${path.cwd}/asset/logos/unicode.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "vim-png" {
@@ -1237,6 +1367,7 @@ resource "aws_s3_bucket_object" "vim-png" {
   key = "logos/vim.png"
   source = "asset/logos/vim.png"
   etag = filemd5("${path.cwd}/asset/logos/vim.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "webpack-png" {
@@ -1244,6 +1375,7 @@ resource "aws_s3_bucket_object" "webpack-png" {
   key = "logos/webpack.png"
   source = "asset/logos/webpack.png"
   etag = filemd5("${path.cwd}/asset/logos/webpack.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "yaml-png" {
@@ -1251,4 +1383,5 @@ resource "aws_s3_bucket_object" "yaml-png" {
   key = "logos/yaml.png"
   source = "asset/logos/yaml.png"
   etag = filemd5("${path.cwd}/asset/logos/yaml.png")
+  content_type = "image/png"
 }
