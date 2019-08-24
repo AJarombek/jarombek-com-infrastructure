@@ -934,6 +934,46 @@ resource "aws_s3_bucket_object" "posts-6-17-19-repos" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-8-24-19-flexbox-1-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-24-19-flexbox-1.png"
+  source = "asset/posts/8-24-19-flexbox-1.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-24-19-flexbox-1.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-24-19-flexbox-2-gif" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-24-19-flexbox-2.gif"
+  source = "asset/posts/8-24-19-flexbox-2.gif"
+  etag = filemd5("${path.cwd}/asset/posts/8-24-19-flexbox-2.gif")
+  content_type = "image/gif"
+}
+
+resource "aws_s3_bucket_object" "posts-8-24-19-flexbox-3-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-24-19-flexbox-3.png"
+  source = "asset/posts/8-24-19-flexbox-3.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-24-19-flexbox-3.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-24-19-flexbox-4-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-24-19-flexbox-4.png"
+  source = "asset/posts/8-24-19-flexbox-4.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-24-19-flexbox-4.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-24-19-flexbox-5-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-24-19-flexbox-5.png"
+  source = "asset/posts/8-24-19-flexbox-5.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-24-19-flexbox-5.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
