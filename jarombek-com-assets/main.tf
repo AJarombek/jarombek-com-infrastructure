@@ -974,6 +974,46 @@ resource "aws_s3_bucket_object" "posts-8-24-19-flexbox-5-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-9-3-19-rds-snapshot-console-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-3-19-rds-snapshot-console.png"
+  source = "asset/posts/9-3-19-rds-snapshot-console.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-3-19-rds-snapshot-console.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-3-19-saints-xctf-infra-diagram-1-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-3-19-saints-xctf-infra-diagram-1.png"
+  source = "asset/posts/9-3-19-saints-xctf-infra-diagram-1.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-3-19-saints-xctf-infra-diagram-1.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-3-19-saints-xctf-infra-diagram-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-3-19-saints-xctf-infra-diagram-2.png"
+  source = "asset/posts/9-3-19-saints-xctf-infra-diagram-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-3-19-saints-xctf-infra-diagram-2.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-3-19-saints-xctf-infra-diagram-3-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-3-19-saints-xctf-infra-diagram-3.png"
+  source = "asset/posts/9-3-19-saints-xctf-infra-diagram-3.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-3-19-saints-xctf-infra-diagram-3.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-3-19-saints-xctf-infra-diagram-4-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-3-19-saints-xctf-infra-diagram-4.png"
+  source = "asset/posts/9-3-19-saints-xctf-infra-diagram-4.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-3-19-saints-xctf-infra-diagram-4.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
