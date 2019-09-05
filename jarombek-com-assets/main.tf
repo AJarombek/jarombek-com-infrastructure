@@ -1014,6 +1014,22 @@ resource "aws_s3_bucket_object" "posts-9-3-19-saints-xctf-infra-diagram-4-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-9-5-19-rds-backup-lambda-1-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-5-19-rds-backup-lambda-1.png"
+  source = "asset/posts/9-5-19-rds-backup-lambda-1.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-5-19-rds-backup-lambda-1.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-5-19-rds-backup-lambda-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-5-19-rds-backup-lambda-2.png"
+  source = "asset/posts/9-5-19-rds-backup-lambda-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-5-19-rds-backup-lambda-2.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1050,12 +1066,52 @@ resource "aws_s3_bucket_object" "aws-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "aws-iam-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/aws-iam.svg"
+  source = "asset/logos/aws-iam.svg"
+  etag = filemd5("${path.cwd}/asset/logos/aws-iam.svg")
+  content_type = "image/svg+xml"
+}
+
+resource "aws_s3_bucket_object" "aws-secrets-manager-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/aws-secrets-manager.png"
+  source = "asset/logos/aws-secrets-manager.png"
+  etag = filemd5("${path.cwd}/asset/logos/aws-secrets-manager.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "aws-vpc-endpoint-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/aws-vpc-endpoint.png"
+  source = "asset/logos/aws-vpc-endpoint.png"
+  etag = filemd5("${path.cwd}/asset/logos/aws-vpc-endpoint.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "awslambda-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/awslambda.png"
   source = "asset/logos/awslambda.png"
   etag = filemd5("${path.cwd}/asset/logos/awslambda.png")
   content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "awsrds-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/awsrds.png"
+  source = "asset/logos/awsrds.png"
+  etag = filemd5("${path.cwd}/asset/logos/awsrds.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "awss3-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/awss3.svg"
+  source = "asset/logos/awss3.svg"
+  etag = filemd5("${path.cwd}/asset/logos/awss3.svg")
+  content_type = "image/svg+xml"
 }
 
 resource "aws_s3_bucket_object" "babel-png" {
@@ -1303,6 +1359,14 @@ resource "aws_s3_bucket_object" "mongoose-png" {
   key = "logos/mongoose.png"
   source = "asset/logos/mongoose.png"
   etag = filemd5("${path.cwd}/asset/logos/mongoose.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "mysql-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/mysql.png"
+  source = "asset/logos/mysql.png"
+  etag = filemd5("${path.cwd}/asset/logos/mysql.png")
   content_type = "image/png"
 }
 
