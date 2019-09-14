@@ -1030,6 +1030,54 @@ resource "aws_s3_bucket_object" "posts-9-5-19-rds-backup-lambda-2-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-9-5-19-rds-backup-lambda-3-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-5-19-rds-backup-lambda-3.png"
+  source = "asset/posts/9-5-19-rds-backup-lambda-3.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-5-19-rds-backup-lambda-3.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-15-19-aws-console-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-15-19-aws-console.png"
+  source = "asset/posts/9-15-19-aws-console.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-15-19-aws-console.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-15-19-kibana-create-doc-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-15-19-kibana-create-doc.png"
+  source = "asset/posts/9-15-19-kibana-create-doc.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-15-19-kibana-create-doc.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-15-19-kibana-index-put-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-15-19-kibana-index-put.png"
+  source = "asset/posts/9-15-19-kibana-index-put.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-15-19-kibana-index-put.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-15-19-kibana-search-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-15-19-kibana-search.png"
+  source = "asset/posts/9-15-19-kibana-search.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-15-19-kibana-search.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-15-19-kibana-ui-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-15-19-kibana-ui.png"
+  source = "asset/posts/9-15-19-kibana-ui.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-15-19-kibana-ui.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1218,6 +1266,22 @@ resource "aws_s3_bucket_object" "eks-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "elasticsearch-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/elasticsearch.png"
+  source = "asset/logos/elasticsearch.png"
+  etag = filemd5("${path.cwd}/asset/logos/elasticsearch.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "elk-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/elk.png"
+  source = "asset/logos/elk.png"
+  etag = filemd5("${path.cwd}/asset/logos/elk.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "es6-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/es6.png"
@@ -1343,6 +1407,14 @@ resource "aws_s3_bucket_object" "k8s-png" {
   key = "logos/k8s.png"
   source = "asset/logos/k8s.png"
   etag = filemd5("${path.cwd}/asset/logos/k8s.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "kibana-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/kibana.png"
+  source = "asset/logos/kibana.png"
+  etag = filemd5("${path.cwd}/asset/logos/kibana.png")
   content_type = "image/png"
 }
 
