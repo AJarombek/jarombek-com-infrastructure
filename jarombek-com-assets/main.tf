@@ -1242,6 +1242,14 @@ resource "aws_s3_bucket_object" "docker-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "dotnetcore-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/dotnetcore.png"
+  source = "asset/logos/dotnetcore.png"
+  etag = filemd5("${path.cwd}/asset/logos/dotnetcore.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "d3-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/d3.png"
