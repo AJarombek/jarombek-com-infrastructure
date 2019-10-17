@@ -1078,6 +1078,14 @@ resource "aws_s3_bucket_object" "posts-9-15-19-kibana-ui-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-10-18-19-kibana-analyzer-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/10-18-19-kibana-analyzer.png"
+  source = "asset/posts/10-18-19-kibana-analyzer.png"
+  etag = filemd5("${path.cwd}/asset/posts/10-18-19-kibana-analyzer.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1528,6 +1536,14 @@ resource "aws_s3_bucket_object" "sql-png" {
   source = "asset/logos/sql.png"
   etag = filemd5("${path.cwd}/asset/logos/sql.png")
   content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "sql-server-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/sql-server.svg"
+  source = "asset/logos/sql-server.svg"
+  etag = filemd5("${path.cwd}/asset/logos/sql-server.svg")
+  content_type = "image/svg+xml"
 }
 
 resource "aws_s3_bucket_object" "swift-png" {
