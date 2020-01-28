@@ -33,6 +33,26 @@ data "aws_route53_zone" "jarombek-com-zone" {
 #--------------------------
 
 #------------------------------
+# Protects '*.demo.jarombek.com'
+#------------------------------
+
+module "jarombek-demo-acm-certificate" {
+  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+
+  # Mandatory arguments
+  name = "jarombek-demo-acm-certificate"
+  tag_name = "jarombek-demo-acm-certificate"
+  tag_application = "jarombek-com"
+  tag_environment = "production"
+
+  route53_zone_name = "jarombek.com."
+  acm_domain_name = "*.demo.jarombek.com"
+
+  # Optional arguments
+  route53_zone_private = false
+}
+
+#------------------------------
 # Protects '*.asset.jarombek.com'
 #------------------------------
 
