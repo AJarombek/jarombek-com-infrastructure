@@ -7,6 +7,7 @@ be run independently or all at once.
 To run all test suites at once, execute the following command from this directory:
 
 ```
+pip3 install -r requirements.txt
 python3 runner.py
 ```
 

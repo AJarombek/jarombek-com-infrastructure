@@ -207,11 +207,11 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(len(containers), 2)
 
         jarombek_com_container = containers[0]
-        self.assertEqual(jarombek_com_container.get('name'), 'jarombek-com')
+        self.assertEqual(jarombek_com_container.get('name'), 'jarombek-com-database')
         self.assertEqual(jarombek_com_container.get('lastStatus'), 'RUNNING')
 
         jarombek_com_database_container = containers[1]
-        self.assertEqual(jarombek_com_database_container.get('name'), 'jarombek-com-database')
+        self.assertEqual(jarombek_com_database_container.get('name'), 'jarombek-com')
         self.assertEqual(jarombek_com_database_container.get('lastStatus'), 'RUNNING')
 
     def test_ecs_service_running(self) -> None:

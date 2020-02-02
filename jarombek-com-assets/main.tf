@@ -1086,6 +1086,14 @@ resource "aws_s3_bucket_object" "posts-10-18-19-kibana-analyzer-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-1-31-20-react-16-3-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-31-20-react-16-3.png"
+  source = "asset/posts/1-31-20-react-16-3.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-31-20-react-16-3.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */

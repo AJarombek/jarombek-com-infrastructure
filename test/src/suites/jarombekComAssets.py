@@ -7,7 +7,6 @@ Date: 5/28/2019
 import unittest
 import boto3
 import urllib.request as request
-import ssl
 
 
 class TestJarombekComAssets(unittest.TestCase):

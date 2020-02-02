@@ -10,6 +10,7 @@ import suites.iam as iam
 import suites.route53 as route53
 import suites.jarombekCom as jarombekCom
 import suites.jarombekComAssets as jarombekComAssets
+import suites.jarombekComReact163 as jarombekComReact163
 
 # Create the test suite
 loader = unittest.TestLoader()
@@ -21,6 +22,7 @@ suite.addTests(loader.loadTestsFromModule(iam))
 suite.addTests(loader.loadTestsFromModule(route53))
 suite.addTests(loader.loadTestsFromModule(jarombekCom))
 suite.addTests(loader.loadTestsFromModule(jarombekComAssets))
+suite.addTests(loader.loadTestsFromModule(jarombekComReact163))
 
 # Create a test runner an execute the test suite
 runner = unittest.TextTestRunner(verbosity=3)
