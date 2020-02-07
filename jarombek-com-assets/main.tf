@@ -1094,6 +1094,14 @@ resource "aws_s3_bucket_object" "posts-1-31-20-react-16-3-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-2-5-20-jest-output" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-5-20-jest-output.png"
+  source = "asset/posts/2-5-20-jest-output.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-5-20-jest-output.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1306,6 +1314,14 @@ resource "aws_s3_bucket_object" "elk-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "enzyme-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/enzyme.png"
+  source = "asset/logos/enzyme.png"
+  etag = filemd5("${path.cwd}/asset/logos/enzyme.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "es6-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/es6.png"
@@ -1402,6 +1418,14 @@ resource "aws_s3_bucket_object" "jenkins-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "jest-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/jest.svg"
+  source = "asset/logos/jest.svg"
+  etag = filemd5("${path.cwd}/asset/logos/jest.svg")
+  content_type = "image/svg+xml"
+}
+
 resource "aws_s3_bucket_object" "js-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/js.png"
@@ -1479,6 +1503,14 @@ resource "aws_s3_bucket_object" "nodejs-png" {
   key = "logos/nodejs.png"
   source = "asset/logos/nodejs.png"
   etag = filemd5("${path.cwd}/asset/logos/nodejs.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "npm-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/npm.png"
+  source = "asset/logos/npm.png"
+  etag = filemd5("${path.cwd}/asset/logos/npm.png")
   content_type = "image/png"
 }
 
