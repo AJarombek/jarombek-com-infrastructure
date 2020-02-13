@@ -5,12 +5,12 @@ Date: 5/27/2019
 """
 
 import unittest
-import suites.acm as acm
-import suites.iam as iam
-import suites.route53 as route53
-import suites.jarombekCom as jarombekCom
-import suites.jarombekComAssets as jarombekComAssets
-import suites.jarombekComReact163 as jarombekComReact163
+import test.suites.acm as acm
+import test.suites.iam as iam
+import test.suites.route53 as route53
+import test.suites.jarombekCom as jarombekCom
+import test.suites.jarombekComAssets as jarombekComAssets
+import test.suites.jarombekComReact163 as jarombekComReact163
 
 # Create the test suite
 loader = unittest.TestLoader()

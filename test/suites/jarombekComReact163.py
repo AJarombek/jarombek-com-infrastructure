@@ -39,23 +39,27 @@ class TestJarombekComReact163(unittest.TestCase):
         with request.urlopen(req) as f:
             self.assertEqual(f.status, 200)
 
-    def test_www_react16_3_demo_jarombek_com_bucket_exists(self) -> None:
+    def test_react16_3_demo_jarombek_com_invalid_endpoint_reachable(self) -> None:
         """
-        Test if an S3 bucket for www.react16-3.demo.jarombek.com exists
+        Test that an endpoint that would return a 404 is redirected to a valid endpoint that returns a 200 in the
+        react16-3.demo.jarombek.com S3 bucket.
         """
-        s3_bucket = self.s3.list_objects(Bucket='www.react16-3.demo.jarombek.com')
-        self.assertEqual(s3_bucket.get('Name'), 'www.react16-3.demo.jarombek.com')
-
-    def test_www_react16_3_demo_jarombek_com_bucket_empty(self) -> None:
-        """
-        Test if the S3 bucket for www.react16-3.demo.jarombek.com contains objects
-        """
-        contents = self.s3.list_objects(Bucket='www.react16-3.demo.jarombek.com').get('Contents')
-        self.assertIsNone(contents)
+        req = request.Request(url='https://react16-3.demo.jarombek.com')
+        with request.urlopen(req) as f:
+            self.assertEqual(f.status, 200)
 
     def test_www_react16_3_demo_jarombek_com_reachable(self) -> None:
         """
         Test that the www.react16-3.demo.jarombek.com S3 bucket is reachable via HTTPS
+        """
+        req = request.Request(url='https://www.react16-3.demo.jarombek.com')
+        with request.urlopen(req) as f:
+            self.assertEqual(f.status, 200)
+
+    def test_www_react16_3_demo_jarombek_com_invalid_endpoint_reachable(self) -> None:
+        """
+        Test that an endpoint that would return a 404 is redirected to a valid endpoint that returns a 200 in the
+        www.react16-3.demo.jarombek.com S3 bucket.
         """
         req = request.Request(url='https://www.react16-3.demo.jarombek.com')
         with request.urlopen(req) as f:

@@ -47,33 +47,12 @@ resource "aws_s3_bucket" "react16-3-demo-jarombek" {
 
   tags = {
     Name = "react16-3.demo.jarombek.com"
+    Environment = "production"
   }
 
   website {
     index_document = "index.html"
     error_document = "index.html"
-
-    routing_rules = file("${path.module}/routing-rules.json")
-  }
-
-  cors_rule {
-    allowed_origins = ["*"]
-    allowed_methods = ["GET"]
-    allowed_headers = ["*"]
-  }
-}
-
-resource "aws_s3_bucket" "www-react16-3-demo-jarombek" {
-  bucket = "www.react16-3.demo.jarombek.com"
-  acl = "public-read"
-  policy = file("${path.module}/www-policy.json")
-
-  tags = {
-    Name = "www.react16-3.demo.jarombek.com"
-  }
-
-  website {
-    redirect_all_requests_to = "https://react16-3.demo.jarombek.com"
   }
 }
 
@@ -130,6 +109,13 @@ resource "aws_cloudfront_distribution" "react16-3-demo-jarombek-distribution" {
     max_ttl = 86400
   }
 
+  custom_error_response {
+    error_code = 404
+    error_caching_min_ttl = 30
+    response_code = 200
+    response_page_path = "/"
+  }
+
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -154,11 +140,11 @@ resource "aws_cloudfront_origin_access_identity" "origin-access-identity" {
 
 resource "aws_cloudfront_distribution" "www-react16-3-demo-jarombek-distribution" {
   origin {
-    domain_name = aws_s3_bucket.www-react16-3-demo-jarombek.bucket_regional_domain_name
-    origin_id = "origin-bucket-${aws_s3_bucket.www-react16-3-demo-jarombek.id}"
+    domain_name = aws_s3_bucket.react16-3-demo-jarombek.bucket_regional_domain_name
+    origin_id = "origin-bucket-${aws_s3_bucket.react16-3-demo-jarombek.id}"
 
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity-www.cloudfront_access_identity_path
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity.cloudfront_access_identity_path
     }
   }
 
@@ -194,7 +180,7 @@ resource "aws_cloudfront_distribution" "www-react16-3-demo-jarombek-distribution
       query_string = false
     }
 
-    target_origin_id = "origin-bucket-${aws_s3_bucket.www-react16-3-demo-jarombek.id}"
+    target_origin_id = "origin-bucket-${aws_s3_bucket.react16-3-demo-jarombek.id}"
 
     # Which protocols to use when accessing items from CloudFront
     viewer_protocol_policy = "allow-all"
@@ -203,6 +189,13 @@ resource "aws_cloudfront_distribution" "www-react16-3-demo-jarombek-distribution
     min_ttl = 0
     default_ttl = 3600
     max_ttl = 86400
+  }
+
+  custom_error_response {
+    error_code = 404
+    error_caching_min_ttl = 30
+    response_code = 200
+    response_page_path = "/"
   }
 
   restrictions {
@@ -221,10 +214,6 @@ resource "aws_cloudfront_distribution" "www-react16-3-demo-jarombek-distribution
     Name = "www-react16-3-demo-jarombek-com-cloudfront"
     Environment = "production"
   }
-}
-
-resource "aws_cloudfront_origin_access_identity" "origin-access-identity-www" {
-  comment = "www.react16-3.demo.jarombek.com origin access identity"
 }
 
 resource "aws_route53_record" "demo-jarombek-a" {

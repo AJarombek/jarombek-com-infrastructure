@@ -66,20 +66,6 @@ resource "aws_s3_bucket" "asset-jarombek" {
   }
 }
 
-resource "aws_s3_bucket" "www-asset-jarombek" {
-  bucket = "www.asset.jarombek.com"
-  acl = "public-read"
-  policy = file("${path.module}/www-policy.json")
-
-  tags = {
-    Name = "www.asset.jarombek.com"
-  }
-
-  website {
-    redirect_all_requests_to = "https://asset.jarombek.com"
-  }
-}
-
 resource "aws_cloudfront_distribution" "asset-jarombek-distribution" {
   origin {
     domain_name = aws_s3_bucket.asset-jarombek.bucket_regional_domain_name
@@ -157,11 +143,11 @@ resource "aws_cloudfront_origin_access_identity" "origin-access-identity" {
 
 resource "aws_cloudfront_distribution" "www-asset-jarombek-distribution" {
   origin {
-    domain_name = aws_s3_bucket.www-asset-jarombek.bucket_regional_domain_name
-    origin_id = "origin-bucket-${aws_s3_bucket.www-asset-jarombek.id}"
+    domain_name = aws_s3_bucket.asset-jarombek.bucket_regional_domain_name
+    origin_id = "origin-bucket-${aws_s3_bucket.asset-jarombek.id}"
 
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity-www.cloudfront_access_identity_path
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity.cloudfront_access_identity_path
     }
   }
 
@@ -197,7 +183,7 @@ resource "aws_cloudfront_distribution" "www-asset-jarombek-distribution" {
       query_string = false
     }
 
-    target_origin_id = "origin-bucket-${aws_s3_bucket.www-asset-jarombek.id}"
+    target_origin_id = "origin-bucket-${aws_s3_bucket.asset-jarombek.id}"
 
     # Which protocols to use when accessing items from CloudFront
     viewer_protocol_policy = "allow-all"
@@ -224,10 +210,6 @@ resource "aws_cloudfront_distribution" "www-asset-jarombek-distribution" {
     Name = "www-asset-jarombek-com-cloudfront"
     Environment = "production"
   }
-}
-
-resource "aws_cloudfront_origin_access_identity" "origin-access-identity-www" {
-  comment = "www.asset.jarombek.com origin access identity"
 }
 
 resource "aws_route53_record" "asset-jarombek-a" {
@@ -1102,6 +1084,22 @@ resource "aws_s3_bucket_object" "posts-2-5-20-jest-output" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "2-15-20-error-page-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-15-20-error-page.png"
+  source = "asset/posts/2-15-20-error-page.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-15-20-error-page.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "2-15-20-infrastructure-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-15-20-infrastructure.png"
+  source = "asset/posts/2-15-20-infrastructure.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-15-20-infrastructure.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1136,6 +1134,14 @@ resource "aws_s3_bucket_object" "aws-png" {
   source = "asset/logos/aws.png"
   etag = filemd5("${path.cwd}/asset/logos/aws.png")
   content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "aws-cloudfront-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "aws-cloudfront.svg"
+  source = "asset/logos/aws-cloudfront.svg"
+  etag = filemd5("${path.cwd}/asset/logos/aws-cloudfront.svg")
+  content_type = "image/svg+xml"
 }
 
 resource "aws_s3_bucket_object" "aws-iam-svg" {

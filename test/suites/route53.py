@@ -6,7 +6,7 @@ Date: 5/28/2019
 
 import unittest
 import boto3
-from utils.Route53 import Route53
+from test.utils.Route53 import Route53
 
 
 class TestRoute53(unittest.TestCase):

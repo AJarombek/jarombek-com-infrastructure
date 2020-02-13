@@ -7,10 +7,10 @@ Date: 5/28/2019
 import unittest
 import boto3
 import os
-from utils.Route53 import Route53
-from utils.LoadBalancing import LB
-from utils.SecurityGroup import SecurityGroup
-from utils.ECS import ECS
+from test.utils.Route53 import Route53
+from test.utils.LoadBalancing import LB
+from test.utils.SecurityGroup import SecurityGroup
+from test.utils.ECS import ECS
 
 
 class TestJarombekCom(unittest.TestCase):
