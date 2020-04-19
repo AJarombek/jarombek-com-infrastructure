@@ -1084,7 +1084,7 @@ resource "aws_s3_bucket_object" "posts-2-5-20-jest-output" {
   content_type = "image/png"
 }
 
-resource "aws_s3_bucket_object" "2-15-20-error-page-png" {
+resource "aws_s3_bucket_object" "posts-2-15-20-error-page-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "posts/2-15-20-error-page.png"
   source = "asset/posts/2-15-20-error-page.png"
@@ -1092,7 +1092,7 @@ resource "aws_s3_bucket_object" "2-15-20-error-page-png" {
   content_type = "image/png"
 }
 
-resource "aws_s3_bucket_object" "2-15-20-infrastructure-png" {
+resource "aws_s3_bucket_object" "posts-2-15-20-infrastructure-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "posts/2-15-20-infrastructure.png"
   source = "asset/posts/2-15-20-infrastructure.png"
@@ -1138,7 +1138,7 @@ resource "aws_s3_bucket_object" "aws-png" {
 
 resource "aws_s3_bucket_object" "aws-cloudfront-svg" {
   bucket = aws_s3_bucket.asset-jarombek.id
-  key = "aws-cloudfront.svg"
+  key = "logos/aws-cloudfront.svg"
   source = "asset/logos/aws-cloudfront.svg"
   etag = filemd5("${path.cwd}/asset/logos/aws-cloudfront.svg")
   content_type = "image/svg+xml"
@@ -1520,11 +1520,27 @@ resource "aws_s3_bucket_object" "npm-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "numpy-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/numpy.png"
+  source = "asset/logos/numpy.png"
+  etag = filemd5("${path.cwd}/asset/logos/numpy.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "oracle-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/oracle.png"
   source = "asset/logos/oracle.png"
   etag = filemd5("${path.cwd}/asset/logos/oracle.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "pandas-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/pandas.png"
+  source = "asset/logos/pandas.png"
+  etag = filemd5("${path.cwd}/asset/logos/pandas.png")
   content_type = "image/png"
 }
 
@@ -1549,6 +1565,14 @@ resource "aws_s3_bucket_object" "python-png" {
   key = "logos/python.png"
   source = "asset/logos/python.png"
   etag = filemd5("${path.cwd}/asset/logos/python.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "r-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/r.png"
+  source = "asset/logos/r.png"
+  etag = filemd5("${path.cwd}/asset/logos/r.png")
   content_type = "image/png"
 }
 
@@ -1653,6 +1677,14 @@ resource "aws_s3_bucket_object" "vim-png" {
   key = "logos/vim.png"
   source = "asset/logos/vim.png"
   etag = filemd5("${path.cwd}/asset/logos/vim.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "webassembly-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/webassembly.png"
+  source = "asset/logos/webassembly.png"
+  etag = filemd5("${path.cwd}/asset/logos/webassembly.png")
   content_type = "image/png"
 }
 
