@@ -13,7 +13,7 @@ terraform {
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/jarombek-com-assets"
+    key = "jarombek-com-infrastructure/jarombek-com-fn"
     region = "us-east-1"
   }
 }

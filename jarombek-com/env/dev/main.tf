@@ -1,5 +1,5 @@
 /**
- * Infrastructure for the jarombek.com ECS cluser in the DEV environment
+ * Infrastructure for the jarombek.com ECS cluster in the DEV environment
  * Author: Andrew Jarombek
  * Date: 4/18/2019
  */
