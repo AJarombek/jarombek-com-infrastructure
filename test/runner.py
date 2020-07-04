@@ -5,25 +5,22 @@ Date: 5/27/2019
 """
 
 import unittest
-import test.suites.acm as acm
-import test.suites.iam as iam
-import test.suites.route53 as route53
-import test.suites.jarombekCom as jarombekCom
-import test.suites.jarombekComAssets as jarombekComAssets
-import test.suites.jarombekComReact163 as jarombekComReact163
+import sys
 
-# Create the test suite
-loader = unittest.TestLoader()
-suite = unittest.TestSuite()
+if __name__ == '__main__':
 
-# Add test files to the test suite
-suite.addTests(loader.loadTestsFromModule(acm))
-suite.addTests(loader.loadTestsFromModule(iam))
-suite.addTests(loader.loadTestsFromModule(route53))
-suite.addTests(loader.loadTestsFromModule(jarombekCom))
-suite.addTests(loader.loadTestsFromModule(jarombekComAssets))
-suite.addTests(loader.loadTestsFromModule(jarombekComReact163))
+    # Create the test suite
+    tests = unittest.TestLoader().discover('suites')
 
-# Create a test runner an execute the test suite
-runner = unittest.TextTestRunner(verbosity=3)
-result = runner.run(suite)
+    if len(sys.argv) > 1:
+        log_filename = sys.argv[1]
+        with open(log_filename, 'w+') as log_file:
+
+            # Create a test runner an execute the test suite
+            runner = unittest.TextTestRunner(log_file, verbosity=3)
+            result: unittest.TestResult = runner.run(tests)
+            exit(len(result.errors))
+    else:
+        runner = unittest.TextTestRunner(verbosity=3)
+        result: unittest.TestResult = runner.run(tests)
+        exit(len(result.errors))

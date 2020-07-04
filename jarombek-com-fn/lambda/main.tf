@@ -5,12 +5,13 @@
  */
 
 resource "aws_lambda_function" "welcome-email" {
-  function_name = "sendWelcomeEmail"
-  filename = "${path.module}/welcomeEmail.zip"
+  function_name = "JarombekComWelcomeEmail"
+  filename = "${path.module}/JarombekComWelcomeEmail.zip"
   handler = "sendEmailAWS.sendWelcomeEmail"
   role = aws_iam_role.lambda-role.arn
   runtime = "nodejs12.x"
-  source_code_hash = filebase64sha256("${path.module}/welcomeEmail.zip")
+  source_code_hash = filebase64sha256("${path.module}/JarombekComWelcomeEmail.zip")
+  timeout = 10
 
   tags = {
     Name = "jarombek-com-lambda-welcome-email"
@@ -20,7 +21,7 @@ resource "aws_lambda_function" "welcome-email" {
 }
 
 resource "aws_cloudwatch_log_group" "welcome-email-log-group" {
-  name = "/aws/lambda/sendWelcomeEmail"
+  name = "/aws/lambda/JarombekComWelcomeEmail"
   retention_in_days = 7
 }
 
@@ -29,14 +30,14 @@ resource "aws_iam_role" "lambda-role" {
   assume_role_policy = file("${path.module}/lambda-role.json")
 }
 
-resource "aws_iam_policy" "lambda_logging_policy" {
-  name = "lambda-logging-policy"
+resource "aws_iam_policy" "lambda_policy" {
+  name = "lambda-policy"
   path = "/jarombek-com/"
-  policy = file("${path.module}/lambda-logging-policy.json")
-  description = "IAM policy for logging from an AWS Lambda function"
+  policy = file("${path.module}/lambda-policy.json")
+  description = "IAM policy for logging & secrets for an AWS Lambda function"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logging_policy_attachment" {
   role = aws_iam_role.lambda-role.name
-  policy_arn = aws_iam_policy.lambda_logging_policy.arn
+  policy_arn = aws_iam_policy.lambda_policy.arn
 }

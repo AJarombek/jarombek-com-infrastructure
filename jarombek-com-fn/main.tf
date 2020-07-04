@@ -28,5 +28,5 @@ module "lambda" {
 
 module "api-gateway" {
   source = "./api-gateway"
-  lambda-function-name = "${module.lambda.function-name}"
+  lambda-function-name = module.lambda.function-name
 }
