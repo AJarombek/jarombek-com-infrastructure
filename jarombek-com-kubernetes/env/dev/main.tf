@@ -1,0 +1,29 @@
+/**
+ * Infrastructure for jarombek.com on Kubernetes in the development environment
+ * Author: Andrew Jarombek
+ * Date: 9/25/2020
+ */
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    aws = ">= 3.7.0"
+  }
+
+  backend "s3" {
+    bucket = "andrew-jarombek-terraform-state"
+    encrypt = true
+    key = "jarombek-com-infrastructure/jarombek-com-kubernetes/env/dev"
+    region = "us-east-1"
+  }
+}
+
+module "kubernetes" {
+  source = "../../modules/kubernetes"
+  prod = false
+}

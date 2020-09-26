@@ -9,7 +9,11 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.13"
+
+  required_providers {
+    aws = "= 2.66.0"
+  }
 
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
@@ -67,6 +71,46 @@ module "jarombek-demo-acm-certificate" {
 
   route53_zone_name = "jarombek.com."
   acm_domain_name = "*.demo.jarombek.com"
+
+  # Optional arguments
+  route53_zone_private = false
+}
+
+#-------------------------------------------------------------
+# New ACM Resource that Protects '*.apollo.proto.jarombek.com'
+#-------------------------------------------------------------
+
+module "jarombek-apollo-proto-acm-certificate" {
+  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+
+  # Mandatory arguments
+  name = "jarombek-apollo-proto-acm-certificate"
+  tag_name = "jarombek-apollo-proto-acm-certificate"
+  tag_application = "jarombek-com"
+  tag_environment = "production"
+
+  route53_zone_name = "jarombek.com."
+  acm_domain_name = "*.apollo.proto.jarombek.com"
+
+  # Optional arguments
+  route53_zone_private = false
+}
+
+#------------------------------
+# Protects '*.proto.jarombek.com'
+#------------------------------
+
+module "jarombek-proto-acm-certificate" {
+  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+
+  # Mandatory arguments
+  name = "jarombek-proto-acm-certificate"
+  tag_name = "jarombek-proto-acm-certificate"
+  tag_application = "jarombek-com"
+  tag_environment = "production"
+
+  route53_zone_name = "jarombek.com."
+  acm_domain_name = "*.proto.jarombek.com"
 
   # Optional arguments
   route53_zone_private = false
