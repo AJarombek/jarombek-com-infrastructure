@@ -1100,6 +1100,14 @@ resource "aws_s3_bucket_object" "posts-2-15-20-infrastructure-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-9-27-20-ec2-efs-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-27-20-ec2-efs-architecture.png"
+  source = "asset/posts/9-27-20-ec2-efs-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-27-20-ec2-efs-architecture.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1109,6 +1117,14 @@ resource "aws_s3_bucket_object" "angular-png" {
   key = "logos/angular.png"
   source = "asset/logos/angular.png"
   etag = filemd5("${path.cwd}/asset/logos/angular.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "ansible-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/ansible.png"
+  source = "asset/logos/ansible.png"
+  etag = filemd5("${path.cwd}/asset/logos/ansible.png")
   content_type = "image/png"
 }
 
@@ -1142,6 +1158,14 @@ resource "aws_s3_bucket_object" "aws-cloudfront-svg" {
   source = "asset/logos/aws-cloudfront.svg"
   etag = filemd5("${path.cwd}/asset/logos/aws-cloudfront.svg")
   content_type = "image/svg+xml"
+}
+
+resource "aws_s3_bucket_object" "aws-efs-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/aws-efs.png"
+  source = "asset/logos/aws-efs.png"
+  etag = filemd5("${path.cwd}/asset/logos/aws-efs.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "aws-iam-svg" {
@@ -1534,6 +1558,14 @@ resource "aws_s3_bucket_object" "oracle-png" {
   source = "asset/logos/oracle.png"
   etag = filemd5("${path.cwd}/asset/logos/oracle.png")
   content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "packer-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/packer.svg"
+  source = "asset/logos/packer.svg"
+  etag = filemd5("${path.cwd}/asset/logos/packer.svg")
+  content_type = "image/svg+xml"
 }
 
 resource "aws_s3_bucket_object" "pandas-png" {
