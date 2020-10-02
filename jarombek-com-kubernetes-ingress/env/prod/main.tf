@@ -1,7 +1,7 @@
 /**
- * Infrastructure for jarombek.com on Kubernetes in the development environment
+ * Infrastructure for jarombek.com Ingress to Kubernetes in the development environment
  * Author: Andrew Jarombek
- * Date: 9/25/2020
+ * Date: 10/1/2020
  */
 
 provider "aws" {
@@ -19,12 +19,12 @@ terraform {
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/jarombek-com-kubernetes/env/dev"
+    key = "jarombek-com-infrastructure/jarombek-com-kubernetes-ingress/env/prod"
     region = "us-east-1"
   }
 }
 
 module "kubernetes" {
   source = "../../modules/kubernetes"
-  prod = false
+  prod = true
 }

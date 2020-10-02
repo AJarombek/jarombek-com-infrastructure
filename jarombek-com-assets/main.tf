@@ -1108,6 +1108,22 @@ resource "aws_s3_bucket_object" "posts-9-27-20-ec2-efs-architecture-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-9-29-20-k8s-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-29-20-k8s-architecture.png"
+  source = "asset/posts/9-29-20-k8s-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-29-20-k8s-architecture.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-10-1-20-cost-detection-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/10-1-20-cost-detection.png"
+  source = "asset/posts/10-1-20-cost-detection.png"
+  etag = filemd5("${path.cwd}/asset/posts/10-1-20-cost-detection.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
