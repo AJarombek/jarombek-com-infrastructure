@@ -1,0 +1,52 @@
+# Kubernetes ingress object for the jarombek.com applications ALB ingress controller.
+# Author: Andrew Jarombek
+# Date: 11/9/2020
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: jarombek-com-ingress
+  namespace: jarombek-com
+  annotations:
+    kubernetes.io/ingress.class: alb
+    external-dns.alpha.kubernetes.io/hostname: jarombek.com,www.jarombek.com
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": {"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/certificate-arn: ${ACM_CERT_ARNS}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/healthcheck-path: '/login'
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/security-groups: ${SECURITY_GROUPS_ID}
+    alb.ingress.kubernetes.io/subnets: ${SUBNET_IDS}
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/tags: Name=jarombek-com-load-balancer,Application=jarombek-com,Environment=${ENV}
+  labels:
+    version: v1.0.0
+    environment: production
+    application: jarombek-com-server
+spec:
+  rules:
+    - host: jarombek.com
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: ssl-redirect
+              servicePort: use-annotation
+          - path: /*
+            backend:
+              serviceName: jarombek-com
+              servicePort: 80
+    - host: www.jarombek.com
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: ssl-redirect
+              servicePort: use-annotation
+          - path: /*
+            backend:
+              serviceName: jarombek-com
+              servicePort: 80
+

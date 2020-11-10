@@ -1124,6 +1124,22 @@ resource "aws_s3_bucket_object" "posts-10-1-20-cost-detection-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-11-5-20-aj-switch-gif" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-5-20-aj-switch.gif"
+  source = "asset/posts/11-5-20-aj-switch.gif"
+  etag = filemd5("${path.cwd}/asset/posts/11-5-20-aj-switch.gif")
+  content_type = "image/gif"
+}
+
+resource "aws_s3_bucket_object" "posts-11-5-20-aj-switch-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-5-20-aj-switch.png"
+  source = "asset/posts/11-5-20-aj-switch.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-5-20-aj-switch.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1485,6 +1501,14 @@ resource "aws_s3_bucket_object" "json-png" {
   key = "logos/json.png"
   source = "asset/logos/json.png"
   etag = filemd5("${path.cwd}/asset/logos/json.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "jss-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/jss.png"
+  source = "asset/logos/jss.png"
+  etag = filemd5("${path.cwd}/asset/logos/jss.png")
   content_type = "image/png"
 }
 
