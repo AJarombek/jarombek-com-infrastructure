@@ -4,10 +4,13 @@ This is the testing suite for `jarombek-com-infrastructure`.  Tests are run in P
 Each infrastructure grouping has its own test suite.  Each test suite contains many individual tests.  Test suites can 
 be run independently or all at once.
 
+### Commands
+
 To run all test suites at once, execute the following command from this directory:
 
 ```bash
 pip3 install -r requirements.txt
+export AWS_DEFAULT_REGION=us-east-1
 python3 runner.py
 ```
 
@@ -18,6 +21,16 @@ Python version as needed):
 /Applications/Python\ 3.8/Install\ Certificates.command
 ```
 
+Install the AWS test functions GitHub repository as a dependency:
+
+```bash
+# Pip
+pip install "git+git://github.com/ajarombek/cloud-modules.git#subdirectory=aws-test-functions&egg=aws_test_functions"
+
+# Pipenv
+pipenv install "git+git://github.com/ajarombek/cloud-modules.git#subdirectory=aws-test-functions&egg=aws_test_functions"
+```
+
 ### Files
 
 | Filename             | Description                                                                                  |
@@ -25,6 +38,7 @@ Python version as needed):
 | `suites/`            | Test suites for each infrastructure grouping.                                                |
 | `utils/`             | Python functions reused throughout the test suites.                                          |
 | `requirements.txt`   | Python dependencies used with pip.                                                           |
+| `Pipfile`            | Python dependencies used with pipenv.                                                        |
 | `runner.py`          | Python `unittest` runner which runs the test suites.                                         |
 
 ### Resources

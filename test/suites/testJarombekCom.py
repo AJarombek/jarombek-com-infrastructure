@@ -9,10 +9,10 @@ import unittest
 
 import boto3
 
-from utils.Route53 import Route53
-from utils.LoadBalancing import LB
-from utils.SecurityGroup import SecurityGroup
-from utils.ECS import ECS
+from aws_test_functions.Route53 import Route53
+from aws_test_functions.LoadBalancing import LB
+from aws_test_functions.SecurityGroup import SecurityGroup
+from aws_test_functions.ECS import ECS
 
 try:
     prod_env = os.environ['TEST_ENV'] == "prod"
@@ -55,6 +55,7 @@ class TestJarombekCom(unittest.TestCase):
         try:
             a_record = Route53.get_record('jarombek.com.', self.website_url, 'A')
         except IndexError:
+            a_record = None
             self.assertFalse(True)
 
         self.assertEqual(a_record.get('Name'), f'{self.website_url}.')
@@ -68,6 +69,7 @@ class TestJarombekCom(unittest.TestCase):
         try:
             a_record = Route53.get_record('jarombek.com.', f'www.{self.website_url}', 'CNAME')
         except IndexError:
+            a_record = None
             self.assertFalse(True)
 
         self.assertEqual(a_record.get('Name'), f'www.{self.website_url}.')
