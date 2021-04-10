@@ -2,7 +2,7 @@
   {
     "cpu": 128,
     "memory": 256,
-    "image": "ajarombek/jarombek-com:1.1.10",
+    "image": "ajarombek/jarombek-com:1.1.12",
     "name": "jarombek-com",
     "logConfiguration": {
       "logDriver": "awslogs",
@@ -42,7 +42,7 @@
   {
     "cpu": 128,
     "memory": 256,
-    "image": "ajarombek/jarombek-com-database:1.1.7",
+    "image": "ajarombek/jarombek-com-database:1.1.9",
     "name": "jarombek-com-database",
     "logConfiguration": {
       "logDriver": "awslogs",

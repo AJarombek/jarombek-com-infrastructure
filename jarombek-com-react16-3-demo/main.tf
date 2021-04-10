@@ -12,6 +12,10 @@ provider "aws" {
 terraform {
   required_version = ">= 0.12"
 
+  required_providers {
+    aws = ">= 3.36.0"
+  }
+
   backend "s3" {
     bucket = "andrew-jarombek-terraform-state"
     encrypt = true

@@ -36,7 +36,6 @@ pipenv install "git+git://github.com/ajarombek/cloud-modules.git#subdirectory=aw
 | Filename             | Description                                                                                  |
 |----------------------|----------------------------------------------------------------------------------------------|
 | `suites/`            | Test suites for each infrastructure grouping.                                                |
-| `utils/`             | Python functions reused throughout the test suites.                                          |
 | `requirements.txt`   | Python dependencies used with pip.                                                           |
 | `Pipfile`            | Python dependencies used with pipenv.                                                        |
 | `runner.py`          | Python `unittest` runner which runs the test suites.                                         |
