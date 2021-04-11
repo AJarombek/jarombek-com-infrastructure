@@ -34,7 +34,7 @@ locals {
   short_env = var.prod ? "prod" : "dev"
   env = var.prod ? "production" : "development"
   namespace = var.prod ? "jarombek-com" : "jarombek-com-dev"
-  web_short_version = "1.1.13"
+  web_short_version = "1.1.15"
   web_version = "v${local.web_short_version}"
   database_short_version = "1.1.9"
   database_version = "v${local.database_short_version}"

@@ -1,5 +1,7 @@
 ### Overview
 
+> **DEPRECATED** (As of 4/10/2021).  `jarombek.com` was moved from ECS to EKS.
+
 Infrastructure for the web application and database.  Both are containerized and exist in an ECS cluster.  The 
 web application is a Node.js/React app based on the [jarombek-com](https://github.com/AJarombek/jarombek-com) 
 repository.  The database in MongoDB with contents equivalent to those in the 

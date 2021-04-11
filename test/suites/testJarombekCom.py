@@ -47,7 +47,7 @@ class TestJarombekCom(unittest.TestCase):
             self.lb_certs = [cert for cert in self.acm_certificates if cert.get('DomainName') == self.cert_url
                              or cert.get('DomainName') == self.wc_cert_url]
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_jarombek_com_a_record_exists(self) -> None:
         """
         Determine if the 'A' record exists for the website in Route53
@@ -61,7 +61,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(a_record.get('Name'), f'{self.website_url}.')
         self.assertEqual(a_record.get('Type'), 'A')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_www_jarombek_com_cname_record_exists(self) -> None:
         """
         Determine if the 'CNAME' record exists for the 'www' prefixed website in Route53
@@ -75,7 +75,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(a_record.get('Name'), f'www.{self.website_url}.')
         self.assertEqual(a_record.get('Type'), 'CNAME')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_load_balancer_active(self) -> None:
         """
         Prove that an application load balancer is running and has proper configuration
@@ -88,7 +88,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(alb.get('State').get('Code'), 'active')
         self.assertEqual(alb.get('Type'), 'application')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_listener_http(self) -> None:
         """
         Prove that the listener for HTTP requests is configured properly
@@ -112,7 +112,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(default_action.get('RedirectConfig').get('Port'), '443')
         self.assertEqual(default_action.get('RedirectConfig').get('StatusCode'), 'HTTP_301')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_listener_https(self) -> None:
         """
         Prove that the listener for HTTPS requests is configured properly
@@ -136,7 +136,7 @@ class TestJarombekCom(unittest.TestCase):
         target_group = LB.get_target_group(f'jarombek-com-{self.env}-lb-target')
         self.assertEqual(default_action.get('TargetGroupArn'), target_group.get('TargetGroupArn'))
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_target_group(self) -> None:
         """
         Prove that the target group for the load balancer is configured properly
@@ -158,7 +158,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(target_group.get('HealthCheckPath'), '/')
         self.assertEqual(target_group.get('Matcher').get('HttpCode'), '200-299')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_listener_https_certificate(self) -> None:
         """
         Prove that the HTTPS listener for the load balancer has the expected ACM certificate
@@ -172,7 +172,7 @@ class TestJarombekCom(unittest.TestCase):
         cert = certs[1]
         self.assertEqual(cert.get('CertificateArn'), self.lb_certs[0].get('CertificateArn'))
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_lb_security_group_exists(self) -> None:
         """
         Prove that the security group for the load balancer exists
@@ -183,7 +183,7 @@ class TestJarombekCom(unittest.TestCase):
         sg = security_groups[0]
         self.assertEqual(sg.get('GroupName'), f'jarombek-com-{self.env}-lb-security-group')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_lb_security_group_rules_exist(self) -> None:
         """
         Prove that the security group rules for the load balancer exist as expected
@@ -197,7 +197,7 @@ class TestJarombekCom(unittest.TestCase):
         self.test_sg_rule_cidr(ingress[1], 'tcp', 443, 443, '0.0.0.0/0')
         self.test_sg_rule_cidr(egress[0], '-1', 0, 0, '0.0.0.0/0')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_ecs_cluster_running(self) -> None:
         """
         Prove that the ECS cluster for the website is up and running as expected
@@ -206,7 +206,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(cluster.get('clusterName'), f'jarombek-com-{self.env}-ecs-cluster')
         self.assertEqual(cluster.get('status'), 'ACTIVE')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_ecs_task_running(self) -> None:
         """
         Prove that the ECS task for the website and database is up and running as expected
@@ -231,7 +231,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(jarombek_com_container.get('name'), 'jarombek-com')
         self.assertEqual(jarombek_com_container.get('lastStatus'), 'RUNNING')
 
-    @unittest.skipIf(not prod_env, 'Dev website not currently running.')
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_ecs_service_running(self) -> None:
         """
         Prove that the ECS service for the website and database is up and running as expected
@@ -250,7 +250,7 @@ class TestJarombekCom(unittest.TestCase):
         self.assertEqual(service.get('runningCount'), 1)
         self.assertEqual(service.get('pendingCount'), 0)
 
-    @unittest.skip("helper function")
+    @unittest.skip("jarombek.com ECS infrastructure no longer used")
     def test_sg_rule_cidr(self, rule: dict, protocol: str, from_port: int, to_port: int, cidr: str) -> None:
         """
         Determine if a security group rule which opens connections

@@ -11,11 +11,12 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 |-----------------------------------|-----------------------------------------------------------------------------|
 | `acm`                             | HTTPS certificates for the website.                                         |
 | `iam`                             | IAM roles and policies for the AWS infrastructure.                          |
-| `jarombek-com`                    | ECS Infrastructure for the main web application and database.               |
+| `jarombek-com`                    | *DEPRECATED* ECS Infrastructure for the main web application and database.  |
 | `jarombek-com-assets`             | Infrastructure for the S3 bucket, which exposes an API for assets.          |
 | `jarombek-com-fn`                 | Infrastructure for the AWS Lambda functions used by the website.            |
 | `jarombek-com-kubernetes`         | Kubernetes infrastructure for the website and database.                     |
 | `jarombek-com-kubernetes-ingress` | Kubernetes Ingress infrastructure for the website and database.             |
 | `jarombek-com-react16-3-demo`     | Infrastructure for an S3 bucket that hosts the React 16.3 demo static app.  |
 | `route53`                         | DNS for the application.                                                    |
-| `test`                            | Unit tests for the infrastructure.  Written with boto3 AWS SDK.             |
+| `test`                            | Python AWS infrastructure test suite written with boto3 AWS SDK.            |
+| `test-k8s`                        | Go Kubernetes infrastructure test suite.                                    |
