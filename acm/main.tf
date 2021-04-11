@@ -9,10 +9,10 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 0.12"
 
   required_providers {
-    aws = "= 2.66.0"
+    aws = ">= 3.36.0"
   }
 
   backend "s3" {
@@ -41,7 +41,7 @@ data "aws_route53_zone" "jarombek-com-zone" {
 #------------------------------
 
 module "jarombek-react16-3-demo-acm-certificate" {
-  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
 
   # Mandatory arguments
   name = "jarombek-react16-3-demo-acm-certificate"
@@ -61,7 +61,7 @@ module "jarombek-react16-3-demo-acm-certificate" {
 #------------------------------
 
 module "jarombek-demo-acm-certificate" {
-  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
 
   # Mandatory arguments
   name = "jarombek-demo-acm-certificate"
@@ -81,7 +81,7 @@ module "jarombek-demo-acm-certificate" {
 #-------------------------------------------------------------
 
 module "jarombek-apollo-proto-acm-certificate" {
-  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
 
   # Mandatory arguments
   name = "jarombek-apollo-proto-acm-certificate"
@@ -101,7 +101,7 @@ module "jarombek-apollo-proto-acm-certificate" {
 #------------------------------
 
 module "jarombek-proto-acm-certificate" {
-  source = "github.com/ajarombek/terraform-modules//acm-certificate?ref=v0.1.8"
+  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
 
   # Mandatory arguments
   name = "jarombek-proto-acm-certificate"
@@ -135,51 +135,45 @@ resource "aws_acm_certificate" "jarombek-asset-wildcard-acm-certificate" {
 }
 
 resource "aws_route53_record" "jarombek-asset-wc-cert-validation-record" {
-  name = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options[0].resource_record_name
-  type = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options[0].resource_record_type
+  for_each = {
+    for dvo in aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options: dvo.domain_name => {
+      name = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name = each.value.name
+  type = each.value.type
   zone_id = data.aws_route53_zone.jarombek-com-zone.id
-  records = [
-    aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options[0].resource_record_value
-  ]
+  records = [each.value.record]
   ttl = 60
 }
 
 resource "aws_acm_certificate_validation" "jarombek-asset-wc-cert-validation" {
   certificate_arn = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.arn
-  validation_record_fqdns = [aws_route53_record.jarombek-asset-wc-cert-validation-record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.jarombek-asset-wc-cert-validation-record: record.fqdn]
 }
 
 #------------------------------
 # Protects '*.dev.jarombek.com'
 #------------------------------
 
-resource "aws_acm_certificate" "jarombek-dev-wildcard-acm-certificate" {
-  domain_name = "*.dev.jarombek.com"
-  validation_method = "DNS"
+module "jarombek-dev-acm-certificate" {
+  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
 
-  tags = {
-    Environment = "dev"
-    Application = "jarombek-com"
-  }
+  # Mandatory arguments
+  name = "jarombek-dev-acm-certificate"
+  tag_name = "jarombek-dev-acm-certificate"
+  tag_application = "jarombek-com"
+  tag_environment = "development"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+  route53_zone_name = "jarombek.com."
+  acm_domain_name = "*.dev.jarombek.com"
 
-resource "aws_route53_record" "jarombek-dev-wc-cert-validation-record" {
-  name = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_name
-  type = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_type
-  zone_id = data.aws_route53_zone.jarombek-com-zone.id
-  records = [
-    aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.domain_validation_options[0].resource_record_value
-  ]
-  ttl = 60
-}
-
-resource "aws_acm_certificate_validation" "jarombek-dev-wc-cert-validation" {
-  certificate_arn = aws_acm_certificate.jarombek-dev-wildcard-acm-certificate.arn
-  validation_record_fqdns = [aws_route53_record.jarombek-dev-wc-cert-validation-record.fqdn]
+  # Optional arguments
+  route53_zone_private = false
 }
 
 #--------------------------
@@ -202,7 +196,7 @@ resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
 
 resource "aws_acm_certificate_validation" "jarombek-wc-cert-validation" {
   certificate_arn = aws_acm_certificate.jarombek-wildcard-acm-certificate.arn
-  validation_record_fqdns = [aws_route53_record.jarombek-cert-validation-record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.jarombek-cert-validation-record: record.fqdn]
 }
 
 #------------------------
@@ -224,14 +218,23 @@ resource "aws_acm_certificate" "jarombek-acm-certificate" {
 }
 
 resource "aws_route53_record" "jarombek-cert-validation-record" {
-  name = aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_name
-  type = aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_type
+  for_each = {
+    for dvo in aws_acm_certificate.jarombek-acm-certificate.domain_validation_options: dvo.domain_name => {
+      name = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name = each.value.name
+  type = each.value.type
   zone_id = data.aws_route53_zone.jarombek-com-zone.id
-  records = [aws_acm_certificate.jarombek-acm-certificate.domain_validation_options[0].resource_record_value]
+  records = [each.value.record]
   ttl = 60
 }
 
 resource "aws_acm_certificate_validation" "jarombek-cert-validation" {
   certificate_arn = aws_acm_certificate.jarombek-acm-certificate.arn
-  validation_record_fqdns = [aws_route53_record.jarombek-cert-validation-record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.jarombek-cert-validation-record: record.fqdn]
 }

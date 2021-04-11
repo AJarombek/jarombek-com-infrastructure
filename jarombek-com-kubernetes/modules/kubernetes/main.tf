@@ -18,8 +18,12 @@ data "aws_eks_cluster_auth" "cluster" {
 provider "kubernetes" {
   host = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token = data.aws_eks_cluster_auth.cluster.token
-  load_config_file = false
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1alpha1"
+    command = "aws"
+    args = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.cluster.name]
+  }
 }
 
 #----------------
@@ -30,8 +34,10 @@ locals {
   short_env = var.prod ? "prod" : "dev"
   env = var.prod ? "production" : "development"
   namespace = var.prod ? "jarombek-com" : "jarombek-com-dev"
-  short_version = "1.2.0"
-  version = "v${local.short_version}"
+  web_short_version = "1.1.13"
+  web_version = "v${local.web_short_version}"
+  database_short_version = "1.1.9"
+  database_version = "v${local.database_short_version}"
   account_id = data.aws_caller_identity.current.account_id
 }
 
@@ -45,7 +51,7 @@ resource "kubernetes_deployment" "web-deployment" {
     namespace = local.namespace
 
     labels = {
-      version = local.version
+      version = local.web_version
       environment = local.env
       application = "jarombek-com"
       task = "web"
@@ -67,7 +73,7 @@ resource "kubernetes_deployment" "web-deployment" {
 
     selector {
       match_labels = {
-        version = local.version
+        version = local.web_version
         environment = local.env
         application = "jarombek-com"
         task = "web"
@@ -77,7 +83,7 @@ resource "kubernetes_deployment" "web-deployment" {
     template {
       metadata {
         labels = {
-          version = local.version
+          version = local.web_version
           environment = local.env
           application = "jarombek-com"
           task = "web"
@@ -87,7 +93,7 @@ resource "kubernetes_deployment" "web-deployment" {
       spec {
         container {
           name = "jarombek-com"
-          image = "${local.account_id}.dkr.ecr.us-east-1.amazonaws.com/jarombek-com:${local.short_version}"
+          image = "ajarombek/jarombek-com:${local.web_short_version}"
 
           readiness_probe {
             period_seconds = 5
@@ -95,12 +101,12 @@ resource "kubernetes_deployment" "web-deployment" {
 
             http_get {
               path = "/"
-              port = 80
+              port = 8080
             }
           }
 
           port {
-            container_port = 80
+            container_port = 8080
             protocol = "TCP"
           }
         }
@@ -117,7 +123,7 @@ resource "kubernetes_service" "web-service" {
     namespace = local.namespace
 
     labels = {
-      version = local.version
+      version = local.web_version
       environment = local.env
       application = "jarombek-com"
       task = "web"
@@ -129,7 +135,7 @@ resource "kubernetes_service" "web-service" {
 
     port {
       port = 80
-      target_port = 80
+      target_port = 8080
       protocol = "TCP"
     }
 
@@ -146,7 +152,7 @@ resource "kubernetes_deployment" "database-deployment" {
     namespace = local.namespace
 
     labels = {
-      version = local.version
+      version = local.database_version
       environment = local.env
       application = "jarombek-com"
       task = "database"
@@ -168,7 +174,7 @@ resource "kubernetes_deployment" "database-deployment" {
 
     selector {
       match_labels = {
-        version = local.version
+        version = local.database_version
         environment = local.env
         application = "jarombek-com"
         task = "database"
@@ -178,7 +184,7 @@ resource "kubernetes_deployment" "database-deployment" {
     template {
       metadata {
         labels = {
-          version = local.version
+          version = local.database_version
           environment = local.env
           application = "jarombek-com"
           task = "database"
@@ -188,7 +194,7 @@ resource "kubernetes_deployment" "database-deployment" {
       spec {
         container {
           name = "jarombek-com-database"
-          image = "${local.account_id}.dkr.ecr.us-east-1.amazonaws.com/jarombek-com-database:${local.short_version}"
+          image = "ajarombek/jarombek-com-database:${local.database_short_version}"
 
           port {
             container_port = 27017
@@ -211,7 +217,7 @@ resource "kubernetes_service" "database-service" {
     namespace = local.namespace
 
     labels = {
-      version = local.version
+      version = local.database_version
       environment = local.env
       application = "jarombek-com"
       task = "database"

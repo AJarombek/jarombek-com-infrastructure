@@ -37,6 +37,11 @@ data "aws_acm_certificate" "jarombek-cert" {
   statuses = ["ISSUED"]
 }
 
+data "aws_acm_certificate" "jarombek-www-cert" {
+  domain = local.www_domain_cert
+  statuses = ["ISSUED"]
+}
+
 data "aws_acm_certificate" "jarombek-dev-cert" {
   domain = local.dev_domain_cert
   statuses = ["ISSUED"]
@@ -55,8 +60,12 @@ data "aws_acm_certificate" "jarombek-apollo-proto-cert" {
 provider "kubernetes" {
   host = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token = data.aws_eks_cluster_auth.cluster.token
-  load_config_file = false
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1alpha1"
+    command = "aws"
+    args = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.cluster.name]
+  }
 }
 
 #----------------
@@ -72,15 +81,17 @@ locals {
   host3 = var.prod ? "apollo.proto.jarombek.com" : "dev.apollo.proto.jarombek.com"
   host4 = var.prod ? "www.apollo.proto.jarombek.com" : "www.dev.apollo.proto.jarombek.com"
   hostname = "${local.host1},${local.host2},${local.host3},${local.host4}"
-  certificates = "${local.cert_arn},${local.dev_cert_arn},${local.proto_cert_arn},${local.apollo_proto_cert_arn}"
+  certificates = "${local.cert_arn},${local.www_cert_arn},${local.dev_cert_arn},${local.proto_cert_arn},${local.apollo_proto_cert_arn}"
   short_version = "1.2.0"
   version = "v${local.short_version}"
   account_id = data.aws_caller_identity.current.account_id
-  domain_cert = "*.jarombek.com"
+  domain_cert = "jarombek.com"
+  www_domain_cert = "*.jarombek.com"
   dev_domain_cert = "*.dev.jarombek.com"
   proto_domain_cert = "*.proto.jarombek.com"
   apollo_proto_domain_cert = "*.apollo.proto.jarombek.com"
   cert_arn = data.aws_acm_certificate.jarombek-cert.arn
+  www_cert_arn = data.aws_acm_certificate.jarombek-www-cert.arn
   dev_cert_arn = data.aws_acm_certificate.jarombek-dev-cert.arn
   proto_cert_arn = data.aws_acm_certificate.jarombek-proto-cert.arn
   apollo_proto_cert_arn = data.aws_acm_certificate.jarombek-apollo-proto-cert.arn
@@ -143,7 +154,7 @@ resource "kubernetes_ingress" "ingress" {
       "alb.ingress.kubernetes.io/actions.ssl-redirect" = "{\"Type\": \"redirect\", \"RedirectConfig\": {\"Protocol\": \"HTTPS\", \"Port\": \"443\", \"StatusCode\": \"HTTP_301\"}}"
       "alb.ingress.kubernetes.io/backend-protocol" = "HTTP"
       "alb.ingress.kubernetes.io/certificate-arn" = local.certificates
-      "alb.ingress.kubernetes.io/healthcheck-path" = "/login"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/"
       "alb.ingress.kubernetes.io/listen-ports" = "[{\"HTTP\":80}, {\"HTTPS\":443}]"
       "alb.ingress.kubernetes.io/healthcheck-protocol": "HTTP"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
@@ -203,36 +214,6 @@ resource "kubernetes_ingress" "ingress" {
 
           backend {
             service_name = "jarombek-com"
-            service_port = 80
-          }
-        }
-      }
-    }
-
-    rule {
-      host = local.host3
-
-      http {
-        path {
-          path = "/*"
-
-          backend {
-            service_name = "apollo-prototype-client"
-            service_port = 80
-          }
-        }
-      }
-    }
-
-    rule {
-      host = local.host4
-
-      http {
-        path {
-          path = "/*"
-
-          backend {
-            service_name = "apollo-prototype-client"
             service_port = 80
           }
         }
