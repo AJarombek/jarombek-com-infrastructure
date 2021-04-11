@@ -11,6 +11,7 @@ To run all test suites at once, execute the following command from this director
 ```bash
 pip3 install -r requirements.txt
 export AWS_DEFAULT_REGION=us-east-1
+export TEST_ENV=<dev|prod>
 python3 runner.py
 ```
 

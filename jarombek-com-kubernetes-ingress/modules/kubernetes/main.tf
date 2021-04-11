@@ -80,8 +80,8 @@ locals {
   host2 = var.prod ? "www.jarombek.com" : "www.dev.jarombek.com"
   host3 = var.prod ? "apollo.proto.jarombek.com" : "dev.apollo.proto.jarombek.com"
   host4 = var.prod ? "www.apollo.proto.jarombek.com" : "www.dev.apollo.proto.jarombek.com"
-  hostname = "${local.host1},${local.host2},${local.host3},${local.host4}"
-  certificates = "${local.cert_arn},${local.www_cert_arn},${local.dev_cert_arn},${local.proto_cert_arn},${local.apollo_proto_cert_arn}"
+  hostname = "${local.host1},${local.host2}"
+  certificates = var.prod ? "${local.cert_arn},${local.www_cert_arn}" : "${local.www_cert_arn},${local.dev_cert_arn}"
   short_version = "1.2.0"
   version = "v${local.short_version}"
   account_id = data.aws_caller_identity.current.account_id
