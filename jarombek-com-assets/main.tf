@@ -1144,9 +1144,41 @@ resource "aws_s3_bucket_object" "posts-11-5-20-aj-switch-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-6-14-21-initial-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-14-21-initial-architecture.png"
+  source = "asset/posts/6-14-21-initial-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-14-21-initial-architecture.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-14-21-aws-lift-shift-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-14-21-aws-lift-shift-architecture.png"
+  source = "asset/posts/6-14-21-aws-lift-shift-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-14-21-aws-lift-shift-architecture.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-14-21-v2-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-14-21-v2-architecture.png"
+  source = "asset/posts/6-14-21-v2-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-14-21-v2-architecture.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
+
+resource "aws_s3_bucket_object" "android-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/android.png"
+  source = "asset/logos/android.png"
+  etag = filemd5("${path.cwd}/asset/logos/android.png")
+  content_type = "image/png"
+}
 
 resource "aws_s3_bucket_object" "angular-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
@@ -1460,6 +1492,14 @@ resource "aws_s3_bucket_object" "html-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "ios-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/ios.png"
+  source = "asset/logos/ios.png"
+  etag = filemd5("${path.cwd}/asset/logos/ios.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "java-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/java.png"
@@ -1490,6 +1530,14 @@ resource "aws_s3_bucket_object" "jest-svg" {
   source = "asset/logos/jest.svg"
   etag = filemd5("${path.cwd}/asset/logos/jest.svg")
   content_type = "image/svg+xml"
+}
+
+resource "aws_s3_bucket_object" "jquery-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/jquery.png"
+  source = "asset/logos/jquery.png"
+  etag = filemd5("${path.cwd}/asset/logos/jquery.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "js-png" {
