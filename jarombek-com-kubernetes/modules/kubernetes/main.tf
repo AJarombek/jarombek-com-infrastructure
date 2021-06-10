@@ -91,6 +91,20 @@ resource "kubernetes_deployment" "web-deployment" {
       }
 
       spec {
+        affinity {
+          node_affinity {
+            required_during_scheduling_ignored_during_execution {
+              node_selector_term {
+                match_expressions {
+                  key = "workload"
+                  operator = "In"
+                  values = ["production-applications"]
+                }
+              }
+            }
+          }
+        }
+
         container {
           name = "jarombek-com"
           image = "ajarombek/jarombek-com:${local.web_short_version}"
@@ -192,6 +206,20 @@ resource "kubernetes_deployment" "database-deployment" {
       }
 
       spec {
+        affinity {
+          node_affinity {
+            required_during_scheduling_ignored_during_execution {
+              node_selector_term {
+                match_expressions {
+                  key = "workload"
+                  operator = "In"
+                  values = ["production-applications"]
+                }
+              }
+            }
+          }
+        }
+
         container {
           name = "jarombek-com-database"
           image = "ajarombek/jarombek-com-database:${local.database_short_version}"
