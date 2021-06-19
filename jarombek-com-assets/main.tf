@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 0.13.6"
+  required_version = ">= 0.15.0"
 
   required_providers {
     aws = ">= 3.36.0"
@@ -1165,6 +1165,62 @@ resource "aws_s3_bucket_object" "posts-6-14-21-v2-architecture-png" {
   key = "posts/6-14-21-v2-architecture.png"
   source = "asset/posts/6-14-21-v2-architecture.png"
   etag = filemd5("${path.cwd}/asset/posts/6-14-21-v2-architecture.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-aws-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-aws-architecture.png"
+  source = "asset/posts/6-18-21-aws-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-aws-architecture.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-terraform-module-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-terraform-module.png"
+  source = "asset/posts/6-18-21-terraform-module.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-terraform-module.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-saints-xctf-com-asset-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-saints-xctf-com-asset.png"
+  source = "asset/posts/6-18-21-saints-xctf-com-asset.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-saints-xctf-com-asset.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-saints-xctf-com-uasset-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-saints-xctf-com-uasset.png"
+  source = "asset/posts/6-18-21-saints-xctf-com-uasset.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-saints-xctf-com-uasset.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-saints-xctf-com-auth-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-saints-xctf-com-auth.png"
+  source = "asset/posts/6-18-21-saints-xctf-com-auth.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-saints-xctf-com-auth.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-saints-xctf-com-fn-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-saints-xctf-com-fn.png"
+  source = "asset/posts/6-18-21-saints-xctf-com-fn.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-saints-xctf-com-fn.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-18-21-saints-xctf-database-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-18-21-saints-xctf-database.png"
+  source = "asset/posts/6-18-21-saints-xctf-database.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-18-21-saints-xctf-database.png")
   content_type = "image/png"
 }
 
