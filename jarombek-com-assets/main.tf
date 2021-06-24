@@ -436,6 +436,30 @@ resource "aws_s3_bucket_object" "dyslexie-bold-ttf" {
   content_type = "font/ttf"
 }
 
+resource "aws_s3_bucket_object" "elegant-icons-eot" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "fonts/ElegantIcons.eot"
+  source = "asset/fonts/ElegantIcons.eot"
+  etag = filemd5("${path.cwd}/asset/fonts/ElegantIcons.eot")
+  content_type = "font/otf"
+}
+
+resource "aws_s3_bucket_object" "elegant-icons-ttf" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "fonts/ElegantIcons.ttf"
+  source = "asset/fonts/ElegantIcons.ttf"
+  etag = filemd5("${path.cwd}/asset/fonts/ElegantIcons.ttf")
+  content_type = "font/ttf"
+}
+
+resource "aws_s3_bucket_object" "elegant-icons-woff" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "fonts/ElegantIcons.woff"
+  source = "asset/fonts/ElegantIcons.woff"
+  etag = filemd5("${path.cwd}/asset/fonts/ElegantIcons.woff")
+  content_type = "font/woff"
+}
+
 resource "aws_s3_bucket_object" "fantasque-sans-mono-bold-ttf" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "fonts/FantasqueSansMono-Bold.ttf"
@@ -1500,6 +1524,14 @@ resource "aws_s3_bucket_object" "express-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "flask-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/flask.png"
+  source = "asset/logos/flask.png"
+  etag = filemd5("${path.cwd}/asset/logos/flask.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "github-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/github.png"
@@ -1769,6 +1801,14 @@ resource "aws_s3_bucket_object" "react-png" {
   key = "logos/react.png"
   source = "asset/logos/react.png"
   etag = filemd5("${path.cwd}/asset/logos/react.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "redux-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/redux.png"
+  source = "asset/logos/redux.png"
+  etag = filemd5("${path.cwd}/asset/logos/redux.png")
   content_type = "image/png"
 }
 
