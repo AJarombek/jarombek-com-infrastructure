@@ -1248,6 +1248,30 @@ resource "aws_s3_bucket_object" "posts-6-18-21-saints-xctf-database-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-6-29-21-jss-class-names-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-29-21-jss-class-names.png"
+  source = "asset/posts/6-29-21-jss-class-names.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-29-21-jss-class-names.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-29-21-jss-demo-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-29-21-jss-demo.png"
+  source = "asset/posts/6-29-21-jss-demo.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-29-21-jss-demo.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-6-30-21-react-jss-alert-component-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/6-30-21-react-jss-alert-component.png"
+  source = "asset/posts/6-30-21-react-jss-alert-component.png"
+  etag = filemd5("${path.cwd}/asset/posts/6-30-21-react-jss-alert-component.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
