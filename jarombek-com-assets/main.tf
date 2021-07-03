@@ -1272,6 +1272,14 @@ resource "aws_s3_bucket_object" "posts-6-30-21-react-jss-alert-component-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-7-3-21-dynamodb-aws-console-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-3-21-dynamodb-aws-console.png"
+  source = "asset/posts/7-3-21-dynamodb-aws-console.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-3-21-dynamodb-aws-console.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1476,6 +1484,14 @@ resource "aws_s3_bucket_object" "dotnetcore-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "dynamodb-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/dynamodb.png"
+  source = "asset/logos/dynamodb.png"
+  etag = filemd5("${path.cwd}/asset/logos/dynamodb.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "d3-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/d3.png"
@@ -1561,6 +1577,14 @@ resource "aws_s3_bucket_object" "github-png" {
   key = "logos/github.png"
   source = "asset/logos/github.png"
   etag = filemd5("${path.cwd}/asset/logos/github.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "go-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/go.png"
+  source = "asset/logos/go.png"
+  etag = filemd5("${path.cwd}/asset/logos/go.png")
   content_type = "image/png"
 }
 

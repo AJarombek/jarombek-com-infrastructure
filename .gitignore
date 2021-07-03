@@ -4,3 +4,4 @@ database/modules/mongodb/cred
 jarombek-com-react16-3-demo/assets
 jarombek-com-fn/lambda/*.zip
 **/__pycache__/
+.DS_Store
