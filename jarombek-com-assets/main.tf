@@ -1280,6 +1280,30 @@ resource "aws_s3_bucket_object" "posts-7-3-21-dynamodb-aws-console-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-7-26-21-aws-canaries-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-26-21-aws-canaries.png"
+  source = "asset/posts/7-26-21-aws-canaries.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-26-21-aws-canaries.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-26-21-aws-sign-in-canary-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-26-21-aws-sign-in-canary.png"
+  source = "asset/posts/7-26-21-aws-sign-in-canary.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-26-21-aws-sign-in-canary.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-26-21-synthetics-canary-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-26-21-synthetics-canary-architecture.png"
+  source = "asset/posts/7-26-21-synthetics-canary-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-26-21-synthetics-canary-architecture.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1820,6 +1844,14 @@ resource "aws_s3_bucket_object" "powershell-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "puppeteer-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/puppeteer.png"
+  source = "asset/logos/puppeteer.png"
+  etag = filemd5("${path.cwd}/asset/logos/puppeteer.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "python-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/python.png"
@@ -1865,6 +1897,14 @@ resource "aws_s3_bucket_object" "sass-png" {
   key = "logos/sass.png"
   source = "asset/logos/sass.png"
   etag = filemd5("${path.cwd}/asset/logos/sass.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "selenium-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/selenium.png"
+  source = "asset/logos/selenium.png"
+  etag = filemd5("${path.cwd}/asset/logos/selenium.png")
   content_type = "image/png"
 }
 
