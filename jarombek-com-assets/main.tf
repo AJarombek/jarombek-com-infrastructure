@@ -1304,6 +1304,54 @@ resource "aws_s3_bucket_object" "posts-7-26-21-synthetics-canary-architecture-pn
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-7-31-21-dashboard-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-dashboard.png"
+  source = "asset/posts/7-31-21-dashboard.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-dashboard.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-dashboard-mobile-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-dashboard-mobile.png"
+  source = "asset/posts/7-31-21-dashboard-mobile.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-dashboard-mobile.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-graphql-query-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-graphql-query.png"
+  source = "asset/posts/7-31-21-graphql-query.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-graphql-query.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-graphql-query-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-graphql-query-2.png"
+  source = "asset/posts/7-31-21-graphql-query-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-graphql-query-2.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-repository-count-component-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-repository-count-component.png"
+  source = "asset/posts/7-31-21-repository-count-component.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-repository-count-component.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-total-commits-component-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-total-commits-component.png"
+  source = "asset/posts/7-31-21-total-commits-component.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-total-commits-component.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1362,6 +1410,14 @@ resource "aws_s3_bucket_object" "aws-cloudfront-svg" {
   source = "asset/logos/aws-cloudfront.svg"
   etag = filemd5("${path.cwd}/asset/logos/aws-cloudfront.svg")
   content_type = "image/svg+xml"
+}
+
+resource "aws_s3_bucket_object" "aws-cloudwatch-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/aws-cloudwatch.png"
+  source = "asset/logos/aws-cloudwatch.png"
+  etag = filemd5("${path.cwd}/asset/logos/aws-cloudwatch.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "aws-efs-png" {
