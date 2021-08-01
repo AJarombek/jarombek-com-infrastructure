@@ -1336,6 +1336,30 @@ resource "aws_s3_bucket_object" "posts-7-31-21-graphql-query-2-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-7-31-21-infrastructure-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-infrastructure.png"
+  source = "asset/posts/7-31-21-infrastructure.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-infrastructure.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-jenkins-pipelines-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-jenkins-pipelines.png"
+  source = "asset/posts/7-31-21-jenkins-pipelines.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-jenkins-pipelines.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-7-31-21-jenkins-test-pipeline-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/7-31-21-jenkins-test-pipeline.png"
+  source = "asset/posts/7-31-21-jenkins-test-pipeline.png"
+  etag = filemd5("${path.cwd}/asset/posts/7-31-21-jenkins-test-pipeline.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "posts-7-31-21-repository-count-component-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "posts/7-31-21-repository-count-component.png"
@@ -1545,6 +1569,14 @@ resource "aws_s3_bucket_object" "css-png" {
   key = "logos/css.png"
   source = "asset/logos/css.png"
   etag = filemd5("${path.cwd}/asset/logos/css.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "cypress-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/cypress.png"
+  source = "asset/logos/cypress.png"
+  etag = filemd5("${path.cwd}/asset/logos/cypress.png")
   content_type = "image/png"
 }
 
@@ -1804,6 +1836,14 @@ resource "aws_s3_bucket_object" "kibana-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "less-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/less.png"
+  source = "asset/logos/less.png"
+  etag = filemd5("${path.cwd}/asset/logos/less.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "mongodb-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/mongodb.png"
@@ -1833,6 +1873,14 @@ resource "aws_s3_bucket_object" "neo4j-png" {
   key = "logos/neo4j.png"
   source = "asset/logos/neo4j.png"
   etag = filemd5("${path.cwd}/asset/logos/neo4j.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "nginx-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/nginx.png"
+  source = "asset/logos/nginx.png"
+  etag = filemd5("${path.cwd}/asset/logos/nginx.png")
   content_type = "image/png"
 }
 
