@@ -1376,6 +1376,86 @@ resource "aws_s3_bucket_object" "posts-7-31-21-total-commits-component-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-8-11-21-cypress-browser-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-cypress-browser.png"
+  source = "asset/posts/8-11-21-cypress-browser.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-cypress-browser.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-cypress-directory-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-cypress-directory.png"
+  source = "asset/posts/8-11-21-cypress-directory.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-cypress-directory.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-cypress-executed-test-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-cypress-executed-test.png"
+  source = "asset/posts/8-11-21-cypress-executed-test.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-cypress-executed-test.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-cypress-test-runner-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-cypress-test-runner.png"
+  source = "asset/posts/8-11-21-cypress-test-runner.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-cypress-test-runner.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-create-log-test-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-create-log-test.png"
+  source = "asset/posts/8-11-21-saintsxctf-create-log-test.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-create-log-test.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-create-log-test-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-create-log-test-2.png"
+  source = "asset/posts/8-11-21-saintsxctf-create-log-test-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-create-log-test-2.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-home-about-mobile-test-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-home-about-mobile-test.png"
+  source = "asset/posts/8-11-21-saintsxctf-home-about-mobile-test.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-home-about-mobile-test.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-home-about-test-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-home-about-test.png"
+  source = "asset/posts/8-11-21-saintsxctf-home-about-test.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-home-about-test.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-home-page-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-home-page.png"
+  source = "asset/posts/8-11-21-saintsxctf-home-page.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-home-page.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-home-title-test-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-home-title-test.png"
+  source = "asset/posts/8-11-21-saintsxctf-home-title-test.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-home-title-test.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
