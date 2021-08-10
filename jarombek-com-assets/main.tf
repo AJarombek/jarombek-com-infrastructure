@@ -1376,6 +1376,10 @@ resource "aws_s3_bucket_object" "posts-7-31-21-total-commits-component-png" {
   content_type = "image/png"
 }
 
+# In the short term, know that I love being here for you in whatever capacity you feel I can be.
+# I also love all the support you give me, it truly does help me.
+# If there are any more ways I can be there for you, just have someone let me know.
+
 resource "aws_s3_bucket_object" "posts-8-11-21-cypress-browser-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "posts/8-11-21-cypress-browser.png"
@@ -1405,6 +1409,22 @@ resource "aws_s3_bucket_object" "posts-8-11-21-cypress-test-runner-png" {
   key = "posts/8-11-21-cypress-test-runner.png"
   source = "asset/posts/8-11-21-cypress-test-runner.png"
   etag = filemd5("${path.cwd}/asset/posts/8-11-21-cypress-test-runner.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-api-error-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-api-error.png"
+  source = "asset/posts/8-11-21-saintsxctf-api-error.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-api-error.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-api-error-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-api-error-2.png"
+  source = "asset/posts/8-11-21-saintsxctf-api-error-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-api-error-2.png")
   content_type = "image/png"
 }
 
@@ -1453,6 +1473,22 @@ resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-home-title-test-png" {
   key = "posts/8-11-21-saintsxctf-home-title-test.png"
   source = "asset/posts/8-11-21-saintsxctf-home-title-test.png"
   etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-home-title-test.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-monthly-calendar-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-monthly-calendar.png"
+  source = "asset/posts/8-11-21-saintsxctf-monthly-calendar.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-monthly-calendar.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-monthly-calendar-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-11-21-saintsxctf-monthly-calendar-2.png"
+  source = "asset/posts/8-11-21-saintsxctf-monthly-calendar-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-11-21-saintsxctf-monthly-calendar-2.png")
   content_type = "image/png"
 }
 
