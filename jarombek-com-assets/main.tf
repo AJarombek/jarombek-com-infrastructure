@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 0.15.0"
+  required_version = ">= 1.0.1"
 
   required_providers {
     aws = ">= 3.36.0"
@@ -1492,6 +1492,22 @@ resource "aws_s3_bucket_object" "posts-8-11-21-saintsxctf-monthly-calendar-2-png
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-9-24-21-shared-url-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-24-21-shared-url.png"
+  source = "asset/posts/9-24-21-shared-url.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-24-21-shared-url.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-9-24-21-reverse-proxy-infrastructure-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/9-24-21-reverse-proxy-infrastructure.png"
+  source = "asset/posts/9-24-21-reverse-proxy-infrastructure.png"
+  etag = filemd5("${path.cwd}/asset/posts/9-24-21-reverse-proxy-infrastructure.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1701,6 +1717,14 @@ resource "aws_s3_bucket_object" "docker-png" {
   key = "logos/docker.png"
   source = "asset/logos/docker.png"
   etag = filemd5("${path.cwd}/asset/logos/docker.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "docker-compose-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/docker-compose.png"
+  source = "asset/logos/docker-compose.png"
+  etag = filemd5("${path.cwd}/asset/logos/docker-compose.png")
   content_type = "image/png"
 }
 
@@ -2197,6 +2221,14 @@ resource "aws_s3_bucket_object" "unicode-png" {
   key = "logos/unicode.png"
   source = "asset/logos/unicode.png"
   etag = filemd5("${path.cwd}/asset/logos/unicode.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "uwsgi-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/uwsgi.png"
+  source = "asset/logos/uwsgi.png"
+  etag = filemd5("${path.cwd}/asset/logos/uwsgi.png")
   content_type = "image/png"
 }
 
