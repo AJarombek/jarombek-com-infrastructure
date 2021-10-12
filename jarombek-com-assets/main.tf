@@ -1508,6 +1508,22 @@ resource "aws_s3_bucket_object" "posts-9-24-21-reverse-proxy-infrastructure-png"
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-10-10-21-jarombek-com-k8s-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/10-10-21-jarombek-com-k8s.png"
+  source = "asset/posts/10-10-21-jarombek-com-k8s.png"
+  etag = filemd5("${path.cwd}/asset/posts/10-10-21-jarombek-com-k8s.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-10-10-21-kubernetes-test-jenkins-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/10-10-21-kubernetes-test-jenkins.png"
+  source = "asset/posts/10-10-21-kubernetes-test-jenkins.png"
+  etag = filemd5("${path.cwd}/asset/posts/10-10-21-kubernetes-test-jenkins.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
