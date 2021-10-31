@@ -1524,6 +1524,174 @@ resource "aws_s3_bucket_object" "posts-10-10-21-kubernetes-test-jenkins-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-10-25-21-k8s-architecture-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/10-25-21-k8s-architecture.png"
+  source = "asset/posts/10-25-21-k8s-architecture.png"
+  etag = filemd5("${path.cwd}/asset/posts/10-25-21-k8s-architecture.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-dashboard-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-dashboard.png"
+  source = "asset/posts/11-1-21-saintsxctf-dashboard.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-dashboard.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-home-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-home.png"
+  source = "asset/posts/11-1-21-saintsxctf-home.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-home.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-register-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-register.png"
+  source = "asset/posts/11-1-21-saintsxctf-register.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-home.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-sign-in-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-sign-in.png"
+  source = "asset/posts/11-1-21-saintsxctf-sign-in.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-sign-in.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-log-1-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-log-1.png"
+  source = "asset/posts/11-1-21-saintsxctf-log-1.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-log-1.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-log-2-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-log-2.png"
+  source = "asset/posts/11-1-21-saintsxctf-log-2.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-log-2.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-profile-logs-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-profile-logs.png"
+  source = "asset/posts/11-1-21-saintsxctf-profile-logs.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-profile-logs.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-profile-calendar-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-profile-calendar.png"
+  source = "asset/posts/11-1-21-saintsxctf-profile-calendar.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-profile-calendar.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-profile-chart-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-profile-chart.png"
+  source = "asset/posts/11-1-21-saintsxctf-profile-chart.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-profile-chart.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-profile-stats-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-profile-stats.png"
+  source = "asset/posts/11-1-21-saintsxctf-profile-stats.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-profile-stats.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-profile-edit-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-profile-edit.png"
+  source = "asset/posts/11-1-21-saintsxctf-profile-edit.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-profile-edit.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-teams-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-teams.png"
+  source = "asset/posts/11-1-21-saintsxctf-teams.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-teams.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-group-logs-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-group-logs.png"
+  source = "asset/posts/11-1-21-saintsxctf-group-logs.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-group-logs.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-group-members-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-group-members.png"
+  source = "asset/posts/11-1-21-saintsxctf-group-members.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-group-members.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-group-leaderboard-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-group-leaderboard.png"
+  source = "asset/posts/11-1-21-saintsxctf-group-leaderboard.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-group-leaderboard.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-group-stats-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-group-stats.png"
+  source = "asset/posts/11-1-21-saintsxctf-group-stats.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-group-stats.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-admin-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-admin.png"
+  source = "asset/posts/11-1-21-saintsxctf-admin.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-admin.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-admin-edit-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-admin-edit.png"
+  source = "asset/posts/11-1-21-saintsxctf-admin-edit.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-admin-edit.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-admin-invite-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-admin-invite.png"
+  source = "asset/posts/11-1-21-saintsxctf-admin-invite.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-admin-invite.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-admin-users-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-1-21-saintsxctf-admin-users.png"
+  source = "asset/posts/11-1-21-saintsxctf-admin-users.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-1-21-saintsxctf-admin-users.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
