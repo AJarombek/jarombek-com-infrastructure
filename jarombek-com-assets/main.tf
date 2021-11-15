@@ -1692,6 +1692,22 @@ resource "aws_s3_bucket_object" "posts-11-1-21-saintsxctf-admin-users-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-11-15-21-directory-structure-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-21-directory-structure.png"
+  source = "asset/posts/11-15-21-directory-structure.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-21-directory-structure.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-15-21-checkbox-component-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-21-checkbox-component.png"
+  source = "asset/posts/11-15-21-checkbox-component.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-21-checkbox-component.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -1992,6 +2008,14 @@ resource "aws_s3_bucket_object" "es2017-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "eslint-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/eslint.svg"
+  source = "asset/logos/eslint.svg"
+  etag = filemd5("${path.cwd}/asset/logos/eslint.svg")
+  content_type = "image/svg+xml"
+}
+
 resource "aws_s3_bucket_object" "express-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/express.png"
@@ -2269,6 +2293,14 @@ resource "aws_s3_bucket_object" "powershell-png" {
   key = "logos/powershell.png"
   source = "asset/logos/powershell.png"
   etag = filemd5("${path.cwd}/asset/logos/powershell.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "prettier-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/prettier.png"
+  source = "asset/logos/prettier.png"
+  etag = filemd5("${path.cwd}/asset/logos/prettier.png")
   content_type = "image/png"
 }
 
