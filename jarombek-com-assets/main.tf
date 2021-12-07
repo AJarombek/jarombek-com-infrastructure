@@ -1708,6 +1708,22 @@ resource "aws_s3_bucket_object" "posts-11-15-21-checkbox-component-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-12-3-21-redux-components-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/12-3-21-redux-components.png"
+  source = "asset/posts/12-3-21-redux-components.png"
+  etag = filemd5("${path.cwd}/asset/posts/12-3-21-redux-components.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-12-3-21-teams-page-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/12-3-21-teams-page.png"
+  source = "asset/posts/12-3-21-teams-page.png"
+  etag = filemd5("${path.cwd}/asset/posts/12-3-21-teams-page.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -2029,6 +2045,14 @@ resource "aws_s3_bucket_object" "flask-png" {
   key = "logos/flask.png"
   source = "asset/logos/flask.png"
   etag = filemd5("${path.cwd}/asset/logos/flask.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "flux-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/flux.png"
+  source = "asset/logos/flux.png"
+  etag = filemd5("${path.cwd}/asset/logos/flux.png")
   content_type = "image/png"
 }
 
