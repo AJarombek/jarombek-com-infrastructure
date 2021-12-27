@@ -16,19 +16,31 @@ class TestJarombekComAssets(unittest.TestCase):
         Perform set-up logic before executing any unit tests
         """
         self.s3 = boto3.client('s3')
+        self.bucket_name = 'asset.jarombek.com'
 
     def test_assets_jarombek_com_bucket_exists(self) -> None:
         """
         Test if an S3 bucket for asset.jarombek.com exists
         """
-        s3_bucket = self.s3.list_objects(Bucket='asset.jarombek.com')
-        self.assertEqual(s3_bucket.get('Name'), 'asset.jarombek.com')
+        s3_bucket = self.s3.list_objects(Bucket=self.bucket_name)
+        self.assertEqual(s3_bucket.get('Name'), self.bucket_name)
+
+    def test_s3_bucket_public_access(self) -> None:
+        """
+        Test whether the public access configuration for a asset.jarombek.com S3 bucket is correct
+        """
+        public_access_block = self.s3.get_public_access_block(Bucket=self.bucket_name)
+        config = public_access_block.get('PublicAccessBlockConfiguration')
+        self.assertTrue(config.get('BlockPublicAcls'))
+        self.assertTrue(config.get('IgnorePublicAcls'))
+        self.assertTrue(config.get('BlockPublicPolicy'))
+        self.assertTrue(config.get('RestrictPublicBuckets'))
 
     def test_assets_jarombek_com_bucket_not_empty(self) -> None:
         """
         Test if the S3 bucket for asset.jarombek.com contains objects
         """
-        contents = self.s3.list_objects(Bucket='asset.jarombek.com').get('Contents')
+        contents = self.s3.list_objects(Bucket=self.bucket_name).get('Contents')
         self.assertGreater(len(contents), 0)
 
     def test_assets_jarombek_com_reachable(self) -> None:

@@ -9,10 +9,10 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 1.0.1"
+  required_version = ">= 1.1.2"
 
   required_providers {
-    aws = ">= 3.36.0"
+    aws = ">= 3.70.0"
   }
 
   backend "s3" {
@@ -45,11 +45,12 @@ data "aws_route53_zone" "jarombek" {
 
 resource "aws_s3_bucket" "asset-jarombek" {
   bucket = "asset.jarombek.com"
-  acl = "public-read"
-  policy = file("${path.module}/policy.json")
+  acl = "private"
 
   tags = {
     Name = "asset.jarombek.com"
+    Environment = "all"
+    Application = "jarombek-com"
   }
 
   website {
@@ -68,6 +69,37 @@ resource "aws_s3_bucket" "asset-jarombek" {
     allowed_methods = ["GET"]
     allowed_headers = ["*"]
   }
+}
+
+resource "aws_s3_bucket_policy" "asset-jarombek" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  policy = data.aws_iam_policy_document.asset-jarombek.json
+}
+
+data "aws_iam_policy_document" "asset-jarombek" {
+  statement {
+    sid = "CloudfrontOAI"
+
+    principals {
+      identifiers = [aws_cloudfront_origin_access_identity.origin-access-identity.iam_arn]
+      type = "AWS"
+    }
+
+    actions = ["s3:GetObject", "s3:ListBucket"]
+    resources = [
+      aws_s3_bucket.asset-jarombek.arn,
+      "${aws_s3_bucket.asset-jarombek.arn}/*"
+    ]
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "asset-jarombek" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+
+  block_public_acls = true
+  block_public_policy = true
+  restrict_public_buckets = true
+  ignore_public_acls = true
 }
 
 resource "aws_cloudfront_distribution" "asset-jarombek-distribution" {
@@ -1721,6 +1753,14 @@ resource "aws_s3_bucket_object" "posts-12-3-21-teams-page-png" {
   key = "posts/12-3-21-teams-page.png"
   source = "asset/posts/12-3-21-teams-page.png"
   etag = filemd5("${path.cwd}/asset/posts/12-3-21-teams-page.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-12-24-21-api-file-structure-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/12-24-21-api-file-structure.png"
+  source = "asset/posts/12-24-21-api-file-structure.png"
+  etag = filemd5("${path.cwd}/asset/posts/12-24-21-api-file-structure.png")
   content_type = "image/png"
 }
 
