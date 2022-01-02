@@ -1764,6 +1764,38 @@ resource "aws_s3_bucket_object" "posts-12-24-21-api-file-structure-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-1-2-22-block-public-access-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-2-22-block-public-access.png"
+  source = "asset/posts/1-2-22-block-public-access.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-2-22-block-public-access.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-2-22-block-public-access-on-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-2-22-block-public-access-on.png"
+  source = "asset/posts/1-2-22-block-public-access-on.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-2-22-block-public-access-on.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-2-22-public-buckets-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-2-22-public-buckets.png"
+  source = "asset/posts/1-2-22-public-buckets.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-2-22-public-buckets.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-2-22-static-website-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-2-22-static-website.png"
+  source = "asset/posts/1-2-22-static-website.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-2-22-static-website.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */

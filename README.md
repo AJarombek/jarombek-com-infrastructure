@@ -20,3 +20,11 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 | `route53`                         | DNS for the application.                                                    |
 | `test`                            | Python AWS infrastructure test suite written with boto3 AWS SDK.            |
 | `test-k8s`                        | Go Kubernetes infrastructure test suite.                                    |
+
+### Version History
+
+**[v1.1.0](https://github.com/AJarombek/saints-xctf-functions/tree/v1.1.0) - Jarombek.com S3 Bucket Updates**
+
+> Release Date: December 27th, 2021
+
+This release updated the S3 buckets in my infrastructure, making those used as static websites private.
