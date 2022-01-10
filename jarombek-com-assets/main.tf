@@ -1796,6 +1796,62 @@ resource "aws_s3_bucket_object" "posts-1-2-22-static-website-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-dag-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-dag.png"
+  source = "asset/posts/1-17-22-airflow-dag.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-dag.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-graph-view-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-graph-view.png"
+  source = "asset/posts/1-17-22-airflow-graph-view.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-graph-view.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-graph-view-click-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-graph-view-click.png"
+  source = "asset/posts/1-17-22-airflow-graph-view-click.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-graph-view-click.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-graph-view-hover-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-graph-view-hover.png"
+  source = "asset/posts/1-17-22-airflow-graph-view-hover.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-graph-view-hover.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-home-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-home.png"
+  source = "asset/posts/1-17-22-airflow-home.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-home.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-log-view-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-log-view.png"
+  source = "asset/posts/1-17-22-airflow-log-view.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-log-view.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-17-22-airflow-tree-view-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-17-22-airflow-tree-view.png"
+  source = "asset/posts/1-17-22-airflow-tree-view.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-17-22-airflow-tree-view.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
