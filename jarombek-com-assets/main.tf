@@ -1908,6 +1908,46 @@ resource "aws_s3_bucket_object" "posts-2-5-22-jenkins-job-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-2-26-22-exercise-log-view-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-26-22-exercise-log-view.png"
+  source = "asset/posts/2-26-22-exercise-log-view.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-26-22-exercise-log-view.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-2-26-22-exercise-log-editing-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-26-22-exercise-log-editing.png"
+  source = "asset/posts/2-26-22-exercise-log-editing.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-26-22-exercise-log-editing.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-2-26-22-exercise-log-created-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-26-22-exercise-log-created.png"
+  source = "asset/posts/2-26-22-exercise-log-created.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-26-22-exercise-log-created.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-2-26-22-exercise-logs-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-26-22-exercise-logs.png"
+  source = "asset/posts/2-26-22-exercise-logs.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-26-22-exercise-logs.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-2-26-22-edit-exercise-log-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-26-22-edit-exercise-log.png"
+  source = "asset/posts/2-26-22-edit-exercise-log.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-26-22-edit-exercise-log.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
