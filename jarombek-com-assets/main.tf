@@ -1948,6 +1948,54 @@ resource "aws_s3_bucket_object" "posts-2-26-22-edit-exercise-log-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-3-12-22-feel-slider-gif" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-12-22-feel-slider.gif"
+  source = "asset/posts/3-12-22-feel-slider.gif"
+  etag = filemd5("${path.cwd}/asset/posts/3-12-22-feel-slider.gif")
+  content_type = "image/gif"
+}
+
+resource "aws_s3_bucket_object" "posts-3-12-22-input-validation-gif" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-12-22-input-validation.gif"
+  source = "asset/posts/3-12-22-input-validation.gif"
+  etag = filemd5("${path.cwd}/asset/posts/3-12-22-input-validation.gif")
+  content_type = "image/gif"
+}
+
+resource "aws_s3_bucket_object" "posts-3-27-22-homepage-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-27-22-homepage.png"
+  source = "asset/posts/3-27-22-homepage.png"
+  etag = filemd5("${path.cwd}/asset/posts/3-27-22-homepage.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-3-27-22-phpmyadmin-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-27-22-phpmyadmin.png"
+  source = "asset/posts/3-27-22-phpmyadmin.png"
+  etag = filemd5("${path.cwd}/asset/posts/3-27-22-phpmyadmin.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-3-27-22-query-result-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-27-22-query-result.png"
+  source = "asset/posts/3-27-22-query-result.png"
+  etag = filemd5("${path.cwd}/asset/posts/3-27-22-query-result.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-3-27-22-write-query-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-27-22-write-query.png"
+  source = "asset/posts/3-27-22-write-query.png"
+  etag = filemd5("${path.cwd}/asset/posts/3-27-22-write-query.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -2645,6 +2693,14 @@ resource "aws_s3_bucket_object" "swift-png" {
   key = "logos/swift.png"
   source = "asset/logos/swift.png"
   etag = filemd5("${path.cwd}/asset/logos/swift.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "swiftui-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/swiftui.png"
+  source = "asset/logos/swiftui.png"
+  etag = filemd5("${path.cwd}/asset/logos/swiftui.png")
   content_type = "image/png"
 }
 
