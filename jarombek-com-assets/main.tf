@@ -1908,6 +1908,14 @@ resource "aws_s3_bucket_object" "posts-2-5-22-jenkins-job-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-2-18-22-api-infrastructure-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/2-18-22-api-infrastructure.png"
+  source = "asset/posts/2-18-22-api-infrastructure.png"
+  etag = filemd5("${path.cwd}/asset/posts/2-18-22-api-infrastructure.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "posts-2-26-22-exercise-log-view-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "posts/2-26-22-exercise-log-view.png"
@@ -1993,6 +2001,14 @@ resource "aws_s3_bucket_object" "posts-3-27-22-write-query-png" {
   key = "posts/3-27-22-write-query.png"
   source = "asset/posts/3-27-22-write-query.png"
   etag = filemd5("${path.cwd}/asset/posts/3-27-22-write-query.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-3-27-22-infra-diagram-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/3-27-22-infra-diagram.png"
+  source = "asset/posts/3-27-22-infra-diagram.png"
+  etag = filemd5("${path.cwd}/asset/posts/3-27-22-infra-diagram.png")
   content_type = "image/png"
 }
 
