@@ -2012,6 +2012,62 @@ resource "aws_s3_bucket_object" "posts-3-27-22-infra-diagram-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-sign-in-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-sign-in.png"
+  source = "asset/posts/8-28-22-splunk-sign-in.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-sign-in.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-homepage-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-homepage.png"
+  source = "asset/posts/8-28-22-splunk-homepage.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-homepage.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-query-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-query.png"
+  source = "asset/posts/8-28-22-splunk-query.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-query.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-count-query-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-count-query.png"
+  source = "asset/posts/8-28-22-splunk-count-query.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-count-query.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-filter-query-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-filter-query.png"
+  source = "asset/posts/8-28-22-splunk-filter-query.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-filter-query.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-prior-queries-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-prior-queries.png"
+  source = "asset/posts/8-28-22-splunk-prior-queries.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-prior-queries.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-memory-chart-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-memory-chart.png"
+  source = "asset/posts/8-28-22-splunk-memory-chart.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-memory-chart.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -2685,6 +2741,14 @@ resource "aws_s3_bucket_object" "selenium-png" {
   key = "logos/selenium.png"
   source = "asset/logos/selenium.png"
   etag = filemd5("${path.cwd}/asset/logos/selenium.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "splunk-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/splunk.png"
+  source = "asset/logos/splunk.png"
+  etag = filemd5("${path.cwd}/asset/logos/splunk.png")
   content_type = "image/png"
 }
 
