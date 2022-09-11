@@ -2068,6 +2068,70 @@ resource "aws_s3_bucket_object" "posts-8-28-22-splunk-memory-chart-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-add-data-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-add-data.png"
+  source = "asset/posts/8-28-22-splunk-add-data.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-add-data.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-upload-files-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-upload-files.png"
+  source = "asset/posts/8-28-22-splunk-upload-files.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-upload-files.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-custom-index-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-custom-index.png"
+  source = "asset/posts/8-28-22-splunk-custom-index.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-custom-index.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-http-codes-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-http-codes.png"
+  source = "asset/posts/8-28-22-splunk-http-codes.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-http-codes.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-dashboards-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-dashboards.png"
+  source = "asset/posts/8-28-22-splunk-dashboards.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-dashboards.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-internal-dashboard-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-internal-dashboard.png"
+  source = "asset/posts/8-28-22-splunk-internal-dashboard.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-internal-dashboard.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-dashboard-create-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-dashboard-create.png"
+  source = "asset/posts/8-28-22-splunk-dashboard-create.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-dashboard-create.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-8-28-22-splunk-dashboard-source-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/8-28-22-splunk-dashboard-source.png"
+  source = "asset/posts/8-28-22-splunk-dashboard-source.png"
+  etag = filemd5("${path.cwd}/asset/posts/8-28-22-splunk-dashboard-source.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
