@@ -2288,6 +2288,14 @@ resource "aws_s3_bucket_object" "bash-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "bazel-svg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/bazel.svg"
+  source = "asset/logos/bazel.svg"
+  etag = filemd5("${path.cwd}/asset/logos/bazel.svg")
+  content_type = "image/svg+xml"
+}
+
 resource "aws_s3_bucket_object" "bootstrap-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/bootstrap.png"
@@ -2480,11 +2488,27 @@ resource "aws_s3_bucket_object" "github-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "github-actions-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/github-actions.png"
+  source = "asset/logos/github-actions.png"
+  etag = filemd5("${path.cwd}/asset/logos/github-actions.png")
+  content_type = "image/png"
+}
+
 resource "aws_s3_bucket_object" "go-png" {
   bucket = aws_s3_bucket.asset-jarombek.id
   key = "logos/go.png"
   source = "asset/logos/go.png"
   etag = filemd5("${path.cwd}/asset/logos/go.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "goland-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/goland.png"
+  source = "asset/logos/goland.png"
+  etag = filemd5("${path.cwd}/asset/logos/goland.png")
   content_type = "image/png"
 }
 
@@ -2726,6 +2750,14 @@ resource "aws_s3_bucket_object" "php-svg" {
   source = "asset/logos/php.svg"
   etag = filemd5("${path.cwd}/asset/logos/php.svg")
   content_type = "image/svg+xml"
+}
+
+resource "aws_s3_bucket_object" "please-build-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/please-build.png"
+  source = "asset/logos/please-build.png"
+  etag = filemd5("${path.cwd}/asset/logos/please-build.png")
+  content_type = "image/png"
 }
 
 resource "aws_s3_bucket_object" "powershell-png" {
