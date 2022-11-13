@@ -2132,6 +2132,46 @@ resource "aws_s3_bucket_object" "posts-8-28-22-splunk-dashboard-source-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-11-15-22-goland-run-config-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-22-goland-run-config.png"
+  source = "asset/posts/11-15-22-goland-run-config.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-22-goland-run-config.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-15-22-actions-tab-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-22-actions-tab.png"
+  source = "asset/posts/11-15-22-actions-tab.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-22-actions-tab.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-15-22-workflow-result-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-22-workflow-result.png"
+  source = "asset/posts/11-15-22-workflow-result.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-22-workflow-result.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-15-22-job-result-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-22-job-result.png"
+  source = "asset/posts/11-15-22-job-result.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-22-job-result.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-11-15-22-job-result-logs-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/11-15-22-job-result-logs.png"
+  source = "asset/posts/11-15-22-job-result-logs.png"
+  etag = filemd5("${path.cwd}/asset/posts/11-15-22-job-result-logs.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
