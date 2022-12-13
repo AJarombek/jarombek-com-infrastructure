@@ -2172,6 +2172,14 @@ resource "aws_s3_bucket_object" "posts-11-15-22-job-result-logs-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-12-11-22-summit-main-stage-jpg" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/12-11-22-summit-main-stage.jpg"
+  source = "asset/posts/12-11-22-summit-main-stage.jpg"
+  etag = filemd5("${path.cwd}/asset/posts/12-11-22-summit-main-stage.jpg")
+  content_type = "image/jpeg"
+}
+
 /*
  * Logos Directory
  */
