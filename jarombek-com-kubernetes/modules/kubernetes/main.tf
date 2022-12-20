@@ -34,9 +34,9 @@ locals {
   short_env = var.prod ? "prod" : "dev"
   env = var.prod ? "production" : "development"
   namespace = var.prod ? "jarombek-com" : "jarombek-com-dev"
-  web_short_version = "1.2.7"
+  web_short_version = "1.2.11"
   web_version = "v${local.web_short_version}"
-  database_short_version = "1.2.8"
+  database_short_version = "1.2.11"
   database_version = "v${local.database_short_version}"
   account_id = data.aws_caller_identity.current.account_id
 }

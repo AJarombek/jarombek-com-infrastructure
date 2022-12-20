@@ -2180,6 +2180,14 @@ resource "aws_s3_bucket_object" "posts-12-11-22-summit-main-stage-jpg" {
   content_type = "image/jpeg"
 }
 
+resource "aws_s3_bucket_object" "posts-12-11-22-databricks-workflow-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/12-11-22-databricks-workflow.png"
+  source = "asset/posts/12-11-22-databricks-workflow.png"
+  etag = filemd5("${path.cwd}/asset/posts/12-11-22-databricks-workflow.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
@@ -2213,6 +2221,14 @@ resource "aws_s3_bucket_object" "ansible-png" {
   key = "logos/ansible.png"
   source = "asset/logos/ansible.png"
   etag = filemd5("${path.cwd}/asset/logos/ansible.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "apache-spark-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/apache-spark.png"
+  source = "asset/logos/apache-spark.png"
+  etag = filemd5("${path.cwd}/asset/logos/apache-spark.png")
   content_type = "image/png"
 }
 
@@ -2437,6 +2453,14 @@ resource "aws_s3_bucket_object" "d3-png" {
   key = "logos/d3.png"
   source = "asset/logos/d3.png"
   etag = filemd5("${path.cwd}/asset/logos/d3.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "databricks-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "logos/databricks.png"
+  source = "asset/logos/databricks.png"
+  etag = filemd5("${path.cwd}/asset/logos/databricks.png")
   content_type = "image/png"
 }
 
