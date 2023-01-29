@@ -2188,6 +2188,38 @@ resource "aws_s3_bucket_object" "posts-12-11-22-databricks-workflow-png" {
   content_type = "image/png"
 }
 
+resource "aws_s3_bucket_object" "posts-1-31-23-github-workflows-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-31-23-github-workflows.png"
+  source = "asset/posts/1-31-23-github-workflows.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-31-23-github-workflows.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-31-23-saintsxctf-infrastructure-flask-api-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-31-23-saintsxctf-infrastructure-flask-api.png"
+  source = "asset/posts/1-31-23-saintsxctf-infrastructure-flask-api.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-31-23-saintsxctf-infrastructure-flask-api.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-31-23-linting-formatting-workflow-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-31-23-linting-formatting-workflow.png"
+  source = "asset/posts/1-31-23-linting-formatting-workflow.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-31-23-linting-formatting-workflow.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_bucket_object" "posts-1-31-23-integration-test-workflow-png" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+  key = "posts/1-31-23-integration-test-workflow.png"
+  source = "asset/posts/1-31-23-integration-test-workflow.png"
+  etag = filemd5("${path.cwd}/asset/posts/1-31-23-integration-test-workflow.png")
+  content_type = "image/png"
+}
+
 /*
  * Logos Directory
  */
