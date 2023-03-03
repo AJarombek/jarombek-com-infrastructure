@@ -16,10 +16,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "andrew-jarombek-terraform-state"
+    bucket  = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/jarombek-com-kubernetes/env/all"
-    region = "us-east-1"
+    key     = "jarombek-com-infrastructure/jarombek-com-kubernetes/env/all"
+    region  = "us-east-1"
   }
 }
 

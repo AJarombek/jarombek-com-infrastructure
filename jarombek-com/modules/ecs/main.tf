@@ -5,8 +5,8 @@
  */
 
 locals {
-  env = var.prod ? "prod" : "dev"
-  env_tag = var.prod ? "production" : "development"
+  env           = var.prod ? "prod" : "dev"
+  env_tag       = var.prod ? "production" : "development"
   container_def = var.prod ? "jarombek-com.json" : "dev-jarombek-com.json"
 }
 
@@ -55,35 +55,35 @@ resource "aws_ecs_cluster" "jarombek-com-ecs-cluster" {
   name = "jarombek-com-${local.env}-ecs-cluster"
 
   tags = {
-    Name = "jarombek-com-${local.env}-ecs-cluster"
+    Name        = "jarombek-com-${local.env}-ecs-cluster"
     Application = "jarombek-com"
     Environment = local.env_tag
   }
 }
 
 resource "aws_cloudwatch_log_group" "jarombek-com-ecs-task-logs" {
-  name = "/ecs/fargate-tasks"
+  name              = "/ecs/fargate-tasks"
   retention_in_days = 7
 
   tags = {
-    Name = "ecs-fargate-tasks"
+    Name        = "ecs-fargate-tasks"
     Application = "jarombek-com"
     Environment = local.env_tag
   }
 }
 
 resource "aws_ecs_task_definition" "jarombek-com-task" {
-  family = "jarombek-com"
-  network_mode = "awsvpc"
+  family                   = "jarombek-com"
+  network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  execution_role_arn = data.aws_iam_role.ecs-task-role.arn
-  cpu = 256
-  memory = 512
+  execution_role_arn       = data.aws_iam_role.ecs-task-role.arn
+  cpu                      = 256
+  memory                   = 512
 
   container_definitions = file("${path.module}/container-def/${local.container_def}")
 
   tags = {
-    Name = "jarombek-com-ecs-${local.env}-task"
+    Name        = "jarombek-com-ecs-${local.env}-task"
     Application = "jarombek-com"
     Environment = local.env_tag
   }
@@ -95,11 +95,11 @@ resource "aws_ecs_task_definition" "jarombek-com-task" {
 }
 
 resource "aws_ecs_service" "jarombek-com-service" {
-  name = "jarombek-com-ecs-${local.env}-service"
-  cluster = aws_ecs_cluster.jarombek-com-ecs-cluster.id
+  name            = "jarombek-com-ecs-${local.env}-service"
+  cluster         = aws_ecs_cluster.jarombek-com-ecs-cluster.id
   task_definition = aws_ecs_task_definition.jarombek-com-task.arn
-  desired_count = var.jarombek_com_desired_count
-  launch_type = "FARGATE"
+  desired_count   = var.jarombek_com_desired_count
+  launch_type     = "FARGATE"
 
   network_configuration {
     security_groups = [aws_security_group.jarombek-com-ecs-sg.id]
@@ -112,12 +112,12 @@ resource "aws_ecs_service" "jarombek-com-service" {
 
   load_balancer {
     target_group_arn = var.jarombek-com-lb-target-group
-    container_name = "jarombek-com"
-    container_port = 8080
+    container_name   = "jarombek-com"
+    container_port   = 8080
   }
 
   tags = {
-    Name = "jarombek-com-ecs-${local.env}-service"
+    Name        = "jarombek-com-ecs-${local.env}-service"
     Application = "jarombek-com"
     Environment = local.env_tag
   }
@@ -126,7 +126,7 @@ resource "aws_ecs_service" "jarombek-com-service" {
 }
 
 resource "aws_security_group" "jarombek-com-ecs-sg" {
-  name = "jarombek-com-${local.env}-ecs-security-group"
+  name   = "jarombek-com-${local.env}-ecs-security-group"
   vpc_id = data.aws_vpc.jarombek-com-vpc.id
 
   lifecycle {
@@ -134,21 +134,21 @@ resource "aws_security_group" "jarombek-com-ecs-sg" {
   }
 
   ingress {
-    protocol = "tcp"
-    from_port = 8080
-    to_port = 8080
+    protocol    = "tcp"
+    from_port   = 8080
+    to_port     = 8080
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    protocol = "-1"
-    from_port = 0
-    to_port = 0
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name = "jarombek-com-${local.env}-ecs-security-group"
+    Name        = "jarombek-com-${local.env}-ecs-security-group"
     Application = "jarombek-com"
     Environment = local.env_tag
   }

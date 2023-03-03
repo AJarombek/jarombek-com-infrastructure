@@ -11,10 +11,10 @@ terraform {
   required_version = ">= 0.12"
 
   backend "s3" {
-    bucket = "andrew-jarombek-terraform-state"
+    bucket  = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/jarombek-com-fn"
-    region = "us-east-1"
+    key     = "jarombek-com-infrastructure/jarombek-com-fn"
+    region  = "us-east-1"
   }
 }
 
@@ -27,6 +27,6 @@ module "lambda" {
 }
 
 module "api-gateway" {
-  source = "./api-gateway"
+  source               = "./api-gateway"
   lambda-function-name = module.lambda.function-name
 }

@@ -7,11 +7,11 @@
 locals {
   # Environment
   prod = true
-  env = local.prod ? "prod" : "dev"
+  env  = local.prod ? "prod" : "dev"
 
   # CIDR blocks for firewalls
   public_cidr = "0.0.0.0/0"
-  my_cidr = "69.124.72.192/32"
+  my_cidr     = "69.124.72.192/32"
 }
 
 provider "aws" {
@@ -22,45 +22,45 @@ terraform {
   required_version = ">= 0.14.8"
 
   required_providers {
-    aws = ">= 3.36.0"
+    aws  = ">= 3.36.0"
     null = ">= 3.1.0"
   }
 
   backend "s3" {
-    bucket = "andrew-jarombek-terraform-state"
+    bucket  = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/jarombek-com/env/prod"
-    region = "us-east-1"
+    key     = "jarombek-com-infrastructure/jarombek-com/env/prod"
+    region  = "us-east-1"
   }
 }
 
 module "alb" {
   source = "../../modules/alb"
-  prod = local.prod
+  prod   = local.prod
 
   load-balancer-sg-rules-cidr = [
     {
       # Inbound traffic from the internet
-      type = "ingress"
-      from_port = 80
-      to_port = 80
-      protocol = "tcp"
+      type        = "ingress"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
       cidr_blocks = local.public_cidr
     },
     {
       # Inbound traffic from the internet
-      type = "ingress"
-      from_port = 443
-      to_port = 443
-      protocol = "tcp"
+      type        = "ingress"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
       cidr_blocks = local.public_cidr
     },
     {
       # Outbound traffic on all ports
-      type = "egress"
-      from_port = 0
-      to_port = 0
-      protocol = "-1"
+      type        = "egress"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
       cidr_blocks = local.public_cidr
     }
   ]
@@ -69,12 +69,12 @@ module "alb" {
 }
 
 module "ecs" {
-  source = "../../modules/ecs"
-  prod = local.prod
-  jarombek_com_desired_count = 1
+  source                              = "../../modules/ecs"
+  prod                                = local.prod
+  jarombek_com_desired_count          = 1
   jarombek_com_database_desired_count = 1
-  alb_security_group = module.alb.alb-sg
-  jarombek-com-lb-target-group = module.alb.jarombek-com-lb-target-group
+  alb_security_group                  = module.alb.alb-sg
+  jarombek-com-lb-target-group        = module.alb.jarombek-com-lb-target-group
 
   dependencies = [
     module.alb.depended_on

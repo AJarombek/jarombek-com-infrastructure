@@ -5,7 +5,7 @@
  */
 
 resource "aws_ecr_repository" "jarombek-com-repository" {
-  name = "jarombek-com"
+  name                 = "jarombek-com"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -13,14 +13,14 @@ resource "aws_ecr_repository" "jarombek-com-repository" {
   }
 
   tags = {
-    Name = "jarombek-com-container-repository"
+    Name        = "jarombek-com-container-repository"
     Application = "jarombek-com"
     Environment = "all"
   }
 }
 
 resource "aws_ecr_repository" "jarombek-com-database-repository" {
-  name = "jarombek-com-database"
+  name                 = "jarombek-com-database"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -28,7 +28,7 @@ resource "aws_ecr_repository" "jarombek-com-database-repository" {
   }
 
   tags = {
-    Name = "jarombek-com-database-container-repository"
+    Name        = "jarombek-com-database-container-repository"
     Application = "jarombek-com"
     Environment = "all"
   }

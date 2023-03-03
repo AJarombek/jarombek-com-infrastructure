@@ -6,17 +6,17 @@
 
 variable "prod" {
   description = "If the environment for the ALB is production"
-  default = false
+  default     = false
 }
 
 variable "load-balancer-sg-rules-cidr" {
   description = "A list of security group rules for the load balancer (using CIDR blocks)"
-  type = list
-  default = []
+  type        = list(any)
+  default     = []
 }
 
 variable "load-balancer-sg-rules-source" {
   description = "A list of security group rules for the load balancer (using source Security Groups)"
-  type = list
-  default = []
+  type        = list(any)
+  default     = []
 }

@@ -24,7 +24,13 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 
 ### Version History
 
-**[v1.1.0](https://github.com/AJarombek/saints-xctf-functions/tree/v1.1.0) - Jarombek.com S3 Bucket Updates**
+**[v1.1.1](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.1) - GitHub Actions**
+
+> Release Date: March 2nd, 2023
+
+Integrate Terraform formatting, AWS tests, and Kubernetes tests with GitHub Actions CI/CD.
+
+**[v1.1.0](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.0) - Jarombek.com S3 Bucket Updates**
 
 > Release Date: December 27th, 2021
 

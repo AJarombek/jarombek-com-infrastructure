@@ -12,19 +12,19 @@ terraform {
   required_version = ">= 0.14"
 
   required_providers {
-    aws = ">= 3.7.0"
+    aws        = ">= 3.7.0"
     kubernetes = ">= 1.11"
   }
 
   backend "s3" {
-    bucket = "andrew-jarombek-terraform-state"
+    bucket  = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/jarombek-com-kubernetes-ingress/env/dev"
-    region = "us-east-1"
+    key     = "jarombek-com-infrastructure/jarombek-com-kubernetes-ingress/env/dev"
+    region  = "us-east-1"
   }
 }
 
 module "kubernetes" {
   source = "../../modules/kubernetes"
-  prod = false
+  prod   = false
 }

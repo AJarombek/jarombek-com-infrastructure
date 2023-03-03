@@ -16,10 +16,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "andrew-jarombek-terraform-state"
+    bucket  = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/route53"
-    region = "us-east-1"
+    key     = "jarombek-com-infrastructure/route53"
+    region  = "us-east-1"
   }
 }
 
@@ -44,10 +44,10 @@ resource "aws_route53_zone" "jarombek" {
 }
 
 resource "aws_route53_record" "jarombek_mx" {
-  name = "jarombek.com."
-  type = "MX"
+  name    = "jarombek.com."
+  type    = "MX"
   zone_id = aws_route53_zone.jarombek.zone_id
-  ttl = 300
+  ttl     = 300
 
   records = [
     "1 ASPMX.L.GOOGLE.COM.",

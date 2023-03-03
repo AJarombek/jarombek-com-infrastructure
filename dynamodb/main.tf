@@ -16,17 +16,17 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "andrew-jarombek-terraform-state"
+    bucket  = "andrew-jarombek-terraform-state"
     encrypt = true
-    key = "jarombek-com-infrastructure/dynamodb"
-    region = "us-east-1"
+    key     = "jarombek-com-infrastructure/dynamodb"
+    region  = "us-east-1"
   }
 }
 
 resource "aws_dynamodb_table" "jarombek-com-subscribers" {
-  name = "jarombek-com-subscribers"
-  billing_mode = "PROVISIONED"
-  read_capacity = 20
+  name           = "jarombek-com-subscribers"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
   write_capacity = 20
 
   hash_key = "email"
@@ -37,7 +37,7 @@ resource "aws_dynamodb_table" "jarombek-com-subscribers" {
   }
 
   tags = {
-    Name = "jarombek-com-subscribers"
+    Name        = "jarombek-com-subscribers"
     Application = "jarombek-com"
     Environment = "production"
   }
@@ -45,11 +45,11 @@ resource "aws_dynamodb_table" "jarombek-com-subscribers" {
 
 resource "aws_dynamodb_table_item" "me" {
   table_name = aws_dynamodb_table.jarombek-com-subscribers.name
-  hash_key = aws_dynamodb_table.jarombek-com-subscribers.hash_key
+  hash_key   = aws_dynamodb_table.jarombek-com-subscribers.hash_key
   item = jsonencode({
-    "email" = {"S" = "andrew@jarombek.com"},
-    "subscribed" = {"BOOL" = true},
-    "created" = {"S" = "2022-12-12"},
-    "updated" = {"S" = "2022-12-12"}
+    "email"      = { "S" = "andrew@jarombek.com" },
+    "subscribed" = { "BOOL" = true },
+    "created"    = { "S" = "2022-12-12" },
+    "updated"    = { "S" = "2022-12-12" }
   })
 }
