@@ -7,11 +7,11 @@
 data "aws_caller_identity" "current" {}
 
 data "aws_eks_cluster" "cluster" {
-  name = "andrew-jarombek-eks-cluster"
+  name = "andrew-jarombek-eks-v2"
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = "andrew-jarombek-eks-cluster"
+  name = "andrew-jarombek-eks-v2"
 }
 
 data "aws_vpc" "application-vpc" {
@@ -47,22 +47,12 @@ data "aws_acm_certificate" "jarombek-dev-cert" {
   statuses = ["ISSUED"]
 }
 
-data "aws_acm_certificate" "jarombek-proto-cert" {
-  domain   = local.proto_domain_cert
-  statuses = ["ISSUED"]
-}
-
-data "aws_acm_certificate" "jarombek-apollo-proto-cert" {
-  domain   = local.apollo_proto_domain_cert
-  statuses = ["ISSUED"]
-}
-
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
 
   exec {
-    api_version = "client.authentication.k8s.io/v1alpha1"
+    api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
     args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.cluster.name]
   }
@@ -78,8 +68,6 @@ locals {
   namespace                = var.prod ? "jarombek-com" : "jarombek-com-dev"
   host1                    = var.prod ? "jarombek.com" : "dev.jarombek.com"
   host2                    = var.prod ? "www.jarombek.com" : "www.dev.jarombek.com"
-  host3                    = var.prod ? "apollo.proto.jarombek.com" : "dev.apollo.proto.jarombek.com"
-  host4                    = var.prod ? "www.apollo.proto.jarombek.com" : "www.dev.apollo.proto.jarombek.com"
   hostname                 = "${local.host1},${local.host2}"
   certificates             = var.prod ? "${local.cert_arn},${local.www_cert_arn}" : "${local.www_cert_arn},${local.dev_cert_arn}"
   short_version            = "1.2.0"
@@ -93,8 +81,6 @@ locals {
   cert_arn                 = data.aws_acm_certificate.jarombek-cert.arn
   www_cert_arn             = data.aws_acm_certificate.jarombek-www-cert.arn
   dev_cert_arn             = data.aws_acm_certificate.jarombek-dev-cert.arn
-  proto_cert_arn           = data.aws_acm_certificate.jarombek-proto-cert.arn
-  apollo_proto_cert_arn    = data.aws_acm_certificate.jarombek-apollo-proto-cert.arn
   subnet1                  = data.aws_subnet.kubernetes-dotty-public-subnet.id
   subnet2                  = data.aws_subnet.kubernetes-grandmas-blanket-public-subnet.id
 }
@@ -143,7 +129,7 @@ resource "aws_security_group" "jarombek-com-lb-sg" {
 # Kubernetes Resources for the jarombek.com Ingress
 #--------------------------------------------------
 
-resource "kubernetes_ingress" "ingress" {
+resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "jarombek-com-ingress"
     namespace = local.namespace
@@ -180,8 +166,12 @@ resource "kubernetes_ingress" "ingress" {
           path = "/*"
 
           backend {
-            service_name = "ssl-redirect"
-            service_port = "use-annotation"
+            service {
+              name = "ssl-redirect"
+              port {
+                name = "use-annotation"
+              }
+            }
           }
         }
 
@@ -189,8 +179,12 @@ resource "kubernetes_ingress" "ingress" {
           path = "/*"
 
           backend {
-            service_name = "jarombek-com"
-            service_port = 80
+            service {
+              name = "jarombek-com"
+              port {
+                number = 80
+              }
+            }
           }
         }
       }
@@ -204,8 +198,12 @@ resource "kubernetes_ingress" "ingress" {
           path = "/*"
 
           backend {
-            service_name = "ssl-redirect"
-            service_port = "use-annotation"
+            service {
+              name = "ssl-redirect"
+              port {
+                name = "use-annotation"
+              }
+            }
           }
         }
 
@@ -213,8 +211,12 @@ resource "kubernetes_ingress" "ingress" {
           path = "/*"
 
           backend {
-            service_name = "jarombek-com"
-            service_port = 80
+            service {
+              name = "jarombek-com"
+              port {
+                number = 80
+              }
+            }
           }
         }
       }

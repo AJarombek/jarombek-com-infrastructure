@@ -9,6 +9,7 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 
 | Directory Name                    | Description                                                                |
 |-----------------------------------|----------------------------------------------------------------------------|
+| `.github`                         | GitHub Actions for CI/CD pipelines.                                        |
 | `acm`                             | HTTPS certificates for the website.                                        |
 | `dynamodb`                        | DynamoDB tables for handling subscriptions.                                |
 | `iam`                             | IAM roles and policies for the AWS infrastructure.                         |
@@ -23,6 +24,12 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 | `test-k8s`                        | Go Kubernetes infrastructure test suite.                                   |
 
 ### Version History
+
+**[v1.1.2](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.2) - EKS V2 Cluster**
+
+> Release Date: April 2nd, 2023
+
+Integrate the website and API with the EKS V2 Cluster.
 
 **[v1.1.1](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.1) - GitHub Actions**
 

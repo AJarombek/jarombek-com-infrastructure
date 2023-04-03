@@ -9,11 +9,11 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 0.14"
+  required_version = "~> 1.3.9"
 
   required_providers {
-    aws        = ">= 3.7.0"
-    kubernetes = ">= 2.0.3"
+    aws        = "~> 4.61.0"
+    kubernetes = "~> 2.19.0"
   }
 
   backend "s3" {
