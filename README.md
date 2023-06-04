@@ -25,6 +25,13 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 
 ### Version History
 
+**[v1.1.3](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.3) - Kubernetes Tests Upgraded**
+
+> Release Date: June 4th, 2023
+
++ Kubernetes Ingress tests fixed
++ Kubernetes tests upgraded to Go 1.20
+
 **[v1.1.2](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.2) - EKS V2 Cluster**
 
 > Release Date: April 2nd, 2023
