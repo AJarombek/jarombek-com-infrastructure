@@ -15,31 +15,29 @@ export TEST_ENV=<dev|prod>
 python3 runner.py
 ```
 
-If an error occurs on Mac OS saying `[SSL: CERTIFICATE_VERIFY_FAILED]`, use the following bash command (change the 
-Python version as needed):
+To update the lockfile with Pipfile dependencies, execute the following command:
 
 ```bash
-/Applications/Python\ 3.8/Install\ Certificates.command
+pipenv install
 ```
 
-Install the AWS test functions GitHub repository as a dependency:
+To format the code, execute the following commands:
 
 ```bash
-# Pip
-pip install "git+git://github.com/ajarombek/cloud-modules.git#subdirectory=aws-test-functions&egg=aws_test_functions"
+pipenv shell
+black .
 
-# Pipenv
-pipenv install "git+git://github.com/ajarombek/cloud-modules.git#subdirectory=aws-test-functions&egg=aws_test_functions"
+# To check the formatting without modifying the code
+black --check .
 ```
 
 ### Files
 
-| Filename             | Description                                                                                  |
-|----------------------|----------------------------------------------------------------------------------------------|
-| `suites/`            | Test suites for each infrastructure grouping.                                                |
-| `requirements.txt`   | Python dependencies used with pip.                                                           |
-| `Pipfile`            | Python dependencies used with pipenv.                                                        |
-| `runner.py`          | Python `unittest` runner which runs the test suites.                                         |
+| Filename    | Description                                          |
+|-------------|------------------------------------------------------|
+| `suites`    | Test suites for each infrastructure grouping.        |
+| `Pipfile`   | Python dependencies used with pipenv.                |
+| `runner.py` | Python `unittest` runner which runs the test suites. |
 
 ### Resources
 
