@@ -18,12 +18,17 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 | `jarombek-com-fn`                 | Infrastructure for the AWS Lambda functions used by the website.           |
 | `jarombek-com-kubernetes`         | Kubernetes infrastructure for the website and database.                    |
 | `jarombek-com-kubernetes-ingress` | Kubernetes Ingress infrastructure for the website and database.            |
-| `jarombek-com-react16-3-demo`     | Infrastructure for an S3 bucket that hosts the React 16.3 demo static app. |
 | `route53`                         | DNS for the application.                                                   |
 | `test`                            | Python AWS infrastructure test suite written with boto3 AWS SDK.           |
 | `test-k8s`                        | Go Kubernetes infrastructure test suite.                                   |
 
 ### Version History
+
+**[v1.1.4](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.4) - Remove React 16.3 Demo Infrastructure**
+
+> Release Date: December 22nd, 2023
+
++ React 16.3 Demo Infrastructure Moved to [andy-jarombek-research](https://github.com/AJarombek/andy-jarombek-research)
 
 **[v1.1.3](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.3) - Kubernetes Tests Upgraded**
 
