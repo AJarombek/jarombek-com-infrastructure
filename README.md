@@ -24,6 +24,12 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 
 ### Version History
 
+**[v1.1.5](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.5) - Remove Unused ACM Certs & CloudFront**
+
+> Release Date: January 28th, 2024
+
++ Remove unused ACM certificates and CloudFront distributions.
+
 **[v1.1.4](https://github.com/AJarombek/jarombek-com-infrastructure/tree/v1.1.4) - Remove React 16.3 Demo Infrastructure**
 
 > Release Date: December 22nd, 2023

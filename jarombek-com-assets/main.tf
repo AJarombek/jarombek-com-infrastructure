@@ -9,10 +9,13 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 1.1.2"
+  required_version = "~> 1.6.6"
 
   required_providers {
-    aws = ">= 3.70.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.34.0"
+    }
   }
 
   backend "s3" {
@@ -23,16 +26,16 @@ terraform {
   }
 }
 
+locals {
+  terraform_tag = "jarombek-com-infrastructure/jarombek-com-assets"
+}
+
 #-----------------------
 # Existing AWS Resources
 #-----------------------
 
 data "aws_acm_certificate" "wildcard-jarombek-com-cert" {
   domain = "*.jarombek.com"
-}
-
-data "aws_acm_certificate" "wildcard-asset-jarombek-com-cert" {
-  domain = "*.asset.jarombek.com"
 }
 
 data "aws_route53_zone" "jarombek" {
@@ -45,28 +48,39 @@ data "aws_route53_zone" "jarombek" {
 
 resource "aws_s3_bucket" "asset-jarombek" {
   bucket = "asset.jarombek.com"
-  acl    = "private"
 
   tags = {
     Name        = "asset.jarombek.com"
     Environment = "all"
     Application = "jarombek-com"
+    Terraform   = local.terraform_tag
+  }
+}
+
+resource "aws_s3_bucket_website_configuration" "asset-jarombek" {
+  bucket = aws_s3_bucket.asset-jarombek.id
+
+  index_document {
+    suffix = "jarombek.png"
   }
 
-  website {
-    index_document = "jarombek.png"
-    error_document = "jarombek.png"
+  error_document {
+    key = "jarombek.png"
   }
+}
+
+resource "aws_s3_bucket_cors_configuration" "asset-jarombek" {
+  bucket = aws_s3_bucket.asset-jarombek.id
 
   cors_rule {
-    allowed_origins = ["https://jarombek.com"]
-    allowed_methods = ["POST", "PUT", "DELETE", "HEAD"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
     allowed_headers = ["*"]
   }
 
   cors_rule {
-    allowed_origins = ["*"]
-    allowed_methods = ["GET"]
+    allowed_methods = ["POST", "PUT", "DELETE", "HEAD"]
+    allowed_origins = ["https://jarombek.com"]
     allowed_headers = ["*"]
   }
 }
@@ -170,82 +184,13 @@ resource "aws_cloudfront_distribution" "asset-jarombek-distribution" {
   tags = {
     Name        = "asset-jarombek-com-cloudfront"
     Environment = "production"
+    Application = "jarombek-com"
+    Terraform   = local.terraform_tag
   }
 }
 
 resource "aws_cloudfront_origin_access_identity" "origin-access-identity" {
   comment = "asset.jarombek.com origin access identity"
-}
-
-resource "aws_cloudfront_distribution" "www-asset-jarombek-distribution" {
-  origin {
-    domain_name = aws_s3_bucket.asset-jarombek.bucket_regional_domain_name
-    origin_id   = "origin-bucket-${aws_s3_bucket.asset-jarombek.id}"
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity.cloudfront_access_identity_path
-    }
-  }
-
-  # Whether the cloudfront distribution is enabled to accept user requests
-  enabled = true
-
-  # Which HTTP version to use for requests
-  http_version = "http2"
-
-  # Whether the cloudfront distribution can use ipv6
-  is_ipv6_enabled = true
-
-  comment             = "www.asset.jarombek.com CloudFront Distribution"
-  default_root_object = "jarombek.png"
-
-  # Extra CNAMEs for this distribution
-  aliases = ["www.asset.jarombek.com"]
-
-  # The pricing model for CloudFront
-  price_class = "PriceClass_100"
-
-  default_cache_behavior {
-    # Which HTTP verbs CloudFront processes
-    allowed_methods = ["HEAD", "GET"]
-
-    # Which HTTP verbs CloudFront caches responses to requests
-    cached_methods = ["HEAD", "GET"]
-
-    forwarded_values {
-      cookies {
-        forward = "none"
-      }
-      query_string = false
-    }
-
-    target_origin_id = "origin-bucket-${aws_s3_bucket.asset-jarombek.id}"
-
-    # Which protocols to use when accessing items from CloudFront
-    viewer_protocol_policy = "allow-all"
-
-    # Determines the amount of time an object exists in the CloudFront cache
-    min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
-  }
-
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-
-  # The SSL certificate for CloudFront
-  viewer_certificate {
-    acm_certificate_arn = data.aws_acm_certificate.wildcard-asset-jarombek-com-cert.arn
-    ssl_support_method  = "sni-only"
-  }
-
-  tags = {
-    Name        = "www-asset-jarombek-com-cloudfront"
-    Environment = "production"
-  }
 }
 
 resource "aws_route53_record" "asset-jarombek-a" {
@@ -257,18 +202,6 @@ resource "aws_route53_record" "asset-jarombek-a" {
     evaluate_target_health = false
     name                   = aws_cloudfront_distribution.asset-jarombek-distribution.domain_name
     zone_id                = aws_cloudfront_distribution.asset-jarombek-distribution.hosted_zone_id
-  }
-}
-
-resource "aws_route53_record" "www-asset-jarombek-a" {
-  name    = "www.asset.jarombek.com."
-  type    = "A"
-  zone_id = data.aws_route53_zone.jarombek.zone_id
-
-  alias {
-    evaluate_target_health = false
-    name                   = aws_cloudfront_distribution.www-asset-jarombek-distribution.domain_name
-    zone_id                = aws_cloudfront_distribution.www-asset-jarombek-distribution.hosted_zone_id
   }
 }
 
