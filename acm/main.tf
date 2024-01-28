@@ -9,10 +9,13 @@ provider "aws" {
 }
 
 terraform {
-  required_version = ">= 0.15.0"
+  required_version = "~> 1.6.6"
 
   required_providers {
-    aws = ">= 3.48.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.34.0"
+    }
   }
 
   backend "s3" {
@@ -21,6 +24,10 @@ terraform {
     key     = "jarombek-com-infrastructure/acm"
     region  = "us-east-1"
   }
+}
+
+locals {
+  terraform_tag = "jarombek-com-infrastructure/acm"
 }
 
 #-----------------------
@@ -36,146 +43,6 @@ data "aws_route53_zone" "jarombek-com-zone" {
 # New AWS Resources for ACM
 #--------------------------
 
-#------------------------------
-# Protects '*.react16-3.demo.jarombek.com'
-#------------------------------
-
-module "jarombek-react16-3-demo-acm-certificate" {
-  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
-
-  # Mandatory arguments
-  name            = "jarombek-react16-3-demo-acm-certificate"
-  tag_name        = "jarombek-react16-3-demo-acm-certificate"
-  tag_application = "jarombek-com"
-  tag_environment = "production"
-
-  route53_zone_name = "jarombek.com."
-  acm_domain_name   = "*.react16-3.demo.jarombek.com"
-
-  # Optional arguments
-  route53_zone_private = false
-}
-
-#------------------------------
-# Protects '*.demo.jarombek.com'
-#------------------------------
-
-module "jarombek-demo-acm-certificate" {
-  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
-
-  # Mandatory arguments
-  name            = "jarombek-demo-acm-certificate"
-  tag_name        = "jarombek-demo-acm-certificate"
-  tag_application = "jarombek-com"
-  tag_environment = "production"
-
-  route53_zone_name = "jarombek.com."
-  acm_domain_name   = "*.demo.jarombek.com"
-
-  # Optional arguments
-  route53_zone_private = false
-}
-
-#-------------------------------------------------------------
-# New ACM Resource that Protects '*.apollo.proto.jarombek.com'
-#-------------------------------------------------------------
-
-module "jarombek-apollo-proto-acm-certificate" {
-  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
-
-  # Mandatory arguments
-  name            = "jarombek-apollo-proto-acm-certificate"
-  tag_name        = "jarombek-apollo-proto-acm-certificate"
-  tag_application = "jarombek-com"
-  tag_environment = "production"
-
-  route53_zone_name = "jarombek.com."
-  acm_domain_name   = "*.apollo.proto.jarombek.com"
-
-  # Optional arguments
-  route53_zone_private = false
-}
-
-#------------------------------
-# Protects '*.proto.jarombek.com'
-#------------------------------
-
-module "jarombek-proto-acm-certificate" {
-  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
-
-  # Mandatory arguments
-  name            = "jarombek-proto-acm-certificate"
-  tag_name        = "jarombek-proto-acm-certificate"
-  tag_application = "jarombek-com"
-  tag_environment = "production"
-
-  route53_zone_name = "jarombek.com."
-  acm_domain_name   = "*.proto.jarombek.com"
-
-  # Optional arguments
-  route53_zone_private = false
-}
-
-#------------------------------
-# Protects '*.asset.jarombek.com'
-#------------------------------
-
-resource "aws_acm_certificate" "jarombek-asset-wildcard-acm-certificate" {
-  domain_name       = "*.asset.jarombek.com"
-  validation_method = "DNS"
-
-  tags = {
-    Environment = "prod"
-    Application = "jarombek-com"
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_route53_record" "jarombek-asset-wc-cert-validation-record" {
-  for_each = {
-    for dvo in aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
-  }
-
-  allow_overwrite = true
-  name            = each.value.name
-  type            = each.value.type
-  zone_id         = data.aws_route53_zone.jarombek-com-zone.id
-  records         = [each.value.record]
-  ttl             = 60
-}
-
-resource "aws_acm_certificate_validation" "jarombek-asset-wc-cert-validation" {
-  certificate_arn         = aws_acm_certificate.jarombek-asset-wildcard-acm-certificate.arn
-  validation_record_fqdns = [for record in aws_route53_record.jarombek-asset-wc-cert-validation-record : record.fqdn]
-}
-
-#------------------------------
-# Protects '*.dev.jarombek.com'
-#------------------------------
-
-module "jarombek-dev-acm-certificate" {
-  source = "github.com/ajarombek/cloud-modules//terraform-modules/acm-certificate?ref=v0.2.12"
-
-  # Mandatory arguments
-  name            = "jarombek-dev-acm-certificate"
-  tag_name        = "jarombek-dev-acm-certificate"
-  tag_application = "jarombek-com"
-  tag_environment = "development"
-
-  route53_zone_name = "jarombek.com."
-  acm_domain_name   = "*.dev.jarombek.com"
-
-  # Optional arguments
-  route53_zone_private = false
-}
-
 #--------------------------
 # Protects '*.jarombek.com'
 #--------------------------
@@ -185,8 +52,10 @@ resource "aws_acm_certificate" "jarombek-wildcard-acm-certificate" {
   validation_method = "DNS"
 
   tags = {
-    Environment = "all"
+    Name        = "jarombek-com-wildcard-acm-certificate"
     Application = "jarombek-com"
+    Environment = "production"
+    Terraform   = local.terraform_tag
   }
 
   lifecycle {
@@ -208,8 +77,10 @@ resource "aws_acm_certificate" "jarombek-acm-certificate" {
   validation_method = "DNS"
 
   tags = {
-    Environment = "prod"
+    Name        = "jarombek-com-acm-certificate"
     Application = "jarombek-com"
+    Environment = "production"
+    Terraform   = local.terraform_tag
   }
 
   lifecycle {

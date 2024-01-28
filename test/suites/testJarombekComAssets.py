@@ -50,12 +50,3 @@ class TestJarombekComAssets(unittest.TestCase):
         req = request.Request(url="https://asset.jarombek.com")
         with request.urlopen(req) as f:
             self.assertEqual(f.status, 200)
-
-    def test_www_assets_jarombek_com_reachable(self) -> None:
-        """
-        Test that the www.asset.jarombek.com S3 bucket is reachable via HTTPS
-        Source: https://docs.python.org/3/library/urllib.request.html#examples
-        """
-        req = request.Request(url="https://www.asset.jarombek.com")
-        with request.urlopen(req) as f:
-            self.assertEqual(f.status, 200)
