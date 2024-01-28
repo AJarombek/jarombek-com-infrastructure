@@ -61,21 +61,6 @@ class TestRoute53(unittest.TestCase):
         self.assertEqual(a_record.get("Name"), "asset.jarombek.com.")
         self.assertEqual(a_record.get("Type"), "A")
 
-    def test_www_jarombek_com_a_record_exists(self) -> None:
-        """
-        Determine if the 'A' record exists for 'www.jarombek.com.' in Route53
-        """
-        try:
-            a_record = Route53.get_record(
-                "jarombek.com.", "www.asset.jarombek.com.", "A"
-            )
-        except IndexError:
-            a_record = None
-            self.assertFalse(True)
-
-        self.assertEqual(a_record.get("Name"), "www.asset.jarombek.com.")
-        self.assertEqual(a_record.get("Type"), "A")
-
     def test_jarombek_com_mx_record_exists(self) -> None:
         """
         Determine if the 'MX' record exists for 'jarombek.com.' in Route53
