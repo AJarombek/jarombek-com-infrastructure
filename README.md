@@ -13,7 +13,6 @@ existing inside my [Global AWS Infrastructure](https://github.com/AJarombek/glob
 | `acm`                             | HTTPS certificates for the website.                                        |
 | `dynamodb`                        | DynamoDB tables for handling subscriptions.                                |
 | `iam`                             | IAM roles and policies for the AWS infrastructure.                         |
-| `jarombek-com`                    | *DEPRECATED* ECS Infrastructure for the main web application and database. |
 | `jarombek-com-assets`             | Infrastructure for the S3 bucket, which exposes an API for assets.         |
 | `jarombek-com-fn`                 | Infrastructure for the AWS Lambda functions used by the website.           |
 | `jarombek-com-kubernetes`         | Kubernetes infrastructure for the website and database.                    |
