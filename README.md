@@ -1,5 +1,11 @@
 # jarombek-com-infrastructure
 
+![Maintained Label](https://img.shields.io/badge/Maintained-No-red?style=for-the-badge)
+![Deprecated Label](https://img.shields.io/badge/Deprecated-Yes-lightgray?style=for-the-badge)
+![Archived Label](https://img.shields.io/badge/Archived-Yes-lightgray?style=for-the-badge)
+
+> ⚠️ Code moved to [jarombek-com](https://github.com/AJarombek/jarombek-com)
+
 ## Overview
 
 AWS Infrastructure for the website [jarombek.com](https://jarombek.com).  This is application specific infrastructure, 
